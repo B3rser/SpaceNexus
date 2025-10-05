@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import { Toaster } from 'react-hot-toast';
 import { Home } from './components/pages/Home'
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { KnowledgeGraph } from './components/pages/KnowledgeGraph';
@@ -17,6 +17,15 @@ function App() {
     <BrowserRouter>
       <BackgroundParticles />
       <UserProvider>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 5000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+            },
+          }} />
         <Routes>
           {/*<ArticleView rol="Cientifico" nombre="Artículo A" />*/}
           {/*<ArticleView rol="Inversor" nombre="Artículo B" />*/}
