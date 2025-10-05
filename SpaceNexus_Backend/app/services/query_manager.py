@@ -144,7 +144,7 @@ class QueryManager:
                         "Afshin Beheshti",
                         "Sylvain V. Costes"
                     ],
-                    "year": "null",
+                    "year": -1,
                     "links": [
                         "41598_2024_Article_51756.json",
                         "41598_2024_Article_57948.json"
@@ -797,7 +797,7 @@ class QueryManager:
                     "Afshin Beheshti",
                     "Sylvain V. Costes"
                 ],
-                "year": "null",
+                "year": -1,
                 "labels": [
                     "F1",
                     "F1A",
