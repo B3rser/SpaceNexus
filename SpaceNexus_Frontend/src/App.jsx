@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from './components/pages/Home'
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { KnowledgeGraph } from './components/pages/KnowledgeGraph';
+import { Test } from './components/pages/Test';
+
 import './App.css'
 
 function App() {
@@ -14,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/Home" element={<Home />} />
         <Route path='/KnowledgeGraph' element={<KnowledgeGraph />} />
+        <Route path='/Test' element={<Test />} />
       </Routes>
     </BrowserRouter>
   )
