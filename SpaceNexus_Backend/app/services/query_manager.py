@@ -1,5 +1,4 @@
-# app/services/query_manager.py
-
+from collections import Counter 
 from typing import Optional, List
 
 
@@ -11,7 +10,7 @@ class QueryManager:
         """
         self._mock_graph_db = {
             "nodes": [
-                {"id": "ART-001", "links": ["ART-002", "ART-003"], "labels": ["astrobiología", "marte", "extremófilos"], "authors": ["Rodriguez, A."], "year": 2023},
+                {"id": "ART-001", "links": ["ART-002", "ART-003"], "labels": ["astrobiología", "marte", "extremófilos","planetas","espacio"], "authors": ["Rodriguez, A."], "year": 2023},
                 {"id": "ART-002", "links": ["ART-001"], "labels": ["propulsión", "iónica", "eficiencia"], "authors": ["Chen, L.", "Miller, S."], "year": 2021},
                 {"id": "ART-003", "links": ["ART-001", "ART-004"], "labels": ["salud", "microgravedad", "huesos"], "authors": ["Kim, J."], "year": 2024},
                 {"id": "ART-004", "links": ["ART-003"], "labels": ["satélites", "comunicación", "cuántica"], "authors": ["Patel, R.", "Jones, B."], "year": 2022},
@@ -19,7 +18,7 @@ class QueryManager:
                 {"id": "ART-006", "links": ["ART-005", "ART-007"], "labels": ["cultivos hidropónicos", "ISS", "nutrición"], "authors": ["Smith, A."], "year": 2022},
                 {"id": "ART-007", "links": ["ART-006"], "labels": ["psicología", "aislamiento", "misiones largas"], "authors": ["Williams, D."], "year": 2024},
                 {"id": "ART-008", "links": ["ART-009"], "labels": ["agujeros negros", "radiación Hawking", "teoría"], "authors": ["Lee, S."], "year": 2020},
-                {"id": "ART-009", "links": ["ART-008", "ART-010"], "labels": ["exoplanetas", "atmósferas", "telescopio Webb"], "authors": ["Davis, T."], "year": 2023},
+                {"id": "ART-009", "links": ["ART-008", "ART-010"], "labels": ["exoplanetas", "atmósferas", "telescopio Webb", "planetas"], "authors": ["Davis, T."], "year": 2023},
                 {"id": "ART-010", "links": ["ART-009"], "labels": ["basura espacial", "mitigación", "láser"], "authors": ["Cho, H."], "year": 2022}
             ],
             "links": [
@@ -30,7 +29,7 @@ class QueryManager:
             ]
         }
         self._mock_articles_db = {
-            "ART-001": {"id": "ART-001", "title": "Supervivencia de Extremófilos en Suelo Marciano Simulado", "authors": ["Rodriguez, A."], "year": 2023, "labels": ["astrobiología", "marte", "extremófilos"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-001": {"id": "ART-001", "title": "Supervivencia de Extremófilos en Suelo Marciano Simulado", "authors": ["Rodriguez, A."], "year": 2023, "labels": ["astrobiología", "marte", "extremófilos","planetas","espacio"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
             "ART-002": {"id": "ART-002", "title": "Avances en Propulsores de Iones para Misiones Interplanetarias", "authors": ["Chen, L.", "Miller, S."], "year": 2021, "labels": ["propulsión", "iónica", "eficiencia"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
             "ART-003": {"id": "ART-003", "title": "Degradación Ósea Acelerada por Exposición a Microgravedad", "authors": ["Kim, J."], "year": 2024, "labels": ["salud", "microgravedad", "huesos"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
             "ART-004": {"id": "ART-004", "title": "Redes de Comunicación Cuántica para Satélites", "authors": ["Patel, R.", "Jones, B."], "year": 2022, "labels": ["satélites", "comunicación", "cuántica"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
@@ -38,7 +37,7 @@ class QueryManager:
             "ART-006": {"id": "ART-006", "title": "Optimización del Crecimiento de Vegetales en la ISS", "authors": ["Smith, A."], "year": 2022, "labels": ["cultivos hidropónicos", "ISS", "nutrición"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
             "ART-007": {"id": "ART-007", "title": "Impacto Psicológico del Aislamiento en Misiones de Larga Duración", "authors": ["Williams, D."], "year": 2024, "labels": ["psicología", "aislamiento", "misiones largas"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
             "ART-008": {"id": "ART-008", "title": "Observación de la Radiación de Hawking en Agujeros Negros Sintéticos", "authors": ["Lee, S."], "year": 2020, "labels": ["agujeros negros", "radiación Hawking", "teoría"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
-            "ART-009": {"id": "ART-009", "title": "Análisis Atmosférico de Exoplanetas con el Telescopio James Webb", "authors": ["Davis, T."], "year": 2023, "labels": ["exoplanetas", "atmósferas", "telescopio Webb"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-009": {"id": "ART-009", "title": "Análisis Atmosférico de Exoplanetas con el Telescopio James Webb", "authors": ["Davis, T."], "year": 2023, "labels": ["exoplanetas", "atmósferas", "telescopio Webb", "planetas"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
             "ART-010": {"id": "ART-010", "title": "Uso de Láseres Terrestres para Mitigar la Basura Espacial", "authors": ["Cho, H."], "year": 2022, "labels": ["basura espacial", "mitigación", "láser"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
         }
     
@@ -170,3 +169,21 @@ class QueryManager:
         sorted_articles = sorted(all_articles, key=lambda article: len(article.get('labels', [])), reverse=True)
         
         return sorted_articles[:limit]
+    
+    def get_top_labels(self, limit: int) -> List[dict]:
+        """
+        Calcula la frecuencia de todas las etiquetas y devuelve las más comunes.
+        """
+        print(f"LOG: Obteniendo las {limit} etiquetas más comunes.")
+        
+        all_labels_flat_list = []
+        for node in self._mock_graph_db["nodes"]:
+            all_labels_flat_list.extend(node.get("labels", []))
+        for article in self._mock_articles_db.values():
+            all_labels_flat_list.extend(article.get("labels", []))
+            
+        label_counts = Counter(all_labels_flat_list)
+        
+        top_labels_tuples = label_counts.most_common(limit)
+        
+        return [{"label": label, "count": count} for label, count in top_labels_tuples]
