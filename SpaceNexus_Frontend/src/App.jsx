@@ -17,6 +17,7 @@ function App() {
         <Route path="/Home" element={<Home />} />
         <Route path='/KnowledgeGraph' element={<KnowledgeGraph />} />
         <Route path='/Test' element={<Test />} />
+        <Route path='/KnowledgeGraph/:user' element={<KnowledgeGraph />} />
       </Routes>
     </BrowserRouter>
   )

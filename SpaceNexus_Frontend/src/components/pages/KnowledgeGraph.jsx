@@ -1,12 +1,21 @@
 import React from 'react'
 import { Graph } from '../Graph'
 import { InfoNode } from '../InfoNode';
+import { useParams } from 'react-router-dom';
 
 import graphData from '../../assets/graph-data.json';
 import CustomizedInputBase from '../CustomizedInputBase';
 
 export function KnowledgeGraph() {
   const [selectedNode, setSelectedNode] = React.useState(null);
+  const { user } = useParams();
+
+  React.useEffect(() => {
+    if (user) {
+      const node = graphData.nodes.find(n => n.id === user);
+      if (node) setSelectedNode(node);
+    }
+  }, [user]);
 
   const handleRelationClick = (relationId) => {
     const relatedNode = graphData.nodes.find(node => node.id === relationId);
@@ -22,7 +31,7 @@ export function KnowledgeGraph() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", alignItems: "center" }}>
       <InfoNode selectedNode={selectedNode} onRelationClick={handleRelationClick} onTagClick={handleTagClick} />
-      <div style={{ flexShrink: 0, position: "absolute", zIndex:2, width: "80%", margin:"15px" }}>
+      <div style={{ flexShrink: 0, position: "absolute", zIndex: 2, width: "80%", margin: "15px" }}>
         <CustomizedInputBase />
       </div>
       <div style={{ flex: 1, minHeight: 0 }}>
