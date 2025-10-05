@@ -34,9 +34,9 @@ class GraphSample(BaseModel):
     
     
 class UserRole(str, Enum):
-    cientifico = "cientifico"
-    inversionista = "inversionista"
-    arquitecto_de_mision = "arquitecto_de_mision"
+    scientific = "scientific"
+    investor = "investor"
+    astronaut = "astronaut"
 
 class ArticleBase(BaseModel):
     id: str

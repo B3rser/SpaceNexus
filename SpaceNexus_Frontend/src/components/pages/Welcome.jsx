@@ -57,7 +57,7 @@ export default function Welcome() {
             id="scientific"
             hovered={hovered}
             setHovered={setHovered}
-            onClick={() => handleSelectRole("Científico")}
+            onClick={() => handleSelectRole("scientific")}
           />
           <AvatarModel
             url="/avatars/investor1.glb"
@@ -66,7 +66,7 @@ export default function Welcome() {
             id="investor"
             hovered={hovered}
             setHovered={setHovered}
-            onClick={() => handleSelectRole("Inversionista")}
+            onClick={() => handleSelectRole("investor")}
           />
           <AvatarModel
             url="/avatars/astronaut.glb"
@@ -75,7 +75,7 @@ export default function Welcome() {
             id="astronaut"
             hovered={hovered}
             setHovered={setHovered}
-            onClick={() => handleSelectRole("Astronauta")}
+            onClick={() => handleSelectRole("astronaut")}
           />
         </group>
 

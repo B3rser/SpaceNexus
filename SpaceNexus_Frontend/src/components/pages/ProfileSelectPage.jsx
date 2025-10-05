@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 
 export default function SelectRole() {
   const navigate = useNavigate();
   const { role } = useParams();
+  const {setRole} = useUser();
 
   useEffect(() => {
         document.title = "Selecting role..";
@@ -12,7 +14,9 @@ export default function SelectRole() {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/home");
-    },4000);
+    },2000);
+
+    setRole(role);
 
     return () => clearTimeout(timer);
   }, [navigate]);
