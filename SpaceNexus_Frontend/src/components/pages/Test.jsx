@@ -1,68 +1,79 @@
-// import * as React from 'react';
-// import CustomizedInputBase from '../CustomizedInputBase';
-// //import { FilterPanel } from '../FilterPanel';
-
-// export function Test() {
-//   const handleSearch = (term) => {
-//     // Acciones para enviar al back
-//     console.log('Buscando:', term);
-//   };
-
-//   //<CustomizedInputBase onSearch={handleSearch} FilterComponent={FilterPanel} />
-//   return (
-//     <div style={{ maxWidth: '90vw' }}>
-//       <CustomizedInputBase onSearch={handleSearch} />
-//     </div>
-//   );
-// }
-
-
-
 import * as React from 'react';
 import CustomizedInputBase from '../CustomizedInputBase';
 import { ArticlesGrid } from '../ArticleGrid';
-import articlesData from './data.json';
+import graphData from '../../assets/graph-data.json';
 
 export function Test() {
-  const [results, setResults] = React.useState([]);
+  // grafo completo (solo lectura / base)
+  const fullGraph = React.useRef(graphData);
+
+  // resultados filtrados que SÍ se renderizan
+  const [graphResponse, setGraphResponse] = React.useState({ nodes: [], links: [] });
+  const [loading, setLoading] = React.useState(false);
 
   const handleSearch = (term) => {
-    const q = term.toLowerCase();
+    const q = term.trim().toLowerCase();
+    setLoading(true);
 
-    // 📦 Placeholder: adapta al shape real cuando te responda el back
-    // Soporta que tu JSON actual pueda venir como array de strings (títulos) o objetos.
-    const normalized = (articlesData ?? []).map((a, idx) =>
-      typeof a === 'string'
-        ? { id: idx, title: a, tags: [], nodeId: idx }
-        : {
-            id: a.id ?? idx,
-            title: a.title ?? a.name ?? `Artículo ${idx + 1}`,
-            tags: Array.isArray(a.tags) ? a.tags : [],
-            nodeId: a.nodeId ?? a.id ?? idx,
-          }
+    if (!q) {
+      // sin término => no mostrar nada
+      setGraphResponse({ nodes: [], links: [] });
+      setLoading(false);
+      return;
+    }
+
+    const baseNodes = Array.isArray(fullGraph.current?.nodes) ? fullGraph.current.nodes : [];
+
+    // filtra por título (id) o por labels
+    const filteredNodes = baseNodes
+      .filter((n) => {
+        const title = (n.id || '').toLowerCase();
+        const labels = Array.isArray(n.labels) ? n.labels : [];
+        const labelsStr = labels.join(' ').toLowerCase();
+        return title.includes(q) || labelsStr.includes(q);
+      })
+      .sort((a, b) => (b.weight ?? 0) - (a.weight ?? 0)); // opcional: prioridad por weight
+
+    // subgrafo de links solo entre nodos filtrados
+    const idSet = new Set(filteredNodes.map((n) => n.id));
+    const filteredLinks = (fullGraph.current.links || []).filter(
+      (l) => idSet.has(l.source) && idSet.has(l.target)
     );
 
-    const filtered = normalized.filter((a) =>
-      a.title.toLowerCase().includes(q)
-    );
-
-    setResults(filtered);
+    setGraphResponse({ nodes: filteredNodes, links: filteredLinks });
+    setLoading(false);
   };
 
   const handleOpenGraph = (nodeId) => {
-    // 🔗 Aquí conectarás con tu grafo (router interno o URL externa).
-    // Ejemplo: window.open(`/grafo/${nodeId}`, '_blank');
+    // Conecta aquí tu vista/URL del grafo
     console.log('Ir al grafo, nodo:', nodeId);
   };
 
+  const hasResults = (graphResponse.nodes?.length ?? 0) > 0;
+
   return (
-    <div style={{ maxWidth: 1100, margin: '0 auto', padding: 16 }}>
+    <div style={{ maxWidth: '100vw', padding: 16 }}>
       <CustomizedInputBase onSearch={handleSearch} />
-      <ArticlesGrid
-        items={results}
-        onOpenGraph={handleOpenGraph}
-        // graphBaseUrl="https://mi-grafo.app/node" // si prefieres URL directo, quita onOpenGraph
-      />
+
+      {loading && (
+        <div style={{ width: '80vw', margin: '16px auto', opacity: 0.7 }}>
+          Buscando…
+        </div>
+      )}
+
+      {!loading && hasResults && (
+        <ArticlesGrid
+          graphResponse={graphResponse}   // 👈 solo mostramos lo filtrado
+          onOpenGraph={handleOpenGraph}
+          // graphBaseUrl="https://mi-grafo.app/node" // alternativa si prefieres URL directa
+        />
+      )}
+
+      {!loading && !hasResults && (
+        <div style={{ width: '80vw', margin: '16px auto', opacity: 0.6, textAlign: 'center' }}>
+          Ingresa un término para ver resultados.
+        </div>
+      )}
     </div>
   );
 }
