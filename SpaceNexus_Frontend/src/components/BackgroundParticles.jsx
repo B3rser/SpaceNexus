@@ -72,7 +72,7 @@ export function BackgroundParticles() {
                 },
                 move: {
                     enable: true,
-                    speed: 0.05,
+                    speed: 0.5,
                     direction: "none",
                     random: true,
                     straight: false,
@@ -87,7 +87,7 @@ export function BackgroundParticles() {
                     value: { min: 0, max: 1 },
                     animation: {
                         enable: true,
-                        speed: 0.05,
+                        speed: 0.5,
                         sync: false
                     }
                 },

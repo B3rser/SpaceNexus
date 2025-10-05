@@ -13,23 +13,30 @@
   -moz-osx-font-smoothing: grayscale;
 
   --color-text: #fcf7f8;
-  --color-background: #222e50;
-  --color-primary: #020024;
+  --color-background: #020024;
+  --color-primary: #222e50;
   --color-secondary: #4B2142;
   --color-accent: #c86fc9;
   --color-neutral: #6b9ac4;
+
+  --color-cosmic-purple: #7b2cbf;
+  --color-supernova-orange: #ff6b35;
+  --color-nebula-red: #ef233c;
+  --color-stellar-blue: #4361ee;
+  --color-electric-blue: #3a86ff;
+  --color-solar-gold: #ff9f1c;
 
   --color-white: #ffffff;
   --color-black: #000;
 
   --color-primary-10: var(--color-white);
-  --color-primary-20: #b9b9c3;
-  --color-primary-30: #78778a;
-  --color-primary-40: #3b3b54;
+  --color-primary-20: #c4c6d0;
+  --color-primary-30: #8b8fa4;
+  --color-primary-40: #565c79;
   --color-primary-50: var(--color-primary);
-  --color-primary-60: #02001d;
-  --color-primary-70: #020016;
-  --color-primary-80: #01000d;
+  --color-primary-60: #1c243d;
+  --color-primary-70: #161a2a;
+  --color-primary-80: #0e1019;
   --color-primary-90: var(--color-black);
 
   --color-secondary-10: var(--color-white);
@@ -61,6 +68,8 @@
   --color-neutral-70: #374b5d;
   --color-neutral-80: #1f2830;
   --color-neutral-90: var(--color-black);
+
+  --shadow-10: rgb(200, 111, 201, 0.3);
 
 }
 
