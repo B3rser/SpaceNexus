@@ -2,8 +2,10 @@
 
 from fastapi import APIRouter, HTTPException
 from app.schemas.models import SearchQuery
+from app.services.semantic_search import EmbbedingsManager
 
 router = APIRouter()
+
 
 @router.post("/search/semantic")
 def post_semantic_search(query: SearchQuery):
@@ -11,7 +13,15 @@ def post_semantic_search(query: SearchQuery):
     Realiza una búsqueda semántica en los artículos.
     Busca por significado en el título, contenido y etiquetas.
     """
-    raise HTTPException(
-        status_code=501, 
-        detail="Búsqueda semántica aún no implementada."
-    )
+
+    manager = EmbbedingsManager("./embeddings_dir")
+
+    if not manager.db:
+        raise HTTPException(
+            status_code=500, detail="Error al realizar la búsqueda semántica"
+        )
+
+    results = manager.similaritySearch(query.query, k=4)
+
+    return {"results": list(results)}
+
