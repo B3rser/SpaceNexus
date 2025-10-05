@@ -1,0 +1,84 @@
+{
+  "nodes": [
+    {
+      "id": "Paper A",
+      "weight": 8,
+      "links": [
+        "Paper B",
+        "Paper D"
+      ],
+      "labels": [
+        "fundamentos",
+        "teoría",
+        "base conceptual"
+      ]
+    },
+    {
+      "id": "Paper B",
+      "weight": 5,
+      "links": [
+        "Paper A",
+        "Paper C"
+      ],
+      "labels": [
+        "expansión",
+        "fundamentos",
+        "desarrollo"
+      ]
+    },
+    {
+      "id": "Paper C",
+      "weight": 3,
+      "links": [
+        "Paper B",
+        "Paper D"
+      ],
+      "labels": [
+        "reciente",
+        "citas",
+        "aplicaciones"
+      ]
+    },
+    {
+      "id": "Paper D",
+      "weight": 4,
+      "links": [
+        "Paper A",
+        "Paper C"
+      ],
+      "labels": [
+        "técnica",
+        "innovación",
+        "metodología"
+      ]
+    },
+    {
+      "id": "Paper E",
+      "weight": 2,
+      "links": [],
+      "labels": [
+        "nicho",
+        "especializado",
+        "baja influencia"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "Paper A",
+      "target": "Paper B"
+    },
+    {
+      "source": "Paper A",
+      "target": "Paper D"
+    },
+    {
+      "source": "Paper B",
+      "target": "Paper C"
+    },
+    {
+      "source": "Paper D",
+      "target": "Paper C"
+    }
+  ]
+}

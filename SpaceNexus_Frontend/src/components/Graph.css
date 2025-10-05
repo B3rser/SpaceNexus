@@ -1,0 +1,30 @@
+.node circle {
+    fill: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+.node text {
+    font-size: 10px;
+    pointer-events: none;
+    fill: var(--color-text);
+}
+
+.link {
+    stroke: var(--color-neutral);
+    stroke-opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.node.highlighted circle {
+    fill: var(--color-neutral);
+}
+
+.link.highlight ed {
+    stroke: var(--color-neutral);
+    stroke-opacity: 1;
+}
+
+.node.faded,
+.link.faded {
+    opacity: 0.8;
+}
