@@ -167,6 +167,7 @@ export default function ArticleView() {
     'results_and_conclusions': 'Results and Conclusions', 'impact_and_application': 'Impact and Application',
     'risks_and_mitigation': 'Risks and Mitigation'
   };
+  console.log('articulo', article);
 
   return (
     <div style={{ minHeight: '100vh' }}>
@@ -409,6 +410,7 @@ export default function ArticleView() {
               onClose={() => setIsChatOpen(false)}
               role={selectedRole}
               theme={theme}
+              articleContent={article} 
             />
           </RolePaper>
         </Box>
