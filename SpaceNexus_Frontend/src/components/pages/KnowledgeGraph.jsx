@@ -25,14 +25,15 @@ export function KnowledgeGraph() {
         setLoading(true);
         let dataFromApi;
         if (name) {
-          
+
           console.log(`Buscando subgrafo para el nodo: ${name}`);
           dataFromApi = await getNodeSubgraph(name);
+          console.log(dataFromApi);
         } else {
           console.log("Buscando el grafo completo...");
           dataFromApi = await getFullGraph();
         }
-
+        console.log("Datos del grafo obtenidos:", dataFromApi);
         setGraphData(dataFromApi);
         setError(null);
       } catch (err) {
@@ -45,31 +46,6 @@ export function KnowledgeGraph() {
 
     fetchGraphData();
   }, [name]);
-
-  /*useEffect(() => {
-    const fetchGraphData = async () => {
-      try {
-        const data = await getFullGraph();
-        setGraphData(data);
-        console.log(data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-      finally { setLoading(false); }
-    };
-    fetchGraphData();
-  }, []);*/
-
-
-  /*useEffect(() => {
-    // Nos aseguramos de que los nodos ya se hayan cargado antes de buscar
-    if (user && graphData.nodes.length > 0) {
-      const node = graphData.nodes.find(n => n.id === user);
-      if (node) setSelectedNode(node);
-    }
-  }, [user, graphData]);*/
 
   useEffect(() => {
     if (name && graphData.nodes.length > 0) {
@@ -99,7 +75,8 @@ export function KnowledgeGraph() {
         <CustomizedInputBase />
       </div>
       <div style={{ flex: 1, minHeight: 0 }}>
-        <Graph data={graphData} selectedNode={selectedNode} setSelectedNode={setSelectedNode} />
+        <Graph data={graphData} selectedNode={selectedNode} setSelectedNode={setSelectedNode} nodeLabel="title"
+        />
       </div>
     </div>
   )

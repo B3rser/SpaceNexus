@@ -100,6 +100,7 @@ export default function ArticleView() {
         setLoading(true);
         const data = await getArticleById(articleId, selectedRole);
         setArticle(data);
+        console.log(data)
         setError(null);
       } catch (err) {
         setError('No se pudo encontrar o cargar el artículo.');
@@ -199,7 +200,7 @@ export default function ArticleView() {
           {/* Paper Completo */}
           <Button
             variant="contained"
-            href="https://www.google.com"
+            href= {article.url}
             target="_blank"
             sx={{
               width: 60,
