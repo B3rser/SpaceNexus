@@ -917,35 +917,86 @@ class QueryManager:
 
     
     def filter_nodes_and_get_neighbors(self, required_labels: List[str]) -> dict:
+        """
+        Filtra nodos por etiquetas y expande la búsqueda para incluir vecinos
+        hasta 3 NIVELES de profundidad.
+        """
         all_nodes_map = {node['id']: node for node in self._mock_graph_db["nodes"]}
         required_set = set(required_labels)
+
+        level_0_nodes = [node for node in self._mock_graph_db["nodes"] if required_set.issubset(set(node["labels"]))]
+        if not level_0_nodes:
+            return {"nodes": [], "links": []}
+
+        final_node_ids = set(node['id'] for node in level_0_nodes)
         
-        seed_nodes = [node for node in self._mock_graph_db["nodes"] if required_set.issubset(set(node["labels"]))]
         
-        final_node_ids = set(node['id'] for node in seed_nodes)
-        for node in seed_nodes:
-            final_node_ids.update(node['links'])
+        level_1_ids = set()
+        for node in level_0_nodes:
+            level_1_ids.update(node.get('links', []))
+        
+        level_2_ids = set()
+        for node_id in level_1_ids:
+            node = all_nodes_map.get(node_id)
+            if node:
+                level_2_ids.update(node.get('links', []))
+
+        level_3_ids = set()
+        for node_id in level_2_ids:
+            node = all_nodes_map.get(node_id)
+            if node:
+                level_3_ids.update(node.get('links', []))
+        
+        final_node_ids.update(level_1_ids)
+        final_node_ids.update(level_2_ids)
+        final_node_ids.update(level_3_ids)
+
 
         final_nodes = [all_nodes_map[node_id] for node_id in final_node_ids if node_id in all_nodes_map]
-        final_links = [link for link in self._mock_graph_db["links"] if link['source'] in final_node_ids and link['target'] in final_node_ids]
+        final_links = [
+            link for link in self._mock_graph_db["links"] 
+            if link['source'] in final_node_ids and link['target'] in final_node_ids
+        ]
 
         return {"nodes": self._add_dynamic_weights(final_nodes), "links": final_links}
-
+    
     def get_subgraph_by_node_id(self, node_id: str) -> Optional[dict]:
         """
-        NUEVO: Encuentra un nodo por su ID y devuelve un subgrafo con sus vecinos.
+        Encuentra un nodo por su ID y devuelve un subgrafo con sus vecinos
+        hasta 3 NIVELES de profundidad.
         """
         all_nodes_map = {node['id']: node for node in self._mock_graph_db["nodes"]}
         
         seed_node = all_nodes_map.get(node_id)
         if not seed_node:
-            return None # El nodo no fue encontrado
-
+            return None 
         final_node_ids = {seed_node['id']}
-        final_node_ids.update(seed_node['links'])
+
+
+        level_1_ids = set(seed_node.get('links', []))
+        
+        level_2_ids = set()
+        for current_id in level_1_ids:
+            node = all_nodes_map.get(current_id)
+            if node:
+                level_2_ids.update(node.get('links', []))
+
+        level_3_ids = set()
+        for current_id in level_2_ids:
+            node = all_nodes_map.get(current_id)
+            if node:
+                level_3_ids.update(node.get('links', []))
+
+        final_node_ids.update(level_1_ids)
+        final_node_ids.update(level_2_ids)
+        final_node_ids.update(level_3_ids)
+
 
         final_nodes = [all_nodes_map[node_id] for node_id in final_node_ids if node_id in all_nodes_map]
-        final_links = [link for link in self._mock_graph_db["links"] if link['source'] in final_node_ids and link['target'] in final_node_ids]
+        final_links = [
+            link for link in self._mock_graph_db["links"] 
+            if link['source'] in final_node_ids and link['target'] in final_node_ids
+        ]
 
         return {"nodes": self._add_dynamic_weights(final_nodes), "links": final_links}
     

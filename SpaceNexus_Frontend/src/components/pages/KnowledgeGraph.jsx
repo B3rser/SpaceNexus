@@ -28,6 +28,7 @@ export function KnowledgeGraph() {
           
           console.log(`Buscando subgrafo para el nodo: ${name}`);
           dataFromApi = await getNodeSubgraph(name);
+          console.log(dataFromApi);
         } else {
           console.log("Buscando el grafo completo...");
           dataFromApi = await getFullGraph();
