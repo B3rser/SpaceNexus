@@ -2,6 +2,8 @@
 from fastapi import FastAPI
 from app.api.endpoints import graph  
 from app.api.endpoints import labels 
+from app.api.endpoints import graph, labels, articles # <-- 1. IMPORTA ARTICLES
+
  
 # Creamos la instancia principal de la aplicación
 app = FastAPI(
@@ -12,6 +14,7 @@ app = FastAPI(
 
 app.include_router(graph.router, tags=["Graph"])
 app.include_router(labels.router, tags=["Labels"])
+app.include_router(articles.router, tags=["Articles"]) 
 
 # Una ruta de bienvenida para verificar que la API está funcionando
 @app.get("/")

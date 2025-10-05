@@ -1,5 +1,6 @@
 # app/schemas/models.py
 
+from enum import Enum
 from pydantic import BaseModel
 from typing import List
 
@@ -15,14 +16,64 @@ class GraphStats(BaseModel):
     
 class GraphNode(BaseModel):
     id: str
-    labels: List[str] # Ahora es una lista de etiquetas
+    labels: List[str] 
+    weight: int
+    links : List[str]
     #properties: dict
 
 class GraphLink(BaseModel):
     source: str
     target: str
-    type: str
 
 class GraphSample(BaseModel):
     nodes: List[GraphNode]
     links: List[GraphLink]
+    
+    
+class UserRole(str, Enum):
+    cientifico = "cientifico"
+    inversionista = "inversionista"
+    arquitecto_de_mision = "arquitecto_de_mision"
+
+class ArticleBase(BaseModel):
+    id: str
+    title: str
+    labels: List[str]
+    abstract: str
+    key_points: str
+    impact_and_application: str
+    risks_and_mitigation: str
+    results_and_conclusions: str
+
+
+class ArticleScientistView(BaseModel):
+    id: str
+    title: str
+    labels: List[str]
+    abstract: str
+    key_points: str
+    results_and_conclusions: str
+
+class ArticleInvestorView(BaseModel):
+    id: str
+    title: str
+    labels: List[str]
+    abstract: str
+    impact_and_application: str
+    results_and_conclusions: str
+
+class ArticleArchitectView(BaseModel):
+    id: str
+    title: str
+    labels: List[str]
+    abstract: str
+    risks_and_mitigation: str
+    results_and_conclusions: str
+    
+class ArticleSummaryView(BaseModel):
+    """
+    Un modelo de resumen para mostrar artículos en una lista.
+    """
+    id: str
+    title: str
+    labels: List[str]
