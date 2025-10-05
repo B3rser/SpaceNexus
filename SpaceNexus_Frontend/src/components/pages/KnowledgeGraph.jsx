@@ -28,12 +28,10 @@ export function KnowledgeGraph() {
 
           console.log(`Buscando subgrafo para el nodo: ${name}`);
           dataFromApi = await getNodeSubgraph(name);
-          console.log(dataFromApi);
         } else {
           console.log("Buscando el grafo completo...");
           dataFromApi = await getFullGraph();
         }
-        console.log("Datos del grafo obtenidos:", dataFromApi);
         setGraphData(dataFromApi);
         setError(null);
       } catch (err) {
@@ -75,7 +73,11 @@ export function KnowledgeGraph() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", alignItems: "center" }}>
-      <InfoNode selectedNode={selectedNode} onRelationClick={handleRelationClick} />
+      <InfoNode
+        selectedNode={selectedNode}
+        onRelationClick={handleRelationClick}
+        allNodes={graphData.nodes}
+      />
       <div style={{ flexShrink: 0, position: "absolute", zIndex: 2, width: "80%", margin: "15px" }}>
         <CustomizedInputBase onSearch={handleSearch} />
       </div>
