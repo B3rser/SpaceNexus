@@ -59,7 +59,7 @@ class EmbbedingsManager:
             embedding_function=embeddings,
         )
 
-    def similaritySearch(self, query: str, k: int = 4) -> set[str]:
+    def similaritySearch(self, query: str, k: int = 4) -> set[Document]:
         results = self.db.similarity_search(query, k=k)
 
         return results
