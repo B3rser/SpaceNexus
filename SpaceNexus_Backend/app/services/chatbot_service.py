@@ -14,7 +14,7 @@ class ChatBot:
 
         self.client = AzureOpenAI(
             api_version="2024-12-01-preview",
-            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+            azure_endpoint=os.getenv("AZURE_OPENAI_CHAT_ENDPOINT"),
             api_key=os.getenv("AZURE_OPENAI_KEY")
         )
 
