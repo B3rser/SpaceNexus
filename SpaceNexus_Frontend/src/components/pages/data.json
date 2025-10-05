@@ -1,0 +1,50 @@
+[
+  {
+    "id": 101,
+    "title": "Introducción a Grafos",
+    "tags": ["grafos", "teoría", "nodos"],
+    "nodeId": "graph-101"
+  },
+  {
+    "id": 102,
+    "title": "Búsqueda semántica en React",
+    "tags": ["react", "MUI", "semantic-search", "UX"],
+    "nodeId": "graph-102"
+  },
+  {
+    "id": 103,
+    "title": "Embeddings con Python",
+    "tags": ["python", "embeddings", "NLP", "vector-db", "faiss", "pytorch", "extra-tag"],
+    "nodeId": "graph-103"
+  },
+  {
+    "id": 104,
+    "title": "Integración con backend de grafos",
+    "tags": ["api", "grafos", "fastapi", "networkx"],
+    "nodeId": "graph-104"
+  },
+  {
+    "id": 105,
+    "title": "Diseño de APIs REST para artículos",
+    "tags": ["REST", "HTTP", "JSON"],
+    "nodeId": "graph-105"
+  },
+  {
+    "id": 106,
+    "title": "Tokenización y seguridad",
+    "tags": ["auth", "jwt", "middleware", "seguridad"],
+    "nodeId": "graph-106"
+  },
+  {
+    "id": 107,
+    "title": "Vector DBs en producción",
+    "tags": ["milvus", "qdrant", "faiss", "ops"],
+    "nodeId": "graph-107"
+  },
+  {
+    "id": 108,
+    "title": "Buenas prácticas de UX para buscadores",
+    "tags": ["ux", "accesibilidad", "teclado", "aria"],
+    "nodeId": "graph-108"
+  }
+]
