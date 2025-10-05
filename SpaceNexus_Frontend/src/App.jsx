@@ -10,23 +10,26 @@ import SelectRole from './components/pages/ProfileSelectPage';
 import ArticleView from './components/pages/AbstractPage';
 
 import './App.css'
+import { UserProvider } from './context/UserContext';
 
 function App() {
   return (
     <BrowserRouter>
       <BackgroundParticles />
-      <Routes>
-        {/*<ArticleView rol="Cientifico" nombre="Artículo A" />*/}
-        {/*<ArticleView rol="Inversor" nombre="Artículo B" />*/}
-        <Route path="/" element={<Welcome key="welcome" />} />
-        <Route path="/welcome" element={<Welcome key="welcome" />} />
-        <Route path="/select-role/:role" element={<SelectRole />} />
-        <Route path="/home" element={<Home />} />
-        <Route path='/knowledgeGalaxy' element={<KnowledgeGraph />} />
-        <Route path='/test' element={<Test />} />
-        <Route path='/knowledgeGalaxy/:user' element={<KnowledgeGraph />} />
-        <Route path='/article' element={<ArticleView rol="Astronauta" nombre="Artículo C" />} />
-      </Routes>
+      <UserProvider>
+        <Routes>
+          {/*<ArticleView rol="Cientifico" nombre="Artículo A" />*/}
+          {/*<ArticleView rol="Inversor" nombre="Artículo B" />*/}
+          <Route path="/" element={<Welcome key="welcome" />} />
+          <Route path="/welcome" element={<Welcome key="welcome" />} />
+          <Route path="/select-role/:role" element={<SelectRole />} />
+          <Route path="/home" element={<Home />} />
+          <Route path='/knowledgeGalaxy' element={<KnowledgeGraph />} />
+          <Route path='/test' element={<Test />} />
+          <Route path='/knowledgeGalaxy/:user' element={<KnowledgeGraph />} />
+          <Route path='/article' element={<ArticleView rol="Astronauta" nombre="Artículo C" />} />
+        </Routes>
+      </UserProvider>
     </BrowserRouter>
   );
 }
