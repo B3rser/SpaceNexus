@@ -1,5 +1,6 @@
 from collections import Counter 
 from typing import Optional, List
+import json
 
 
 class QueryManager:
@@ -8,843 +9,11 @@ class QueryManager:
         Inicializamos la clase con una única fuente de datos para el grafo,
         así evitamos inconsistencias. El peso se calculará dinámicamente.
         """
-        self._mock_graph_db = {
-            "nodes": [
-                {
-                    "id": "12870_2017_Article_1024",
-                    "labels": [
-                        "trans-Golgi network",
-                        "Root movement",
-                        "Cell file rotation",
-                        "Tethering factor",
-                        "Microtubules"
-                    ],
-                    "authors": [
-                        "Rahul Roy",
-                        "Diane C. Bassham"
-                    ],
-                    "year": 2017,
-                    "links": [
-                        "514",
-                        "1471-2229-11-25"
-                    ]
-                },
-                {
-                    "id": "41598_2024_Article_51756",
-                    "labels": [
-                        "DNA methylation",
-                        "galactic cosmic radiation",
-                        "high-LET",
-                        "56Fe",
-                        "28Si",
-                        "X-ray",
-                        "Hi-C",
-                        "chromatin architecture",
-                        "epigenetics",
-                        "radiation biology",
-                        "epigenome",
-                        "epigenetic clock",
-                        "gene expression validation",
-                        "multiomics",
-                        "HBEC"
-                    ],
-                    "authors": [
-                        "Adrian Perdyan",
-                        "Marcin Jąkalski",
-                        "Monika Horbacz",
-                        "Afshin Beheshti",
-                        "Jakub Mieczkowski"
-                    ],
-                    "year": 2024,
-                    "links": [
-                        "41526_2016_Article_2",
-                        "41598_2024_Article_57948",
-                        "2975810"
-                    ]
-                },
-                {
-                    "id": "41526_2016_Article_2",
-                    "labels": [
-                        "NASA translational research",
-                        "Life Sciences Translational Path",
-                        "basic-to-applied translation",
-                        "applied-to-operational translation",
-                        "Space Biology",
-                        "Human Research Program (HRP)",
-                        "NASA Johnson Space Center",
-                        "NASA Ames Research Center",
-                        "Center for the Advancement of Science in Space",
-                        "Decadal Survey",
-                        "NIH translational science model",
-                        "bi-directional knowledge transfer",
-                        "Translational Research Institute",
-                        "ISS National Laboratory"
-                    ],
-                    "authors": [
-                        "Joshua S. Alwood",
-                        "April E. Ronca",
-                        "Richard C. Mains",
-                        "Mark J. Shelhamer",
-                        "Jeffrey D. Smith",
-                        "Thomas J. Goodwin"
-                    ],
-                    "year": 2017,
-                    "links": [
-                        "41598_2024_Article_51756"
-                    ]
-                },
-                {
-                    "id": "1471-2229-11-25",
-                    "labels": [
-                        "Rab GTPases",
-                        "AtRabD2b",
-                        "AtRabD2c",
-                        "pollen development",
-                        "pollen tube growth",
-                        "Golgi localization",
-                        "vesicle trafficking",
-                        "Arabidopsis thaliana"
-                    ],
-                    "authors": [
-                        "Jianling Peng",
-                        "Hilal Ilarslan",
-                        "Eve Syrkin Wurtele",
-                        "Diane C Bassham"
-                    ],
-                    "year": 2011,
-                    "links": [
-                        "12870_2017_Article_1024",
-                        "514",
-                        "41431_2023_Article_1462"
-                    ]
-                },
-                {
-                    "id": "2975810",
-                    "labels": [
-                        "F1",
-                        "F1A",
-                        "F1B",
-                        "F2",
-                        "F3",
-                        "F4",
-                        "A1.1",
-                        "A1.2",
-                        "A2",
-                        "I1",
-                        "I2",
-                        "I3",
-                        "R1",
-                        "R1.1",
-                        "R1.2",
-                        "R1.3",
-                        "Overall FAIRness Score"
-                    ],
-                    "authors": [
-                        "Daniel C. Berrios",
-                        "Afshin Beheshti",
-                        "Sylvain V. Costes"
-                    ],
-                    "year": -1,
-                    "links": [
-                        "41598_2024_Article_51756",
-                        "41598_2024_Article_57948"
-                    ]
-                },
-                {
-                    "id": "40168_2022_Article_1332",
-                    "labels": [
-                        "ISS",
-                        "Metagenomics",
-                        "Antibiotic resistance",
-                        "Machine learning",
-                        "Space Omics",
-                        "Microbiome",
-                        "Built‑environment",
-                        "Microbial Tracking‑1",
-                        "NGS"
-                    ],
-                    "authors": [
-                        "Pedro Madrigal",
-                        "Nitin K. Singh",
-                        "Jason M. Wood",
-                        "Elena Gaudioso",
-                        "Félix Hernández‑del‑Olmo",
-                        "Christopher E. Mason",
-                        "Kasthuri Venkateswaran",
-                        "Afshin Beheshti"
-                    ],
-                    "year": 2022,
-                    "links": [
-                        "41598_2024_Article_57948"
-                    ]
-                },
-                {
-                    "id": "41598_2024_Article_57948",
-                    "labels": [
-                        "BP",
-                        "MF",
-                        "MSigDB",
-                        "NASA",
-                        "NES",
-                        "OSD",
-                        "OSDR",
-                        "padj",
-                        "PBMCs",
-                        "R+"
-                    ],
-                    "authors": [
-                        "Andrea Camera",
-                        "Marshall Tabetah",
-                        "Veronica Castañeda",
-                        "JangKeun Kim",
-                        "Aman Singh Galsinh",
-                        "Alissen Haro-Vinueza",
-                        "Ivonne Salinas",
-                        "Allen Seylani",
-                        "Shehbeel Arif",
-                        "Saswati Das",
-                        "Marcelo A. Mori",
-                        "Anthony Carano",
-                        "Lorraine Christine de Oliveira",
-                        "Masafumi Muratani",
-                        "Richard Barker",
-                        "Victoria Zaksas",
-                        "Chirag Goel",
-                        "Eleni Dimokidis",
-                        "Deanne M. Taylor",
-                        "Jisu Jeong",
-                        "Eliah Overbey",
-                        "Cem Meydan",
-                        "D. Marshall Porterfield",
-                        "Juan Esteban Díaz",
-                        "Andrés Caicedo",
-                        "Jonathan C. Schisler",
-                        "Evagelia C. Laiakis",
-                        "Christopher E. Mason",
-                        "Man S. Kim",
-                        "Fathi Karouia",
-                        "Nathaniel J. Szewczyk",
-                        "Afshin Beheshti"
-                    ],
-                    "year": 2024,
-                    "links": [
-                        "41598_2024_Article_51756",
-                        "2975810",
-                        "40168_2022_Article_1332",
-                        "2044-5040-4-13"
-                    ]
-                },
-                {
-                    "id": "2044-5040-4-13",
-                    "labels": [
-                        "Sarcoglycan",
-                        "Sarcoglycanopathies",
-                        "Limb girdle muscular dystrophy",
-                        "Mechanotransduction",
-                        "Mechano-sensing",
-                        "Load-sensing",
-                        "p70S6K",
-                        "S6K",
-                        "p70S6 kinase",
-                        "ERK1/2"
-                    ],
-                    "authors": [
-                        "Catherine Moorwood",
-                        "Anastassios Philippou",
-                        "Janelle Spinazzola",
-                        "Benjamin Keyser",
-                        "Edward J Macarak",
-                        "Elisabeth R Barton"
-                    ],
-                    "year": 2014,
-                    "links": [
-                        "41598_2024_Article_57948"
-                    ]
-                },
-                {
-                    "id": "514",
-                    "labels": [
-                        "SYP41",
-                        "SYP61",
-                        "VTI12",
-                        "AtVPS45",
-                        "TNO1",
-                        "VSR1",
-                        "PVC",
-                        "TGN",
-                        "SNARE",
-                        "Vacuolar trafficking",
-                        "Salt tolerance",
-                        "Osmotic stress",
-                        "Arabidopsis thaliana",
-                        "Co-immunoprecipitation",
-                        "Brefeldin A (BFA)",
-                        "Membrane fusion"
-                    ],
-                    "authors": [
-                        "Sang-Jin Kim",
-                        "Diane C. Bassham"
-                    ],
-                    "year": 2011,
-                    "links": [
-                        "12870_2017_Article_1024",
-                        "1471-2229-11-25"
-                    ]
-                },
-                {
-                    "id": "41431_2023_Article_1462",
-                    "labels": [
-                        "extracellular effects of SARS-CoV-2",
-                        "systemic metabolic remodeling",
-                        "lipid metabolism and mediators",
-                        "TCA cycle and mitochondrial dysfunction",
-                        "glycolysis and pentose phosphate pathway shifts",
-                        "humoral factors and immune signaling",
-                        "renin–angiotensin system (RAS)",
-                        "ACE2 and TMPRSS2 mediated entry",
-                        "bradykinin signaling",
-                        "endothelial damage and vascular effects",
-                        "biomarkers of disease severity",
-                        "metabolomics and lipidomics in COVID-19",
-                        "future research directions in viral pathogenesis"
-                    ],
-                    "authors": [
-                        "S. Anand Narayanan",
-                        "David A. JamisonJr",
-                        "Joseph W. Guarnieri",
-                        "Victoria Zaksas",
-                        "Michael Topper",
-                        "Andrew P. Koutnik",
-                        "Jiwoon Park",
-                        "Kevin B. Clark",
-                        "Francisco J. Enguita",
-                        "Ana Lúcia Leitão",
-                        "Saswati Das",
-                        "Pedro M. Moraes-Vieira",
-                        "Diego Galeano",
-                        "Christopher E. Mason",
-                        "Nídia S. Trovão",
-                        "Robert E. Schwartz",
-                        "Jonathan C. Schisler",
-                        "Jordana G. A. Coelho-dos-Reis",
-                        "Eve Syrkin Wurtele",
-                        "Afshin Beheshti"
-                    ],
-                    "year": 2024,
-                    "links": [
-                        "1471-2229-11-25"
-                    ]
-                }
-            ],
-            "links": [
-                {
-                    "source": "12870_2017_Article_1024",
-                    "target": "514",
-                    "relationship": "shares author and topic (TNO1, vacuolar trafficking)"
-                },
-                {
-                    "source": "12870_2017_Article_1024",
-                    "target": "1471-2229-11-25",
-                    "relationship": "shares author and topic (Arabidopsis, cellular trafficking)"
-                },
-                {
-                    "source": "41598_2024_Article_51756",
-                    "target": "41526_2016_Article_2",
-                    "relationship": "shares author and thematic link (NASA, space biology)"
-                },
-                {
-                    "source": "41598_2024_Article_51756",
-                    "target": "41598_2024_Article_57948",
-                    "relationship": "shares author, topic (GCR, epigenetics) and data source (GeneLab, JAXA)"
-                },
-                {
-                    "source": "41598_2024_Article_51756",
-                    "target": "2975810",
-                    "relationship": "shares author and topic (GeneLab, data systems)"
-                },
-                {
-                    "source": "1471-2229-11-25",
-                    "target": "514",
-                    "relationship": "shares author and topic (Arabidopsis, cellular trafficking)"
-                },
-                {
-                    "source": "1471-2229-11-25",
-                    "target": "41431_2023_Article_1462",
-                    "relationship": "shares author (Eve Syrkin Wurtele)"
-                },
-                {
-                    "source": "2975810",
-                    "target": "41598_2024_Article_57948",
-                    "relationship": "shares author and topic (NASA, GeneLab, data systems)"
-                },
-                {
-                    "source": "40168_2022_Article_1332",
-                    "target": "41598_2024_Article_57948",
-                    "relationship": "shares author and data source (ISS, GeneLab)"
-                },
-                {
-                    "source": "41598_2024_Article_57948",
-                    "target": "2044-5040-4-13",
-                    "relationship": "topic connection (muscle, spaceflight, sarcopenia)"
-                }
-            ]
-        }
-        self._mock_articles_db = {
-            "12870_2017_Article_1024": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3177255/",
-                "id": "12870_2017_Article_1024",
-                "title": "TNO1, a TGN-localized SNARE-interacting protein, modulates root skewing in Arabidopsis thaliana",
-                "authors": [
-                    "Rahul Roy",
-                    "Diane C. Bassham"
-                ],
-                "year": 2017,
-                "labels": [
-                    "trans-Golgi network",
-                    "Root movement",
-                    "Cell file rotation",
-                    "Tethering factor",
-                    "Microtubules"
-                ],
-                "abstract": "Background: The movement of plant roots within the soil is key to their ability to interact with the environment and maximize anchorage and nutrient acquisition. Directional growth of roots occurs by a combination of sensing external cues, hormonal signaling and cytoskeletal changes in the root cells. Roots growing on slanted, impenetrable growth medium display a characteristic waving and skewing, and mutants with deviations in these phenotypes assist in identifying genes required for root movement. Our study identifies a role for a trans-Golgi network-localized protein in root skewing.\n\nResults: We found that Arabidopsis thaliana TNO1 (TGN-localized SYP41-interacting protein), a putative tethering factor localized at the trans-Golgi network, affects root skewing. tno1 knockout mutants display enhanced root skewing and epidermal cell file rotation. Skewing of tno1 roots increases upon microtubule stabilization, but is insensitive to microtubule destabilization. Microtubule destabilization leads to severe defects in cell morphology in tno1 seedlings. Microtubule array orientation is unaffected in the mutant roots, suggesting that the increase in cell file rotation is independent of the orientation of microtubule arrays.\n\nConclusions: We conclude that TNO1 modulates root skewing in a mechanism that is dependent on microtubules but is not linked to disruption of the orientation of microtubule arrays. In addition, TNO1 is required for maintenance of cell morphology in mature regions of roots and the base of hypocotyls. The TGN-localized SNARE machinery might therefore be important for appropriate epidermal cell file rotation and cell expansion during root growth.",
-                "key_points": [
-                    "tno1 knockout mutants display enhanced root skewing and epidermal cell file rotation",
-                    "Skewing of tno1 roots increases upon microtubule stabilization",
-                    "Skewing is insensitive to microtubule destabilization",
-                    "Microtubule destabilization leads to severe defects in cell morphology in tno1 seedlings",
-                    "Microtubule array orientation is unaffected in the mutant roots",
-                    "The increase in CFR is independent of MT array orientation",
-                    "TNO1 modulates root skewing through a microtubule-dependent mechanism not tied to MT orientation",
-                    "TGN-localized SNARE machinery may be important for epidermal CFR and cell expansion"
-                ],
-                "impact_and_application": "Highlights a role for trans-Golgi network trafficking components, specifically TNO1, in controlling directional root growth and cell morphology, which could inform strategies to manipulate root architecture for improved anchorage and nutrient foraging in crops.",
-                "risks_and_mitigation": "",
-                "results_and_conclusions": "Mutants lacking TNO1 show exaggerated root skewing and CFR; skewing increases with MT stabilization but is not further altered by MT destabilization; MT orientation remains unchanged, suggesting CFR changes are MT-dependent but orientation-independent; TNO1 is required for maintenance of cell morphology in mature root regions and hypocotyl bases; the TGN SNARE machinery is implicated in epidermal CFR and cell expansion during root growth."
-            },
-            "2044-5040-4-13": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4095884/",
-                "id": "2044-5040-4-13",
-                "title": "Absence of γ-sarcoglycan alters the response of p70S6 kinase to mechanical perturbation in murine skeletal muscle",
-                "authors": [
-                    "Catherine Moorwood",
-                    "Anastassios Philippou",
-                    "Janelle Spinazzola",
-                    "Benjamin Keyser",
-                    "Edward J Macarak",
-                    "Elisabeth R Barton"
-                ],
-                "year": 2014,
-                "labels": [
-                    "Sarcoglycan",
-                    "Sarcoglycanopathies",
-                    "Limb girdle muscular dystrophy",
-                    "Mechanotransduction",
-                    "Mechano-sensing",
-                    "Load-sensing",
-                    "p70S6 kinase",
-                    "S6K",
-                    "p70S6 kinase",
-                    "ERK1/2"
-                ],
-                "abstract": "Abstract\nBackground: The dystrophin glycoprotein complex (DGC) is located at the sarcolemma of muscle fibers, providing structural integrity. Mutations in and loss of DGC proteins cause a spectrum of muscular dystrophies. When only the sarcoglycan subcomplex is absent, muscles display severe myofiber degeneration, but little susceptibility to contractile damage, suggesting that disease occurs not by structural deficits but through aberrant signaling, namely, loss of normal mechanotransduction signaling through the sarcoglycan complex. We extended our previous studies on mechanosensitive,γ-sarcoglycan-dependent ERK1/2 phosphorylation, to determine whether additional pathways are altered with the loss ofγ-sarcoglycan.\nMethods: We examined mechanotransduction in the presence and absence ofγ-sarcoglycan, using C2C12 myotubes, and primary cultures and isolated muscles from C57Bl/6 (C57) andγ-sarcoglycan-null (γ-SG -/-)m i c e .A l l were subjected to cyclic passive stretch. Signaling protein phosphorylation was determined by immunoblotting of lysates from stretched and non-stretched samples. Calcium dependence was assessed by maintaining muscles in calcium-free or tetracaine-supplemented Ringer’s solution. Dependence on mTOR was determined by stretching isolated muscles in the presence or absence of rapamycin.\nResults: C2C12 myotube stretch caused a robust increase in P-p70S6K, but decreased P-FAK and P-ERK2. Neither Akt nor ERK1 were responsive to passive stretch. Similar but non-significant trends were observed in C57 primary cultures in response to stretch, andγ-SG-/- cultures displayed no p70S6K response. In contrast, in isolated muscles, p70S6K was mechanically responsive. Basal p70S6K activation was elevated in muscles ofγ-SG-/- mice, in a calcium-independent manner. p70S6K activation increased with stretch in both C57 andγ-SG-/- isolated muscles, and was sustained inγ-SG-/- muscles, unlike the transient response in C57 muscles. Rapamycin treatment blocked all of p70S6K activation in stretched C57 muscles, and reduced downstream S6RP phosphorylation. However, even though rapamycin treatment decreased p70S6K activation in stretchedγ-SG-/- muscles, S6RP phosphorylation remained elevated.\nConclusions: p70S6K is an important component ofγ-sarcoglycan-dependent mechanotransduction in skeletal muscle. Our results suggest that loss ofγ-sarcoglycan uncouples the response of p70S6K to stretch and implies that γ-sarcoglycan is important for inactivation of this pathway. Overall, we assert that altered load-sensing mechanisms exist in muscular dystrophies where the sarcoglycans are absent.",
-                "key_points": [
-                    "10% isotropic stretch, 40 cycles per minute, for 30 minutes applied to C2C12 myotubes",
-                    "p70S6K phosphorylation increases with stretch in C2C12 myotubes; ERK2 dephosphorylates; Akt and ERK1 not responsive to stretch",
-                    "γ-SG-/- primary cultures show no p70S6K response to stretch",
-                    "In isolated muscles, p70S6K is mechanically responsive; basal activation elevated in γ-SG-/- mice (calcium-independent)",
-                    "p70S6K activation increases with stretch in both C57 and γ-SG-/- isolated muscles; sustained in γ-SG-/- versus transient in C57",
-                    "Rapamycin blocks p70S6K activation in stretched C57 muscles and reduces S6RP phosphorylation",
-                    "In stretched γ-SG-/- muscles, rapamycin reduces p70S6K but S6RP phosphorylation remains elevated",
-                    "Calcium dependence: ERK1/2 signaling is calcium-dependent; p70S6K signaling is calcium-independent in this context",
-                    "15% stretch (30 or 90 minutes) of isolated EDL muscles at ~9.3 mN resting tension; 150 nM rapamycin used in experiments",
-                    "Loss of γ-SG uncouples p70S6K response to stretch, implying SG is important for inactivation of this pathway"
-                ],
-                "impact_and_application": "The study suggests that loss of γ-sarcoglycan alters load-sensing mechanotransduction by uncoupling p70S6K response to stretch, indicating that γ-sarcoglycan is important for inactivation of this signaling pathway. This points to altered load-sensing mechanisms in muscular dystrophies lacking sarcoglycans and may inform future therapeutic strategies targeting mechanotransduction signaling in SG-related muscular dystrophy.",
-                "risks_and_mitigation": "",
-                "results_and_conclusions": "Key findings include that p70S6K is mechanically responsive in isolated muscles, with elevated basal activation in γ-SG-/- mice and sustained activation upon stretch in γ-SG-/- compared to the transient response in C57; rapamycin blocks p70S6K activation in C57 but not fully in γ-SG-/-, where S6RP remains elevated, suggesting γ-SG is required for inactivation of the p70S6K pathway. Calcium-independent regulation of p70S6K contrasts with calcium-dependent regulation of ERK1/2 signaling. Collectively, γ-SG appears to be a critical component of mechanotransduction in skeletal muscle, and its absence reveals altered load-sensing that could contribute to dystrophic pathology."
-            },
-            "41431_2023_Article_1462": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10772081/",
-                "id": "41431_2023_Article_1462",
-                "title": "A comprehensive SARS-CoV-2 and COVID-19 review, Part 2: host extracellular to systemic effects of SARS-CoV-2 infection",
-                "authors": [
-                    "S. Anand Narayanan",
-                    "David A. JamisonJr",
-                    "Joseph W. Guarnieri",
-                    "Victoria Zaksas",
-                    "Michael Topper",
-                    "Andrew P. Koutnik",
-                    "Jiwoon Park",
-                    "Kevin B. Clark",
-                    "Francisco J. Enguita",
-                    "Ana Lúcia Leitão",
-                    "Saswati Das",
-                    "Pedro M. Moraes-Vieira",
-                    "Diego Galeano",
-                    "Christopher E. Mason",
-                    "Nídia S. Trovão",
-                    "Robert E. Schwartz",
-                    "Jonathan C. Schisler",
-                    "Jordana G. A. Coelho-dos-Reis",
-                    "Eve Syrkin Wurtele",
-                    "Afshin Beheshti"
-                ],
-                "year": 2024,
-                "labels": [
-                    "extracellular effects of SARS-CoV-2",
-                    "systemic metabolic remodeling",
-                    "lipid metabolism and mediators",
-                    "TCA cycle and mitochondrial dysfunction",
-                    "glycolysis and pentose phosphate pathway shifts",
-                    "humoral factors and immune signaling",
-                    "renin–angiotensin system (RAS)",
-                    "ACE2 and TMPRSS2 mediated entry",
-                    "bradykinin signaling",
-                    "endothelial damage and vascular effects",
-                    "biomarkers of disease severity",
-                    "metabolomics and lipidomics in COVID-19",
-                    "future research directions in viral pathogenesis"
-                ],
-                "abstract": "COVID-19, the disease caused by SARS-CoV-2, has caused significant morbidity and mortality worldwide. The betacoronavirus continues to evolve with global health implications as we race to learn more to curb its transmission, evolution, and sequelae. The focus of this review, the second of a three-part series, is on the biological effects of the SARS-CoV-2 virus on post-acute disease in the context of tissue and organ adaptations and damage. We highlight the current knowledge and describe how virological, animal, and clinical studies have shed light on the mechanisms driving the varied clinical diagnoses and observations of COVID-19 patients. Moreover, we describe how investigations into SARS-CoV-2 effects have informed the understanding of viral pathogenesis and provide innovative pathways for future research on the mechanisms of viral diseases. European Journal of Human Genetics(2024) 32:10–20; https://doi.org/10.1038/s41431-023-01462-1",
-                "key_points": [
-                    "Decreased plasma citrate, fumarate, malate, and aconitate in SARS-CoV-2–infected patients compared with controls",
-                    "Lowered citrate associated with severe COVID-19",
-                    "Increased deoxy-thymidine, deoxyuridine, adenine, cystine, and homocysteine in patients",
-                    "Elevated homocysteine linked to endothelial damage",
-                    "Reduced mitochondrial function with increased glycolysis and shunting to the pentose phosphate pathway",
-                    "Altered lipid metabolism: increased triglycerides and free fatty acids (e.g., arachidonic and oleic acid); diminished short- and medium-chain acylcarnitines",
-                    "Lipid mediators and humoral factors modulate immune responses and disease severity",
-                    "Bradykinin, ACE/ACE2 interactions, and RAS connectivity influence systemic physiology and viral entry"
-                ],
-                "impact_and_application": "This analysis links extracellular signals and systemic metabolic/humoral remodeling caused by SARS-CoV-2 to organ and tissue-level outcomes, informing biomarker discovery, risk stratification, and therapeutic targeting. It also lays groundwork for exploring how metabolic pathways could be modulated to alter disease trajectory and for broader research into viral pathogenesis across organ systems.",
-                "risks_and_mitigation": "Risks highlighted include unequal global distribution of vaccines and antivirals, which sustains transmission and variant emergence. Mitigations suggested by the article include continued development and deployment of vaccines and antiviral therapeutics, as well as research into the extracellular and systemic pathways influenced by SARS-CoV-2 to identify new therapeutic targets and protective strategies.",
-                "results_and_conclusions": "The results demonstrate widespread metabolic and humoral remodeling during SARS-CoV-2 infection, with systemic manifestations including altered energy metabolism, lipid handling, and endothelial function. These changes correlate with disease severity and offer mechanistic insights that support the conclusions: SARS-CoV-2 drives multi-organ physiological remodeling through extracellular signals, with implications for prognosis, treatment, and future research into the mechanisms of viral diseases."
-            },
-            "41526_2016_Article_2": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5460236/",
-                "id": "41526_2016_Article_2",
-                "title": "From the bench to exploration medicine: NASA life sciences translational research for human exploration and habitation missions",
-                "authors": [
-                    "Joshua S. Alwood",
-                    "April E. Ronca",
-                    "Richard C. Mains",
-                    "Mark J. Shelhamer",
-                    "Jeffrey D. Smith",
-                    "Thomas J. Goodwin"
-                ],
-                "year": 2017,
-                "labels": [
-                    "NASA translational research",
-                    "Life Sciences Translational Path",
-                    "basic-to-applied translation",
-                    "applied-to-operational translation",
-                    "Space Biology",
-                    "Human Research Program (HRP)",
-                    "NASA Johnson Space Center",
-                    "NASA Ames Research Center",
-                    "Center for the Advancement of Science in Space",
-                    "Decadal Survey",
-                    "NIH translational science model",
-                    "bi-directional knowledge transfer",
-                    "Translational Research Institute",
-                    "ISS National Laboratory"
-                ],
-                "abstract": "With the International Space Station (ISS) available for research and habitation for the next decade, there is now a precious opportunity to signiﬁcantly advance the contributions of space life sciences and space medicine toward enabling the Exploration Class missions (that is, human missions beyond low-Earth orbit). Such missions are currently burdened with signiﬁcant anticipated crew health and safety challenges. Coordinated research and development are crucial for producing effective countermeasures against the deleterious inﬂuences of spaceﬂight on the human body. To this end, we emphatically support the development of translational research efforts at NASA that will facilitate bi- directional information ﬂow between basic and applied life sciences and medical operations with the goal to accelerate countermeasure development. As identiﬁed by National Academy committees and embedded in the NASA Strategic Plan, a sustainable human space ﬂight program requires robust research at bothbasic and applied levels to make fundamental biological discoveries and to address the known and emerging risks to human health resulting from the spaceﬂight environment, respectively. The Life Sciences portfolio at NASA is composed of the Space Biology program (a basic science program), the Human Research Program (HRP, an applied program), and Medical Operations (Office of Chief Health and Medical Officer). Informal translational research within these programs has taken place at NASA for decades, yet there is a need for a more coordinated effort that enables dynamic translation that can take rapid advantage of new findings. In particular, the National Academy committees recommended that NASA follows key elements of the National Institutes of Healths (NIH) model of translational science. It was specifically recommended that the coordination and maturation of projects between each level of research be enhanced to increase knowledge transfer and identification of potential solutions for astronaut health challenges. Additionally, the translation of knowledge to Earth-based medical care has recently begun with the designation of the ISS as a National Laboratory (currently through the Center for the Advancement of Science in Space). In this paper, we provide context for the current drivers (and needs) for translational research at NASA, briefly summarize the experience at NIH, and lay out a two-phased approach for translational research. As illustrated in Fig. 1, the first phase is basic-to-applied and the second phase is applied-to-operational. We define the levels of the research continuum as follows, consistent with the Decadal Survey ’s Interim Report: basic research aims to generate new biological knowledge using biological systems or model organisms, applied research aims to develop countermeasures for risks to astronaut health (similar to pre-clinical research), and medical operations puts countermeasures into practice for astronauts (like operations in the clinic). Finally, going into greater depth on the basic-to-applied window of translation, we provide examples and recommendations of early-stage research where Space Biology and HRP aim to build synergy between their existing programs. NASAs Space Biology and HRP entities have recently spearheaded communications both internally and externally to coordinate the Agency’s translational research efforts between basic and applied levels. In this paper, we strongly advocate for translational research at NASA, provide recent examples of NASA-sponsored early-stage translational research, and discuss options for a path forward. Our overall objective is to help in stimulating the collaborative research across multiple disciplines and entities that, working together, will more effectively and more rapidly achieve NASAs goals for human spaceflight.",
-                "key_points": [
-                    "Two-phase translational model: basic-to-applied and applied-to-operational",
-                    "ISS designated as a National Laboratory, enabling Earth-based translation",
-                    "HRP Translational Research Institute established in October 2016",
-                    "Integrated organization within NASA recommended to manage translational efforts",
-                    "Decadal Survey recommendations support cross-disciplinary translational research and animal integration",
-                    "Need for cross-agency collaboration and shared frameworks (e.g., NIH-like translational pipeline)"
-                ],
-                "impact_and_application": "The article argues for a formal, coordinated translational research program at NASA to accelerate development of countermeasures against spaceflight risks. By implementing a bi-directional translational pathway, NASA aims to shorten the time from basic discovery to practical applications in spaceflight operations and Earth-based medicine, foster cross-disciplinary collaboration, and better prepare human exploration missions beyond low-Earth orbit. It also highlights opportunities to leverage NIH translational models and interagency coordination to bolster NASA’s readiness for long-duration missions.",
-                "risks_and_mitigation": "NASA identifies key spaceflight health risks such as immune dysfunction, microbial-host interactions, oxidative stress, and visual impairment (VI) syndrome, alongside general environmental factors like microgravity, confinement, and space radiation. Mitigation entails advancing translational research to develop preventive and therapeutic countermeasures, fostering cross-disciplinary collaboration, leveraging translational pipelines to translate findings into operational tools and medical protocols, and institutionalizing processes (e.g., HRP Roadmap, Translational Research Institute) to systematically address knowledge gaps and implement countermeasures in operations.",
-                "results_and_conclusions": "The paper documents progress in institutionalizing NASA translational research, including the 2004 cross-disciplinary workshops, subsequent NASA-sponsored events (ASGSR 2014–2015; HRP Investigators Workshops 2015–2016), and the establishment of the Translational Research Institute in 2016. It concludes that integrating Space Biology and HRP within a NIH-like translational framework, guided by NASA and National Academy recommendations, will enhance knowledge transfer, accelerate countermeasure development, and improve preparation for exploration-class missions. It also emphasizes the potential for Earth-based medical applications via the ISS National Laboratory designation."
-            },
-            "40168_2022_Article_1332": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9400218/",
-                "id": "40168_2022_Article_1332",
-                "title": "Machine learning algorithm to characterize antimicrobial resistance associated with the International Space Station surface microbiome",
-                "authors": [
-                    "Pedro Madrigal",
-                    "Nitin K. Singh",
-                    "Jason M. Wood",
-                    "Elena Gaudioso",
-                    "Félix Hernández‑del‑Olmo",
-                    "Christopher E. Mason",
-                    "Kasthuri Venkateswaran",
-                    "Afshin Beheshti"
-                ],
-                "year": 2022,
-                "labels": [
-                    "ISS",
-                    "Metagenomics",
-                    "Antibiotic resistance",
-                    "Machine learning",
-                    "Space Omics",
-                    "Microbiome",
-                    "Built‑environment",
-                    "Microbial Tracking‑1",
-                    "NGS"
-                ],
-                "abstract": "Background: Antimicrobial resistance (AMR) has a detrimental impact on human health on Earth and it is equally concerning in other environments such as space habitat due to microgravity, radiation and confinement, especially for long‑distance space travel. The International Space Station (ISS) is ideal for investigating microbial diversity and virulence associated with spaceflight. The shotgun metagenomics data of the ISS generated during the Microbial Tracking–1 (MT‑1) project and resulting metagenome‑assembled genomes (MAGs) across three flights in eight different locations during 12 months were used in this study. The objective of this study was to identify the AMR genes associated with whole genomes of 226 cultivable strains, 21 shotgun metagenome sequences, and 24 MAGs retrieved from the ISS environmental samples that were treated with propidium monoazide (PMA; viable microbes).\nResults: We have analyzed the data using a deep learning model, allowing us to go beyond traditional cut‑offs based only on high DNA sequence similarity and extending the catalog of AMR genes. Our results in PMA treated samples revealed AMR dominance in the last flight for Kalamiella piersonii, a bacteria related to urinary tract infection in humans. The analysis of 226 pure strains isolated from the MT‑1 project revealed hundreds of antibiotic resistance genes from many isolates, including two top‑ranking species that corresponded to strains of Enterobacter bugandensis and Bacillus cereus. Computational predictions were experimentally validated by antibiotic resistance profiles in these two species, showing a high degree of concordance. Specifically, disc assay data confirmed the high resistance of these two pathogens to various beta‑lactam antibiotics.\nConclusion: Overall, our computational predictions and validation analyses demonstrate the advantages of machine learning to uncover concealed AMR determinants in metagenomics datasets, expanding the understanding of the ISS environmental microbiomes and their pathogenic potential in humans.",
-                "key_points": [
-                    "DeepARG-SS predictions used with a prediction probability cutoff of 0.8 to identify AMR genes from metagenomic reads.",
-                    "Correlation between DeepARG-SS read counts and prior results: r = 0.86, p = 6.879e−7.",
-                    "Study analyzed 226 pure strains, 21 environmental metagenomes, and 24 PMA-treated MAGs.",
-                    "ARGs in MAGs often had low sequence identity to known ARGs (identity < 40%), highlighting the advantage of probabilistic predictions over best-hit methods.",
-                    "Kalamiella piersonii MAGs contained multiple ARGs across locations, associated with glycopeptide, fluoroquinolone and MLS classes.",
-                    "Enterobacter bugandensis had >40 ARGs; Bacillus cereus also showed resistance patterns; beta-lactam resistance validated by disc assays.",
-                    " beta-lactams were the top antibiotic class in resistance profiles across sampled locations and flights."
-                ],
-                "impact_and_application": "Demonstrates the utility of machine learning to identify AMR determinants in spaceflight microbiomes, informing health risk assessment and mitigation strategies for astronauts during long-term missions.",
-                "risks_and_mitigation": "",
-                "results_and_conclusions": "Results demonstrate that ML-based AMR gene prediction can uncover novel determinants in ISS surface microbiomes, with experimental validation confirming resistance in pathogenic species; conclusions emphasize ML's value in identifying concealed AMR determinants in metagenomic datasets and its implications for astronaut health."
-            },
-            "1471-2229-11-25": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3040128/",
-                "id": "1471-2229-11-25",
-                "title": "AtRabD2b and AtRabD2c have overlapping functions in pollen development and pollen tube growth",
-                "authors": [
-                    "Jianling Peng",
-                    "Hilal Ilarslan",
-                    "Eve Syrkin Wurtele",
-                    "Diane C Bassham"
-                ],
-                "year": 2011,
-                "labels": [
-                    "Rab GTPases",
-                    "AtRabD2b",
-                    "AtRabD2c",
-                    "pollen development",
-                    "pollen tube growth",
-                    "Golgi localization",
-                    "vesicle trafficking",
-                    "Arabidopsis thaliana"
-                ],
-                "abstract": "Background: Rab GTPases are important regulators of endomembrane trafficking, regulating exocytosis, endocytosis and membrane recycling. Many Rab-like proteins exist in plants, but only a subset have been functionally characterized. Results: Here we report that AtRabD2b and AtRabD2c play important roles in pollen development, germination and tube elongation.AtrabD2b and AtrabD2c single mutants have no obvious morphological changes compared with wild-type plants across a variety of growth conditions. AnAtrabD2b/2c double mutant is also indistinguishable from wild-type plants during vegetative growth; however its siliques are shorter than those in wild-type plants. Compared with wild-type plants,AtrabD2b/2c mutants produce deformed pollen with swollen and branched pollen tube tips. The shorter siliques in theAtrabD2b/2c double mutant were found to be primarily due to the pollen defects. AtRabD2b and AtRabD2c have different but overlapping expression patterns, and they are both highly expressed in pollen. Both AtRabD2b and AtRabD2c protein localize to Golgi bodies. Conclusions: These findings support a partially redundant role for AtRabD2b and AtRabD2c in vesicle trafficking during pollen tube growth that cannot be fulfilled by the remaining AtRabD family members.",
-                "key_points": [
-                    "AtRabD2b and AtRabD2c expression patterns are highly correlated (Pearson r = 0.72).",
-                    "Single mutants (AtrabD2b or AtrabD2c) show no obvious vegetative phenotype under tested conditions.",
-                    "AtrabD2b/2c double mutant has shorter siliques (~70% of wild-type) with statistical significance (P < 0.01).",
-                    "Approximately half of ovules in AtrabD2b/2c are not fertilized, leading to reduced seed production.",
-                    "Complementation with AtRabD2b or AtRabD2c restores silique length, seed fertilization and seed number.",
-                    "Both AtRabD2b and AtRabD2c localize to Golgi bodies, consistent with a role in ER-to-Golgi trafficking."
-                ],
-                "impact_and_application": "The study advances understanding of Rab GTPase function in plant reproduction by showing partial redundancy between AtRabD2b and AtRabD2c in pollen development and pollen tube growth. Insights into vesicle trafficking in pollen could inform strategies to manipulate fertility and seed production in crops through targeted regulation of RabD-compatible pathways.",
-                "risks_and_mitigation": "",
-                "results_and_conclusions": "The results demonstrate that AtRabD2b and AtRabD2c have overlapping expression and partially redundant functions essential for proper pollen development and pollen tube growth. The double mutant exhibits defective pollen morphology and impaired tube elongation, leading to reduced fertility and shorter siliques. Complementation rescues these defects, and both proteins localize to the Golgi, supporting a role in ER-to-Golgi trafficking. This work concludes that AtRabD2b and AtRabD2c contribute to vesicle trafficking in pollen in a manner not fully compensated by other RabD family members."
-            },
-            "41598_2024_Article_57948": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11166946/",
-                "id": "41598_2024_Article_57948",
-                "title": "Aging and putative frailty biomarkers are altered by spaceflight",
-                "authors": [
-                    "Andrea Camera",
-                    "Marshall Tabetah",
-                    "Veronica Castañeda",
-                    "JangKeun Kim",
-                    "Aman Singh Galsinh",
-                    "Alissen Haro-Vinueza",
-                    "Ivonne Salinas",
-                    "Allen Seylani",
-                    "Shehbeel Arif",
-                    "Saswati Das",
-                    "Marcelo A. Mori",
-                    "Anthony Carano",
-                    "Lorraine Christine de Oliveira",
-                    "Masafumi Muratani",
-                    "Richard Barker",
-                    "Victoria Zaksas",
-                    "Chirag Goel",
-                    "Eleni Dimokidis",
-                    "Deanne M. Taylor",
-                    "Jisu Jeong",
-                    "Eliah Overbey",
-                    "Cem Meydan",
-                    "D. Marshall Porterfield",
-                    "Juan Esteban Díaz",
-                    "Andrés Caicedo",
-                    "Jonathan C. Schisler",
-                    "Evagelia C. Laiakis",
-                    "Christopher E. Mason",
-                    "Man S. Kim",
-                    "Fathi Karouia",
-                    "Nathaniel J. Szewczyk",
-                    "Afshin Beheshti"
-                ],
-                "year": 2024,
-                "labels": [
-                    "BP",
-                    "CFE",
-                    "DEGs",
-                    "EDL",
-                    "FBA",
-                    "GO",
-                    "GSEA",
-                    "I4",
-                    "ISS",
-                    "JAXA",
-                    "L-",
-                    "MAS",
-                    "MF",
-                    "MSigDB",
-                    "NASA",
-                    "NES",
-                    "OSD",
-                    "OSDR",
-                    "padj",
-                    "PBMCs",
-                    "R+"
-                ],
-                "abstract": "Human space exploration poses inherent risks to astronauts’ health, leading to molecular changes that can significantly impact their well‑being. These alterations encompass genomic instability, mitochondrial dysfunction, increased inflammation, homeostatic dysregulation, and various epigenomic changes. Remarkably, these changes bear similarities to those observed during the aging process on Earth. However, our understanding of the connection between these molecular shifts and disease development in space remains limited. Frailty syndrome, a clinical syndrome associated with biological aging, has not been comprehensively investigated during spaceflight. To bridge this knowledge gap, we leveraged murine data obtained from NASA’s GeneLab, along with astronaut data gathered from the JAXA and Inspiration4 missions. Our objective was to assess the presence of biological markers and pathways related to frailty, aging, and sarcopenia within the spaceflight context. Through our analysis, we identified notable changes in gene expression patterns that may be indicative of the development of a frailty‑like condition during space missions. These findings suggest that the parallels between spaceflight and the aging process may extend to encompass frailty as well. Consequently, further investigations exploring the utility of a frailty index in monitoring astronaut health appear to be warranted.",
-                "key_points": [
-                    "Putative frailty biomarker genes were compiled for humans and mice (Supplementary Data 1).",
-                    "Mouse datasets from NASA GeneLab Open Science Data Repository (OSDR) were used to identify DEGs in flight vs. control with adjusted p-value threshold.",
-                    "Tissue-specific frailty-related DEGs identified: gastrocnemius (34 genes in OSD-21; 8 in OSD-101); EDL (45 genes in OSD-99); quadriceps (26 genes in OSD-101); soleus (36 genes in OSD-104); tibialis anterior (32 genes in OSD-105).",
-                    "A maximum of four frailty-related genes was unique to each tissue type; up to four genes were common across different datasets.",
-                    "Results support a frailty-like molecular signature induced by spaceflight, with potential implications for astronaut health monitoring."
-                ],
-                "impact_and_application": "If spaceflight consistently alters frailty-related biomarkers, this could enable monitoring astronauts with frailty indices, enabling early interventions and countermeasures to maintain health during long-duration missions. The translational potential extends to Earth: insights into aging and frailty biology may inform clinical approaches to sarcopenia, inflamm-aging, and related conditions.",
-                "risks_and_mitigation": "Risks associated with spaceflight include space radiation, altered gravity, isolation and confinement, distance from Earth, and hostile/closed environments. These factors can drive genomic instability, mitochondrial dysfunction, inflammation, homeostatic dysregulation, and epigenomic changes, contributing to frailty and age-related diseases. Mitigation strategies include continuous health monitoring, development of frailty indices for early detection, countermeasures to preserve muscle mass and immune function, and designing mission architectures that minimize radiation exposure and environmental stressors.",
-                "results_and_conclusions": "Results show tissue-specific frailty-related gene expression changes in rodent muscles during spaceflight, with a subset of DEGs common across datasets, suggesting a frailty-like response to space conditions. Conclusions emphasize the potential utility of frailty biomarkers for astronaut health surveillance and the need for preventive strategies in future missions."
-            },
-            "41598_2024_Article_51756": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10789781/",
-                "id": "41598_2024_Article_51756",
-                "title": "Chromosomal positioning and epigenetic architecture influence DNA methylation patterns triggered by galactic cosmic radiation",
-                "authors": [
-                    "Adrian Perdyan",
-                    "Marcin Jąkalski",
-                    "Monika Horbacz",
-                    "Afshin Beheshti",
-                    "Jakub Mieczkowski"
-                ],
-                "year": 2024,
-                "labels": [
-                    "DNA methylation",
-                    "galactic cosmic radiation",
-                    "high-LET",
-                    "56Fe",
-                    "28Si",
-                    "X-ray",
-                    "Hi-C",
-                    "chromatin architecture",
-                    "epigenetics",
-                    "radiation biology",
-                    "epigenome",
-                    "epigenetic clock",
-                    "gene expression validation",
-                    "multiomics",
-                    "HBEC"
-                ],
-                "abstract": "Despite surging interest in space travel in recent decades, the impacts of prolonged, elevated exposure to galactic cosmic radiation (GCR) on human health remain poorly understood. This form of ionizing radiation causes significant changes to biological systems including damage to DNA structure by altering epigenetic phenotype with emphasis on DNA methylation. Building on previous work by Kennedy et al. (Sci Rep 8(1): 6709. 10.1038/S41598-018-24755-8), we evaluated spatial DNA methylation patterns triggered by high-LET ( 56Fe, 28Si) and low-LET (X-ray) radiation and the influence of chromosome positioning and epigenetic architecture in distinct radial layers of cell nucleus. Next, we validated our results using gene expression data of mice irradiated with simulated GCR and JAXA astronauts. We showed that primarily 56Fe induces a persistent DNA methylation increase whereas 28Si and X-ray induce a decrease DNA methylation which is not persistent with time. Moreover, we highlighted the role of nuclear chromatin architecture in cell response to external radiation. In summary, our study provides novel insights towards epigenetic and transcriptomic response as well as chromatin multidimensional structure influence on galactic cosmic radiation damage.",
-                "key_points": [
-                    "DMPs: 485,061 probes analyzed; q < 0.05; absolute avDiff ≥ 0.58",
-                    "DMRs identified with lambda = 1000, C = 2 using dmrcate",
-                    "three comparisons: Fe0.3Gy vs Si0.3Gy; Fe1Gy vs Si1Gy; Fe1Gy vs X1Gy",
-                    "Hi-C-based nucleus segmented into five layers L1-L5 with equal DNA content",
-                    "Mann-Kendall trend test and chi-squared tests used for statistics",
-                    "Persistent methylation increase predominantly after Fe irradiation; decreases after Si and X-ray",
-                    "Hi-C, ChIP-seq, and RNA-seq integration to link chromatin context to methylation changes",
-                    "RNA-seq/microarray validation using mice and JAXA astronauts data",
-                    "5 radial layers used to assess spatial chromatin effects on irradiation outcome",
-                    "Overall finding: chromatin architecture modulates radiation-induced epigenetic changes"
-                ],
-                "impact_and_application": "Contributes to understanding of epigenetic and transcriptomic responses and chromatin architecture in response to galactic cosmic radiation, informing strategies to minimize adverse effects during space travel.",
-                "risks_and_mitigation": "During long exposure, these alterations are likely to increase the risk of cancer and degenerative diseases occurrence. Our work aims to mitigate risk by identifying epigenetic and chromatin-context factors that influence radiation damage, potentially guiding protective strategies for space missions.",
-                "results_and_conclusions": "56Fe irradiation induces a persistent DNA methylation increase, whereas 28Si and X-ray induce decreases with X-ray effects not persisting over time. Chromatin architecture and nuclear positioning modulate radiation response, with Hi-C-defined radial layers revealing layer-specific epigenetic and transcriptional changes. The study provides novel insights into the epigenetic and transcriptomic responses and the role of chromatin structure in galactic cosmic radiation damage."
-            },
-            "514": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3177255/",
-                "id": "514",
-                "title": "TNO1 Is Involved in Salt Tolerance and Vacuolar Trafficking in Arabidopsis",
-                "authors": [
-                    "Sang-Jin Kim",
-                    "Diane C. Bassham"
-                ],
-                "year": 2011,
-                "labels": [
-                    "SYP41",
-                    "SYP61",
-                    "VTI12",
-                    "AtVPS45",
-                    "TNO1",
-                    "VSR1",
-                    "PVC",
-                    "TGN",
-                    "SNARE",
-                    "Vacuolar trafficking",
-                    "Salt tolerance",
-                    "Osmotic stress",
-                    "Arabidopsis thaliana",
-                    "Co-immunoprecipitation",
-                    "Brefeldin A (BFA)",
-                    "Membrane fusion"
-                ],
-                "abstract": "The Arabidopsis (Arabidopsis thaliana) solubleN-ethylmaleimide-sensitive factor attachment protein receptor SYP41 is involved in vesicle fusion at the trans-Golgi network (TGN) and interacts with AtVPS45, SYP61, and VTI12. These proteins are involved in diverse cellular processes, including vacuole biogenesis and stress tolerance. A previously uncharacterized protein, named TNO1 (for TGN-localized SYP41-interacting protein), was identified by coimmunoprecipitation as a SYP41-interacting protein. TNO1 was found to localize to the TGN by immunofluorescence microscopy. Atno1 mutant showed increased sensitivity to high concentrations of NaCl, KCl, and LiCl and also to mannitol-induced osmotic stress. Localization of SYP61, which is involved in the salt stress response, was disrupted in thetno1 mutant. Vacuolar proteins were partially secreted to the apoplast in the tno1 mutant, suggesting that TNO1 is required for efficient protein trafficking to the vacuole. Thetno1 mutant had delayed formation of the brefeldin A (BFA) compartment in cotyledons upon application of BFA, suggesting less efficient membrane fusion processes in the mutant. Unlike most TGN proteins, TNO1 does not relocate to the BFA compartment upon BFA treatment. These data demonstrate that TNO1 is involved in vacuolar trafficking and salt tolerance, potentially via roles in vesicle fusion and in maintaining TGN structure or identity.",
-                "key_points": [
-                    "TNO1 identified as a SYP41-interacting protein by coimmunoprecipitation and mass spectrometry.",
-                    "TNO1 is a TGN-localized, membrane-integrated protein with a C-terminal transmembrane domain.",
-                    "TNO1 is broadly expressed across tissues and developmental stages.",
-                    "tno1 knockout shows increased sensitivity to NaCl, KCl, LiCl, and mannitol/osmotic stress.",
-                    "SYP61 localization is disrupted in the tno1 mutant, indicating trafficking defects.",
-                    "Vacuolar proteins are partially secreted to the apoplast in tno1, suggesting impaired vacuolar targeting.",
-                    "tno1 displays delayed formation of the BFA compartment, indicating reduced membrane fusion efficiency at the TGN/endosome.",
-                    "TNO1 does not relocate to the BFA compartment after BFA treatment, a noncanonical behavior compared with many TGN proteins."
-                ],
-                "impact_and_application": "Elucidates a novel component of the plant vacuolar trafficking machinery and its role in salt and osmotic stress tolerance. Understanding TNO1's function could inform strategies to engineer stress-tolerant crops through manipulation of TGN/vacuolar trafficking pathways.",
-                "risks_and_mitigation": "",
-                "results_and_conclusions": "Results demonstrated that TNO1 is a TGN-associated, membrane-integrated protein that interacts with the SYP41 SNARE complex and is required for efficient vacuolar trafficking. The tno1 mutant's salt/osmotic sensitivity and mislocalization of SYP61, along with partial secretion of vacuolar proteins and delayed BFA compartment formation, support a model in which TNO1 facilitates vesicle fusion at the TGN and maintains TGN structure/identity, contributing to salt tolerance and proper vacuolar protein sorting."
-            },
-            "2975810": {
-                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6371294/",
-                "id": "2975810",
-                "title": "FAIRness and Usability for Open-access Omics Data Systems",
-                "authors": [
-                    "Daniel C. Berrios",
-                    "Afshin Beheshti",
-                    "Sylvain V. Costes"
-                ],
-                "year": -1,
-                "labels": [
-                    "F1",
-                    "F1A",
-                    "F1B",
-                    "F2",
-                    "F3",
-                    "F4",
-                    "A1.1",
-                    "A1.2",
-                    "A2",
-                    "I1",
-                    "I2",
-                    "I3",
-                    "R1",
-                    "R1.1",
-                    "R1.2",
-                    "R1.3",
-                    "Overall FAIRness Score"
-                ],
-                "abstract": "Omics data sharing is crucial to the biological research community, and the last decade or two has seen a huge rise in collaborative analysis systems, databases, and knowledge bases for omics and other systems biology data. We assessed the “FAIRness” of NASA’s GeneLab Data Systems (GLDS) along with four similar kinds of systems in the research omics data domain, using 14 FAIRness metrics. The range of overall FAIRness scores was 6-12 (out of 14), average 10.1, and standard deviation 2.4. The range of Pass ratings for the metrics was 29-79%, Partial Pass 0-21%, and Fail 7-50%. The systems we evaluated performed the best in the areas of data findability and accessibility, and worst in the area of data interoperability. Reusability of metadata, in particular, was frequently not well supported. We relate our experiences implementing semantic integration of omics data from some of the assessed systems for federated querying and retrieval functions, given their shortcomings in data interoperability. Finally, we propose two new principles that Big Data system developers, in particular, should consider for maximizing data accessibility.",
-                "key_points": [
-                    "Range of overall FAIRness scores: 6-12 (out of 14); average 10.1; standard deviation 2.4",
-                    "Pass ratings range: 29-79%",
-                    "Partial Pass: 0-21%",
-                    "Fail: 7-50%",
-                    "All systems best in data accessibility and reusability; worst in data interoperability",
-                    "Reusability of metadata frequently not well supported",
-                    "Systems evaluated: GEO, ENA, MG-RAST, Metabolights, and GLDS",
-                    "Assessment used GO FAIR Metrics draft for FAIRness",
-                    "GLDS designed to support federated searching and data integration",
-                    "Two new design principles proposed to maximize data accessibility"
-                ],
-                "impact_and_application": "Proposes two design principles to maximize data accessibility in FAIR open-access omics data systems; highlights importance of interoperability and metadata usability to enable federated querying and integration across multiple data resources; informs future development of Big Data omics platforms to enhance usability and reusability.",
-                "risks_and_mitigation": "Risks include inconsistent interoperability across omics data systems and incomplete metadata reusability. Mitigations include adopting and applying GO FAIR Metrics, standardizing metadata, using persistent global identifiers, employing machine-actionable metadata, and leveraging open protocols to enable federated search and data integration.",
-                "results_and_conclusions": "Results show variability in FAIRness across systems with scores ranging 6-12; best performance in findability, accessibility, and reusability; worst in interoperability. Conclusions emphasize the need for two new design principles to improve usability while maintaining FAIR compliance, promoting broader data accessibility and cross-system integration."
-            }
-        }
+        with open("mockGraph.json", "r", encoding="utf-8") as f:
+            self._mock_graph_db = json.load(f)
+
+        with open("mockArticles.json", "r", encoding="utf-8") as f:
+            self._mock_articles_db = json.load(f)
     
     def _add_dynamic_weights(self, nodes: List[dict]) -> List[dict]:
         """
@@ -917,35 +86,86 @@ class QueryManager:
 
     
     def filter_nodes_and_get_neighbors(self, required_labels: List[str]) -> dict:
+        """
+        Filtra nodos por etiquetas y expande la búsqueda para incluir vecinos
+        hasta 3 NIVELES de profundidad.
+        """
         all_nodes_map = {node['id']: node for node in self._mock_graph_db["nodes"]}
         required_set = set(required_labels)
+
+        level_0_nodes = [node for node in self._mock_graph_db["nodes"] if required_set.issubset(set(node["labels"]))]
+        if not level_0_nodes:
+            return {"nodes": [], "links": []}
+
+        final_node_ids = set(node['id'] for node in level_0_nodes)
         
-        seed_nodes = [node for node in self._mock_graph_db["nodes"] if required_set.issubset(set(node["labels"]))]
         
-        final_node_ids = set(node['id'] for node in seed_nodes)
-        for node in seed_nodes:
-            final_node_ids.update(node['links'])
+        level_1_ids = set()
+        for node in level_0_nodes:
+            level_1_ids.update(node.get('links', []))
+        
+        level_2_ids = set()
+        for node_id in level_1_ids:
+            node = all_nodes_map.get(node_id)
+            if node:
+                level_2_ids.update(node.get('links', []))
+
+        level_3_ids = set()
+        for node_id in level_2_ids:
+            node = all_nodes_map.get(node_id)
+            if node:
+                level_3_ids.update(node.get('links', []))
+        
+        final_node_ids.update(level_1_ids)
+        final_node_ids.update(level_2_ids)
+        final_node_ids.update(level_3_ids)
+
 
         final_nodes = [all_nodes_map[node_id] for node_id in final_node_ids if node_id in all_nodes_map]
-        final_links = [link for link in self._mock_graph_db["links"] if link['source'] in final_node_ids and link['target'] in final_node_ids]
+        final_links = [
+            link for link in self._mock_graph_db["links"] 
+            if link['source'] in final_node_ids and link['target'] in final_node_ids
+        ]
 
         return {"nodes": self._add_dynamic_weights(final_nodes), "links": final_links}
-
+    
     def get_subgraph_by_node_id(self, node_id: str) -> Optional[dict]:
         """
-        NUEVO: Encuentra un nodo por su ID y devuelve un subgrafo con sus vecinos.
+        Encuentra un nodo por su ID y devuelve un subgrafo con sus vecinos
+        hasta 3 NIVELES de profundidad.
         """
         all_nodes_map = {node['id']: node for node in self._mock_graph_db["nodes"]}
         
         seed_node = all_nodes_map.get(node_id)
         if not seed_node:
-            return None # El nodo no fue encontrado
-
+            return None 
         final_node_ids = {seed_node['id']}
-        final_node_ids.update(seed_node['links'])
+
+
+        level_1_ids = set(seed_node.get('links', []))
+        
+        level_2_ids = set()
+        for current_id in level_1_ids:
+            node = all_nodes_map.get(current_id)
+            if node:
+                level_2_ids.update(node.get('links', []))
+
+        level_3_ids = set()
+        for current_id in level_2_ids:
+            node = all_nodes_map.get(current_id)
+            if node:
+                level_3_ids.update(node.get('links', []))
+
+        final_node_ids.update(level_1_ids)
+        final_node_ids.update(level_2_ids)
+        final_node_ids.update(level_3_ids)
+
 
         final_nodes = [all_nodes_map[node_id] for node_id in final_node_ids if node_id in all_nodes_map]
-        final_links = [link for link in self._mock_graph_db["links"] if link['source'] in final_node_ids and link['target'] in final_node_ids]
+        final_links = [
+            link for link in self._mock_graph_db["links"] 
+            if link['source'] in final_node_ids and link['target'] in final_node_ids
+        ]
 
         return {"nodes": self._add_dynamic_weights(final_nodes), "links": final_links}
     
