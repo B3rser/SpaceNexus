@@ -2,6 +2,17 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import './Graph.css';
 
+const rootStyles = getComputedStyle(document.documentElement);
+
+const colorPalette = [
+    rootStyles.getPropertyValue("--color-cosmic-purple").trim(),
+    rootStyles.getPropertyValue("--color-supernova-orange").trim(),
+    rootStyles.getPropertyValue("--color-nebula-red").trim(),
+    rootStyles.getPropertyValue("--color-stellar-blue").trim(),
+    rootStyles.getPropertyValue("--color-electric-blue").trim(),
+    rootStyles.getPropertyValue("--color-solar-gold").trim()
+];
+
 export function Graph({ selectedNode, setSelectedNode, data }) {
     const svgRef = useRef();
     const wrapperRef = useRef();
@@ -34,9 +45,18 @@ export function Graph({ selectedNode, setSelectedNode, data }) {
 
         const container = svg.append("g");
 
+        const minWeight = d3.min(nodes, d => d.weight || 1);
+        const maxWeight = d3.max(nodes, d => d.weight || 1);
+
         const radiusScale = d3.scaleSqrt()
-            .domain([0, d3.max(nodes, d => d.weight || 1)])
-            .range([5, 30]);
+            .domain([minWeight, maxWeight])
+            .range([10, 40]);
+
+        const colorScale = d3.scaleQuantize()
+            .domain([minWeight, maxWeight])
+            .range(colorPalette);
+
+        console.log(colorScale)
 
         const simulation = d3.forceSimulation(nodes)
             .force('link', d3.forceLink(links).id(d => d.id).distance(100))
@@ -60,7 +80,8 @@ export function Graph({ selectedNode, setSelectedNode, data }) {
             .call(drag(simulation));
 
         node.append('circle')
-            .attr('r', d => radiusScale(d.weight));
+            .attr('r', d => radiusScale(d.weight))
+            .attr('fill', d => colorScale(d.weight));
 
         node.append('text')
             .text(d => d.id)
@@ -158,7 +179,6 @@ export function Graph({ selectedNode, setSelectedNode, data }) {
                 const t = getId(l.target);
                 return !(s === selectedNode.id || t === selectedNode.id);
             });
-
     }, [selectedNode, data]);
 
     return (

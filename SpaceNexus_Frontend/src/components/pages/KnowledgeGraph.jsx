@@ -3,6 +3,7 @@ import { Graph } from '../Graph'
 import { InfoNode } from '../InfoNode';
 
 import graphData from '../../assets/graph-data.json';
+import CustomizedInputBase from '../CustomizedInputBase';
 
 export function KnowledgeGraph() {
   const [selectedNode, setSelectedNode] = React.useState(null);
@@ -19,10 +20,10 @@ export function KnowledgeGraph() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh", alignItems: "center" }}>
       <InfoNode selectedNode={selectedNode} onRelationClick={handleRelationClick} onTagClick={handleTagClick} />
-      <div style={{ flexShrink: 0 }}>
-
+      <div style={{ flexShrink: 0, position: "absolute", zIndex:2, width: "80%", margin:"15px" }}>
+        <CustomizedInputBase />
       </div>
       <div style={{ flex: 1, minHeight: 0 }}>
         <Graph data={graphData} selectedNode={selectedNode} setSelectedNode={setSelectedNode} />

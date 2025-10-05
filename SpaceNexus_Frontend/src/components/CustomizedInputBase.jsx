@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
-export default function CustomizedInputBase() {
+export default function CustomizedInputBase({onSubmit}) {
   return (
     <Paper
       component="form"
