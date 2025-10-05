@@ -26,8 +26,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path='/knowledgeGalaxy' element={<KnowledgeGraph />} />
           <Route path='/test' element={<Test />} />
-          <Route path='/knowledgeGalaxy/:user' element={<KnowledgeGraph />} />
-          <Route path='/article' element={<ArticleView rol="Astronauta" nombre="Artículo C" />} />
+          <Route path='/knowledgeGalaxy/:name' element={<KnowledgeGraph />} />
+          { /*<Route path='/article' element={<ArticleView rol="Astronauta" nombre="Artículo C" />} />*/}
+          <Route path="/article/:articleId" element={<ArticleView />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>

@@ -1,12 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, Tabs, Tab, CircularProgress, Paper, Button, Chip } from '@mui/material';
 import { styled } from '@mui/system';
+
+import { getArticleById } from '../../services/articles.service';
 
 // Paletas temáticas y estilos más audaces
 const THEME_STYLES = {
   // 🔬 Científico: Profesional, oscuro, enfocado en el detalle y la precisión.
-  Cientifico: {
+  cientifico: {
     primaryColor: '#00bcd4', // Cian para tecnología y datos
     secondaryColor: '#f44336', // Rojo de alerta/importancia
     gradient: 'linear-gradient(135deg, #1C2331 0%, #0A1929 100%)', // Fondo oscuro y profundo
@@ -15,7 +18,7 @@ const THEME_STYLES = {
     boxShadow: '0 8px 30px rgba(0, 188, 212, 0.4)', // Sombra con acento de color
   },
   // 📈 Inversor: Enérgico, enfocado en el crecimiento y las finanzas.
-  Inversor: {
+  inversionista: {
     primaryColor: '#4caf50', // Verde de crecimiento y éxito
     secondaryColor: '#ff9800', // Ámbar de precaución/oportunidad
     gradient: 'linear-gradient(135deg, #1A237E 0%, #295F2D 100%)', // Combinación de azul corporativo y verde
@@ -24,7 +27,7 @@ const THEME_STYLES = {
     boxShadow: '0 8px 30px rgba(76, 175, 80, 0.4)',
   },
   // 🚀 Astronauta: Inspirador, futurista, enfocado en el espacio y la aventura.
-  Astronauta: {
+  arquitecto_de_mision: {
     primaryColor: '#bbdefb', // Azul claro, espacial
     secondaryColor: '#ff5722', // Naranja espacial/de seguridad
     gradient: 'linear-gradient(135deg, #000000 0%, #151B54 100%)', // Fondo de cielo nocturno a azul oscuro
@@ -35,6 +38,8 @@ const THEME_STYLES = {
 };
 
 const RolePaper = styled(Paper)(({ role }) => {
+
+
   const theme = THEME_STYLES[role] || {};
   return {
     width: '85%', // un poco más ancho
@@ -56,25 +61,21 @@ const RolePaper = styled(Paper)(({ role }) => {
 });
 
 const ROLE_SECTIONS = {
-  Cientifico: ['Abstract', 'Datos Clave', 'Resultados', 'Conclusión'],
-  Inversor: ['Abstract', 'Impacto y Aplicación', 'Resultados', 'Conclusión'],
-  Astronauta: ['Abstract', 'Riesgos y Mitigación', 'Resultados', 'Conclusión'],
-};
-
-const MOCK_SUMMARY = {
-  Abstract: 'Resumen general adaptado al rol, lenguaje distinto según el rol.',
-  'Datos Clave': 'Datos científicos clave y relevantes para análisis técnico.',
-  Resultados: 'Resultados cuantitativos y cualitativos del artículo.',
-  Conclusiones: 'Síntesis y reflexiones finales desde la perspectiva científica.',
-  'Impacto y Aplicación': 'Potencial de inversión y aplicaciones prácticas inmediatas.',
-  'Riesgos y Mitigación': 'Riesgos detectados y estrategias de mitigación espacial.',
-  Conclusión: 'Cierre resumido con tono adaptado al rol.',
-  Etiquetas: ['Biologia', 'Fisica', 'Espacio', 'Investigacion', 'Marte']
+  cientifico: ['Abstract', 'Datos Clave', 'Resultados', 'Conclusión'],
+  inversionista: ['Abstract', 'Impacto y Aplicación', 'Resultados', 'Conclusión'],
+  arquitecto_de_mision: ['Abstract', 'Riesgos y Mitigación', 'Resultados', 'Conclusión'],
 };
 
 
+export default function ArticleView() {
+  const navigate = useNavigate();
+  const { articleId } = useParams();
 
-export default function ArticleView({ rol, nombre }) {
+  const [article, setArticle] = useState(null);
+  const [error, setError] = useState(null);
+
+  //Cambiar con el contexto
+  const selectedRole = 'cientifico';
   const [sectionsContent, setSectionsContent] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -83,22 +84,34 @@ export default function ArticleView({ rol, nombre }) {
     document.title = "Articles";
   });
 
-  // Lógica de carga... (mantener tal cual)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const sections = ROLE_SECTIONS[rol] || [];
-      const data = {};
-      sections.forEach((sec) => {
-        data[sec] = MOCK_SUMMARY[sec] || 'No hay información disponible.';
-      });
-      setSectionsContent(data);
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, [rol]);
+     if (!articleId) return;
+
+    const fetchArticle = async () => {
+      try {
+        setLoading(true);
+        const data = await getArticleById(articleId, selectedRole);
+        setArticle(data);
+        setError(null);
+      } catch (err) {
+        setError('No se pudo encontrar o cargar el artículo.');
+        console.error("Error fetching article:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticle();
+  }, [articleId]);
 
   const handleChange = (event, newValue) => {
     setSelectedTab(newValue);
+  };
+
+   const handleRelatedPapersClick = () => {
+    if (article) {
+      navigate(`/knowledgeGraph/${article.id}`);
+    }
   };
 
   if (loading) {
@@ -106,14 +119,26 @@ export default function ArticleView({ rol, nombre }) {
     return (
       <Box sx={{ width: '100vh', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {/* Usamos el color primario del rol para el cargador */}
-        <CircularProgress sx={{ color: (THEME_STYLES[rol] || {}).primaryColor || 'secondary.main' }} />
+        <CircularProgress sx={{ color: (THEME_STYLES[selectedRole] || {}).primaryColor || 'secondary.main' }} />
         <Typography variant="h6" sx={{ ml: 2, color: 'text.primary' }}>Cargando resumen...</Typography>
       </Box>
     );
   }
 
-  const sections = ROLE_SECTIONS[rol] || [];
-  const theme = THEME_STYLES[rol] || {};
+  if (error || !article) {
+    return <Box sx={{ color: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>{error || "Artículo no encontrado."}</Box>;
+  }
+
+  // const sections = ROLE_SECTIONS[selectedRole] || [];
+  const theme = THEME_STYLES[selectedRole] || {};
+
+  const availableSections = ['abstract', 'key_points', 'impact_and_application', 'risks_and_mitigation', 'results_and_conclusions'];
+  const sections = availableSections.filter(key => article.hasOwnProperty(key));
+  const sectionTitles = {
+    'abstract': 'Abstract', 'key_points': 'Datos Clave',
+    'results_and_conclusions': 'Resultados y Conclusiones', 'impact_and_application': 'Impacto y Aplicación',
+    'risks_and_mitigation': 'Riesgos y Mitigación'
+  };
 
   return (
     <Box
@@ -123,9 +148,11 @@ export default function ArticleView({ rol, nombre }) {
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
+        display: 'flex',
+        flexDirection: 'column',
         // Fondo más oscuro para que el RolePaper resalte
         backgroundColor: '#0F1624',
-
+        position: 'relative',
       }}
     >
       <Box
@@ -154,6 +181,7 @@ export default function ArticleView({ rol, nombre }) {
         </Button>
         <Button
           variant="outlined"
+          onClick={handleRelatedPapersClick}
           sx={{
             color: theme.primaryColor,
             borderColor: theme.primaryColor,
@@ -170,19 +198,19 @@ export default function ArticleView({ rol, nombre }) {
         {/* --- Encabezado y Metadatos --- */}
         <Box sx={{ mb: 3 }}>
           <Typography variant="h3" sx={{ color: theme.primaryColor, fontWeight: 'bold' }}>
-            {theme.icon} {nombre}
+            {theme.icon} {article.title}
           </Typography>
           <Typography variant="h6" sx={{ color: theme.color }}>
-            Autores: <strong>{MOCK_SUMMARY.autores}</strong> | Año: <strong>{MOCK_SUMMARY.año}</strong>
+            Autores: <strong>{article.authors.join(', ')}</strong> | Año: <strong>{article.year}</strong>
           </Typography>
           <Typography variant="body1" sx={{ mt: 1, color: theme.color }}>
-            Vista Personalizada: <strong style={{ color: theme.primaryColor }}>{rol}</strong>
+            Vista Personalizada: <strong style={{ color: theme.primaryColor }}>{selectedRole}</strong>
           </Typography>
         </Box>
 
         {/* Etiquetas temáticas */}
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3 }}>
-          {MOCK_SUMMARY.Etiquetas.map((tag, i) => (
+          {article.labels.map((tag, i) => (
             <Chip
               key={i}
               label={tag}
@@ -210,10 +238,10 @@ export default function ArticleView({ rol, nombre }) {
             '& .MuiTabs-indicator': { backgroundColor: theme.primaryColor, height: '4px' },
           }}
         >
-          {sections.map((section, idx) => (
+          {sections.map((sectionKey) => (
             <Tab
-              key={idx}
-              label={section}
+              key={sectionKey}
+              label={sectionTitles[sectionKey]}
               sx={{
                 color: theme.color,
                 '&.Mui-selected': {
@@ -227,7 +255,7 @@ export default function ArticleView({ rol, nombre }) {
         </Tabs>
 
         {/* --- Contenido del Paper --- */}
-        <RolePaper role={rol} elevation={10}>
+        <RolePaper role={selectedRole} elevation={10}>
           <Typography
             variant="h4"
             gutterBottom
@@ -237,13 +265,13 @@ export default function ArticleView({ rol, nombre }) {
               paddingBottom: '10px',
             }}
           >
-            {sections[selectedTab]}
+            {sectionTitles[sections[selectedTab]]}
           </Typography>
           <Typography
             variant="body1"
             sx={{ fontSize: '1.2rem', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}
           >
-            {sectionsContent[sections[selectedTab]]}
+            {article[sections[selectedTab]]}
           </Typography>
         </RolePaper>
       </Box>
