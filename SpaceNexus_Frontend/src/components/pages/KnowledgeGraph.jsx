@@ -25,7 +25,7 @@ export function KnowledgeGraph() {
         setLoading(true);
         let dataFromApi;
         if (name) {
-          
+
           console.log(`Buscando subgrafo para el nodo: ${name}`);
           dataFromApi = await getNodeSubgraph(name);
         } else {
@@ -81,6 +81,7 @@ export function KnowledgeGraph() {
       setSelectedNode(null);
     }
   }, [name, graphData]);
+
   const handleRelationClick = (relationId) => {
     const relatedNode = graphData.nodes.find(node => node.id === relationId);
     if (relatedNode) {
@@ -88,15 +89,19 @@ export function KnowledgeGraph() {
     }
   };
 
-  const handleTagClick = (tag) => {
-    console.log("Etiqueta clicada:", tag);
-  };
+  const handleSearch = (relationId) => {
+    const relatedNode = graphData.nodes.find(node => node.id === relationId);
+    if (relatedNode) {
+      setSelectedNode(relatedNode);
+    }
+  }
+
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", alignItems: "center" }}>
-      <InfoNode selectedNode={selectedNode} onRelationClick={handleRelationClick} onTagClick={handleTagClick} />
+      <InfoNode selectedNode={selectedNode} onRelationClick={handleRelationClick} />
       <div style={{ flexShrink: 0, position: "absolute", zIndex: 2, width: "80%", margin: "15px" }}>
-        <CustomizedInputBase />
+        <CustomizedInputBase onSearch={handleSearch} />
       </div>
       <div style={{ flex: 1, minHeight: 0 }}>
         <Graph data={graphData} selectedNode={selectedNode} setSelectedNode={setSelectedNode} />

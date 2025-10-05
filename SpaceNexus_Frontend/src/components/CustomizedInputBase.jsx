@@ -5,22 +5,16 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import Collapse from '@mui/material/Collapse';
 
-export default function CustomizedInputBase({ onSearch, FilterComponent }) {
+export default function CustomizedInputBase({ onSearch = () => { } }) {
   const [query, setQuery] = React.useState('');
-  const [filtersOpen, setFiltersOpen] = React.useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const q = query.trim();
-    if (!q) return;
-    if (onSearch) onSearch(q);
-    else console.log('Buscar:', q); 
+    if(query == "") return;
+    onSearch(query);
   };
-
-  const handleToggleFilters = () => setFiltersOpen((v) => !v);
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -28,59 +22,43 @@ export default function CustomizedInputBase({ onSearch, FilterComponent }) {
         component="form"
         onSubmit={handleSubmit}
         sx={{
-          p: '2px 4px',
+          p: '8px 12px',
           display: 'flex',
           alignItems: 'center',
           width: '80vw',
-          bgcolor: 'var(--color-white)',
-          borderRadius: '50px',
-          position:"relative" 
+          borderRadius: '20px',
+          background: 'rgba(255, 255, 255, 0.08)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+          backdropFilter: 'blur(12px)',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            background: 'rgba(255, 255, 255, 0.15)',
+            boxShadow: '0 0 12px rgba(255,255,255,0.25)',
+          },
         }}
       >
-        <IconButton
-          sx={{ p: '10px' }}
-          aria-label="filter"
-          onClick={handleToggleFilters}
-        >
-          <FilterListIcon sx={{ color: 'var(--color-accent-60)' }} />
-        </IconButton>
-
         <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Article"
-          inputProps={{ 'aria-label': 'search article' }}
+          sx={{
+            ml: 1,
+            flex: 1,
+            color: 'var(--color-text, #fff)',
+            fontSize: '0.95rem',
+            '::placeholder': {
+              color: 'rgba(255,255,255,0.6)',
+              opacity: 1,
+            },
+          }}
+          placeholder="Buscar artículo..."
+          inputProps={{ 'aria-label': 'buscar artículo' }}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
 
-        {/* La lupa envía el formulario */}
         <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-          <SearchIcon sx={{ color: 'var(--color-accent-60)' }} />
+          <SearchIcon sx={{ color: 'var(--color-accent-60, #90caf9)' }} />
         </IconButton>
       </Paper>
-
-      {/* Panel de filtros plegable */}
-      <Collapse in={filtersOpen} unmountOnExit>
-        {FilterComponent ? (
-          <FilterComponent
-            onClose={() => setFiltersOpen(false)}
-            // pasa más props si necesitas (onApply, valores, etc.)
-          />
-        ) : (
-          <Paper
-            elevation={0}
-            sx={{
-              mt: 1,
-              p: 2,
-              borderRadius: 2,
-              bgcolor: 'var(--color-white)',
-            }}
-          >
-            {/* Placeholder si aún no tienes componente */}
-            <strong>Filtros</strong>: coloca aquí tu componente de filtros.
-          </Paper>
-        )}
-      </Collapse>
     </Box>
   );
 }

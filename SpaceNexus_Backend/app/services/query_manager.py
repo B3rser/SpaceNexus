@@ -11,7 +11,7 @@ class QueryManager:
         self._mock_graph_db = {
             "nodes": [
                 {
-                    "id": "12870_2017_Article_1024.json",
+                    "id": "12870_2017_Article_1024",
                     "labels": [
                         "trans-Golgi network",
                         "Root movement",
@@ -25,12 +25,12 @@ class QueryManager:
                     ],
                     "year": 2017,
                     "links": [
-                        "514.json",
-                        "1471-2229-11-25.json"
+                        "514",
+                        "1471-2229-11-25"
                     ]
                 },
                 {
-                    "id": "41598_2024_Article_51756.json",
+                    "id": "41598_2024_Article_51756",
                     "labels": [
                         "DNA methylation",
                         "galactic cosmic radiation",
@@ -57,13 +57,13 @@ class QueryManager:
                     ],
                     "year": 2024,
                     "links": [
-                        "41526_2016_Article_2.json",
-                        "41598_2024_Article_57948.json",
-                        "2975810.json"
+                        "41526_2016_Article_2",
+                        "41598_2024_Article_57948",
+                        "2975810"
                     ]
                 },
                 {
-                    "id": "41526_2016_Article_2.json",
+                    "id": "41526_2016_Article_2",
                     "labels": [
                         "NASA translational research",
                         "Life Sciences Translational Path",
@@ -90,11 +90,11 @@ class QueryManager:
                     ],
                     "year": 2017,
                     "links": [
-                        "41598_2024_Article_51756.json"
+                        "41598_2024_Article_51756"
                     ]
                 },
                 {
-                    "id": "1471-2229-11-25.json",
+                    "id": "1471-2229-11-25",
                     "labels": [
                         "Rab GTPases",
                         "AtRabD2b",
@@ -113,13 +113,13 @@ class QueryManager:
                     ],
                     "year": 2011,
                     "links": [
-                        "12870_2017_Article_1024.json",
-                        "514.json",
-                        "41431_2023_Article_1462.json"
+                        "12870_2017_Article_1024",
+                        "514",
+                        "41431_2023_Article_1462"
                     ]
                 },
                 {
-                    "id": "2975810.json",
+                    "id": "2975810",
                     "labels": [
                         "F1",
                         "F1A",
@@ -146,12 +146,12 @@ class QueryManager:
                     ],
                     "year": -1,
                     "links": [
-                        "41598_2024_Article_51756.json",
-                        "41598_2024_Article_57948.json"
+                        "41598_2024_Article_51756",
+                        "41598_2024_Article_57948"
                     ]
                 },
                 {
-                    "id": "40168_2022_Article_1332.json",
+                    "id": "40168_2022_Article_1332",
                     "labels": [
                         "ISS",
                         "Metagenomics",
@@ -175,11 +175,11 @@ class QueryManager:
                     ],
                     "year": 2022,
                     "links": [
-                        "41598_2024_Article_57948.json"
+                        "41598_2024_Article_57948"
                     ]
                 },
                 {
-                    "id": "41598_2024_Article_57948.json",
+                    "id": "41598_2024_Article_57948",
                     "labels": [
                         "BP",
                         "MF",
@@ -228,14 +228,14 @@ class QueryManager:
                     ],
                     "year": 2024,
                     "links": [
-                        "41598_2024_Article_51756.json",
-                        "2975810.json",
-                        "40168_2022_Article_1332.json",
-                        "2044-5040-4-13.json"
+                        "41598_2024_Article_51756",
+                        "2975810",
+                        "40168_2022_Article_1332",
+                        "2044-5040-4-13"
                     ]
                 },
                 {
-                    "id": "2044-5040-4-13.json",
+                    "id": "2044-5040-4-13",
                     "labels": [
                         "Sarcoglycan",
                         "Sarcoglycanopathies",
@@ -258,11 +258,11 @@ class QueryManager:
                     ],
                     "year": 2014,
                     "links": [
-                        "41598_2024_Article_57948.json"
+                        "41598_2024_Article_57948"
                     ]
                 },
                 {
-                    "id": "514.json",
+                    "id": "514",
                     "labels": [
                         "SYP41",
                         "SYP61",
@@ -287,12 +287,12 @@ class QueryManager:
                     ],
                     "year": 2011,
                     "links": [
-                        "12870_2017_Article_1024.json",
-                        "1471-2229-11-25.json"
+                        "12870_2017_Article_1024",
+                        "1471-2229-11-25"
                     ]
                 },
                 {
-                    "id": "41431_2023_Article_1462.json",
+                    "id": "41431_2023_Article_1462",
                     "labels": [
                         "extracellular effects of SARS-CoV-2",
                         "systemic metabolic remodeling",
@@ -332,67 +332,67 @@ class QueryManager:
                     ],
                     "year": 2024,
                     "links": [
-                        "1471-2229-11-25.json"
+                        "1471-2229-11-25"
                     ]
                 }
             ],
             "links": [
                 {
-                    "source": "12870_2017_Article_1024.json",
-                    "target": "514.json",
+                    "source": "12870_2017_Article_1024",
+                    "target": "514",
                     "relationship": "shares author and topic (TNO1, vacuolar trafficking)"
                 },
                 {
-                    "source": "12870_2017_Article_1024.json",
-                    "target": "1471-2229-11-25.json",
+                    "source": "12870_2017_Article_1024",
+                    "target": "1471-2229-11-25",
                     "relationship": "shares author and topic (Arabidopsis, cellular trafficking)"
                 },
                 {
-                    "source": "41598_2024_Article_51756.json",
-                    "target": "41526_2016_Article_2.json",
+                    "source": "41598_2024_Article_51756",
+                    "target": "41526_2016_Article_2",
                     "relationship": "shares author and thematic link (NASA, space biology)"
                 },
                 {
-                    "source": "41598_2024_Article_51756.json",
-                    "target": "41598_2024_Article_57948.json",
+                    "source": "41598_2024_Article_51756",
+                    "target": "41598_2024_Article_57948",
                     "relationship": "shares author, topic (GCR, epigenetics) and data source (GeneLab, JAXA)"
                 },
                 {
-                    "source": "41598_2024_Article_51756.json",
-                    "target": "2975810.json",
+                    "source": "41598_2024_Article_51756",
+                    "target": "2975810",
                     "relationship": "shares author and topic (GeneLab, data systems)"
                 },
                 {
-                    "source": "1471-2229-11-25.json",
-                    "target": "514.json",
+                    "source": "1471-2229-11-25",
+                    "target": "514",
                     "relationship": "shares author and topic (Arabidopsis, cellular trafficking)"
                 },
                 {
-                    "source": "1471-2229-11-25.json",
-                    "target": "41431_2023_Article_1462.json",
+                    "source": "1471-2229-11-25",
+                    "target": "41431_2023_Article_1462",
                     "relationship": "shares author (Eve Syrkin Wurtele)"
                 },
                 {
-                    "source": "2975810.json",
-                    "target": "41598_2024_Article_57948.json",
+                    "source": "2975810",
+                    "target": "41598_2024_Article_57948",
                     "relationship": "shares author and topic (NASA, GeneLab, data systems)"
                 },
                 {
-                    "source": "40168_2022_Article_1332.json",
-                    "target": "41598_2024_Article_57948.json",
+                    "source": "40168_2022_Article_1332",
+                    "target": "41598_2024_Article_57948",
                     "relationship": "shares author and data source (ISS, GeneLab)"
                 },
                 {
-                    "source": "41598_2024_Article_57948.json",
-                    "target": "2044-5040-4-13.json",
+                    "source": "41598_2024_Article_57948",
+                    "target": "2044-5040-4-13",
                     "relationship": "topic connection (muscle, spaceflight, sarcopenia)"
                 }
             ]
         }
         self._mock_articles_db = {
-            "12870_2017_Article_1024.json": {
+            "12870_2017_Article_1024": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3177255/",
-                "id": "12870_2017_Article_1024.json",
+                "id": "12870_2017_Article_1024",
                 "title": "TNO1, a TGN-localized SNARE-interacting protein, modulates root skewing in Arabidopsis thaliana",
                 "authors": [
                     "Rahul Roy",
@@ -421,9 +421,9 @@ class QueryManager:
                 "risks_and_mitigation": "",
                 "results_and_conclusions": "Mutants lacking TNO1 show exaggerated root skewing and CFR; skewing increases with MT stabilization but is not further altered by MT destabilization; MT orientation remains unchanged, suggesting CFR changes are MT-dependent but orientation-independent; TNO1 is required for maintenance of cell morphology in mature root regions and hypocotyl bases; the TGN SNARE machinery is implicated in epidermal CFR and cell expansion during root growth."
             },
-            "2044-5040-4-13.json": {
+            "2044-5040-4-13": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4095884/",
-                "id": "2044-5040-4-13.json",
+                "id": "2044-5040-4-13",
                 "title": "Absence of γ-sarcoglycan alters the response of p70S6 kinase to mechanical perturbation in murine skeletal muscle",
                 "authors": [
                     "Catherine Moorwood",
@@ -463,9 +463,9 @@ class QueryManager:
                 "risks_and_mitigation": "",
                 "results_and_conclusions": "Key findings include that p70S6K is mechanically responsive in isolated muscles, with elevated basal activation in γ-SG-/- mice and sustained activation upon stretch in γ-SG-/- compared to the transient response in C57; rapamycin blocks p70S6K activation in C57 but not fully in γ-SG-/-, where S6RP remains elevated, suggesting γ-SG is required for inactivation of the p70S6K pathway. Calcium-independent regulation of p70S6K contrasts with calcium-dependent regulation of ERK1/2 signaling. Collectively, γ-SG appears to be a critical component of mechanotransduction in skeletal muscle, and its absence reveals altered load-sensing that could contribute to dystrophic pathology."
             },
-            "41431_2023_Article_1462.json": {
+            "41431_2023_Article_1462": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10772081/",
-                "id": "41431_2023_Article_1462.json",
+                "id": "41431_2023_Article_1462",
                 "title": "A comprehensive SARS-CoV-2 and COVID-19 review, Part 2: host extracellular to systemic effects of SARS-CoV-2 infection",
                 "authors": [
                     "S. Anand Narayanan",
@@ -520,9 +520,9 @@ class QueryManager:
                 "risks_and_mitigation": "Risks highlighted include unequal global distribution of vaccines and antivirals, which sustains transmission and variant emergence. Mitigations suggested by the article include continued development and deployment of vaccines and antiviral therapeutics, as well as research into the extracellular and systemic pathways influenced by SARS-CoV-2 to identify new therapeutic targets and protective strategies.",
                 "results_and_conclusions": "The results demonstrate widespread metabolic and humoral remodeling during SARS-CoV-2 infection, with systemic manifestations including altered energy metabolism, lipid handling, and endothelial function. These changes correlate with disease severity and offer mechanistic insights that support the conclusions: SARS-CoV-2 drives multi-organ physiological remodeling through extracellular signals, with implications for prognosis, treatment, and future research into the mechanisms of viral diseases."
             },
-            "41526_2016_Article_2.json": {
+            "41526_2016_Article_2": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5460236/",
-                "id": "41526_2016_Article_2.json",
+                "id": "41526_2016_Article_2",
                 "title": "From the bench to exploration medicine: NASA life sciences translational research for human exploration and habitation missions",
                 "authors": [
                     "Joshua S. Alwood",
@@ -562,9 +562,9 @@ class QueryManager:
                 "risks_and_mitigation": "NASA identifies key spaceflight health risks such as immune dysfunction, microbial-host interactions, oxidative stress, and visual impairment (VI) syndrome, alongside general environmental factors like microgravity, confinement, and space radiation. Mitigation entails advancing translational research to develop preventive and therapeutic countermeasures, fostering cross-disciplinary collaboration, leveraging translational pipelines to translate findings into operational tools and medical protocols, and institutionalizing processes (e.g., HRP Roadmap, Translational Research Institute) to systematically address knowledge gaps and implement countermeasures in operations.",
                 "results_and_conclusions": "The paper documents progress in institutionalizing NASA translational research, including the 2004 cross-disciplinary workshops, subsequent NASA-sponsored events (ASGSR 2014–2015; HRP Investigators Workshops 2015–2016), and the establishment of the Translational Research Institute in 2016. It concludes that integrating Space Biology and HRP within a NIH-like translational framework, guided by NASA and National Academy recommendations, will enhance knowledge transfer, accelerate countermeasure development, and improve preparation for exploration-class missions. It also emphasizes the potential for Earth-based medical applications via the ISS National Laboratory designation."
             },
-            "40168_2022_Article_1332.json": {
+            "40168_2022_Article_1332": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9400218/",
-                "id": "40168_2022_Article_1332.json",
+                "id": "40168_2022_Article_1332",
                 "title": "Machine learning algorithm to characterize antimicrobial resistance associated with the International Space Station surface microbiome",
                 "authors": [
                     "Pedro Madrigal",
@@ -602,9 +602,9 @@ class QueryManager:
                 "risks_and_mitigation": "",
                 "results_and_conclusions": "Results demonstrate that ML-based AMR gene prediction can uncover novel determinants in ISS surface microbiomes, with experimental validation confirming resistance in pathogenic species; conclusions emphasize ML's value in identifying concealed AMR determinants in metagenomic datasets and its implications for astronaut health."
             },
-            "1471-2229-11-25.json": {
+            "1471-2229-11-25": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3040128/",
-                "id": "1471-2229-11-25.json",
+                "id": "1471-2229-11-25",
                 "title": "AtRabD2b and AtRabD2c have overlapping functions in pollen development and pollen tube growth",
                 "authors": [
                     "Jianling Peng",
@@ -636,9 +636,9 @@ class QueryManager:
                 "risks_and_mitigation": "",
                 "results_and_conclusions": "The results demonstrate that AtRabD2b and AtRabD2c have overlapping expression and partially redundant functions essential for proper pollen development and pollen tube growth. The double mutant exhibits defective pollen morphology and impaired tube elongation, leading to reduced fertility and shorter siliques. Complementation rescues these defects, and both proteins localize to the Golgi, supporting a role in ER-to-Golgi trafficking. This work concludes that AtRabD2b and AtRabD2c contribute to vesicle trafficking in pollen in a manner not fully compensated by other RabD family members."
             },
-            "41598_2024_Article_57948.json": {
+            "41598_2024_Article_57948": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11166946/",
-                "id": "41598_2024_Article_57948.json",
+                "id": "41598_2024_Article_57948",
                 "title": "Aging and putative frailty biomarkers are altered by spaceflight",
                 "authors": [
                     "Andrea Camera",
@@ -710,9 +710,9 @@ class QueryManager:
                 "risks_and_mitigation": "Risks associated with spaceflight include space radiation, altered gravity, isolation and confinement, distance from Earth, and hostile/closed environments. These factors can drive genomic instability, mitochondrial dysfunction, inflammation, homeostatic dysregulation, and epigenomic changes, contributing to frailty and age-related diseases. Mitigation strategies include continuous health monitoring, development of frailty indices for early detection, countermeasures to preserve muscle mass and immune function, and designing mission architectures that minimize radiation exposure and environmental stressors.",
                 "results_and_conclusions": "Results show tissue-specific frailty-related gene expression changes in rodent muscles during spaceflight, with a subset of DEGs common across datasets, suggesting a frailty-like response to space conditions. Conclusions emphasize the potential utility of frailty biomarkers for astronaut health surveillance and the need for preventive strategies in future missions."
             },
-            "41598_2024_Article_51756.json": {
+            "41598_2024_Article_51756": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10789781/",
-                "id": "41598_2024_Article_51756.json",
+                "id": "41598_2024_Article_51756",
                 "title": "Chromosomal positioning and epigenetic architecture influence DNA methylation patterns triggered by galactic cosmic radiation",
                 "authors": [
                     "Adrian Perdyan",
@@ -756,9 +756,9 @@ class QueryManager:
                 "risks_and_mitigation": "During long exposure, these alterations are likely to increase the risk of cancer and degenerative diseases occurrence. Our work aims to mitigate risk by identifying epigenetic and chromatin-context factors that influence radiation damage, potentially guiding protective strategies for space missions.",
                 "results_and_conclusions": "56Fe irradiation induces a persistent DNA methylation increase, whereas 28Si and X-ray induce decreases with X-ray effects not persisting over time. Chromatin architecture and nuclear positioning modulate radiation response, with Hi-C-defined radial layers revealing layer-specific epigenetic and transcriptional changes. The study provides novel insights into the epigenetic and transcriptomic responses and the role of chromatin structure in galactic cosmic radiation damage."
             },
-            "514.json": {
+            "514": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3177255/",
-                "id": "514.json",
+                "id": "514",
                 "title": "TNO1 Is Involved in Salt Tolerance and Vacuolar Trafficking in Arabidopsis",
                 "authors": [
                     "Sang-Jin Kim",
@@ -798,9 +798,9 @@ class QueryManager:
                 "risks_and_mitigation": "",
                 "results_and_conclusions": "Results demonstrated that TNO1 is a TGN-associated, membrane-integrated protein that interacts with the SYP41 SNARE complex and is required for efficient vacuolar trafficking. The tno1 mutant's salt/osmotic sensitivity and mislocalization of SYP61, along with partial secretion of vacuolar proteins and delayed BFA compartment formation, support a model in which TNO1 facilitates vesicle fusion at the TGN and maintains TGN structure/identity, contributing to salt tolerance and proper vacuolar protein sorting."
             },
-            "2975810.json": {
+            "2975810": {
                 "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6371294/",
-                "id": "2975810.json",
+                "id": "2975810",
                 "title": "FAIRness and Usability for Open-access Omics Data Systems",
                 "authors": [
                     "Daniel C. Berrios",
