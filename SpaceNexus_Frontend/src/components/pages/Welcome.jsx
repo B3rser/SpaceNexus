@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AvatarModel from "../Avatar";
 import RoleInfoPanel from "../RoleInfoPanel";
 import { useNavigate } from "react-router-dom";
