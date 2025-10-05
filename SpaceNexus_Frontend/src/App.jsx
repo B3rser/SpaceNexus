@@ -25,8 +25,10 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path='/knowledgeGraph' element={<KnowledgeGraph />} />
         <Route path='/test' element={<Test />} />
-        <Route path='/knowledgeGraph/:user' element={<KnowledgeGraph />} />
-        <Route path='/article' element={<ArticleView rol="Astronauta" nombre="Artículo C" />} />
+        <Route path='/knowledgeGraph/:name' element={<KnowledgeGraph />} />
+        { /*<Route path='/article' element={<ArticleView rol="Astronauta" nombre="Artículo C" />} />*/}
+        <Route path="/article/:articleId" element={<ArticleView />} />
+
       </Routes>
     </BrowserRouter>
   );

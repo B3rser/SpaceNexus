@@ -3,22 +3,49 @@ import { Graph } from '../Graph'
 import { InfoNode } from '../InfoNode';
 import { useParams } from 'react-router-dom';
 
-import { getFullGraph } from '../../services/graph.service';
+import { getFullGraph, getNodeSubgraph } from '../../services/graph.service';
 
 import graphData from '../../assets/graph-data.json';
 import CustomizedInputBase from '../CustomizedInputBase';
 
 export function KnowledgeGraph() {
+  const { name } = useParams();
+
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
 
   const [selectedNode, setSelectedNode] = useState(null);
-  const { user } = useParams();
-
 
   useEffect(() => {
+    const fetchGraphData = async () => {
+      try {
+        setLoading(true);
+        let dataFromApi;
+        if (name) {
+          
+          console.log(`Buscando subgrafo para el nodo: ${name}`);
+          dataFromApi = await getNodeSubgraph(name);
+        } else {
+          console.log("Buscando el grafo completo...");
+          dataFromApi = await getFullGraph();
+        }
+
+        setGraphData(dataFromApi);
+        setError(null);
+      } catch (err) {
+        setError("Error al cargar los datos del grafo.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGraphData();
+  }, [name]);
+
+  /*useEffect(() => {
     const fetchGraphData = async () => {
       try {
         const data = await getFullGraph();
@@ -32,22 +59,27 @@ export function KnowledgeGraph() {
       finally { setLoading(false); }
     };
     fetchGraphData();
-  }, []);
-  /*
-    useEffect(() => {
-      if (user) {
-        const node = graphData.nodes.find(n => n.id === user);
-        if (node) setSelectedNode(node);
-      }
-    }, [user]);
-  */
-  useEffect(() => {
+  }, []);*/
+
+
+  /*useEffect(() => {
     // Nos aseguramos de que los nodos ya se hayan cargado antes de buscar
     if (user && graphData.nodes.length > 0) {
       const node = graphData.nodes.find(n => n.id === user);
       if (node) setSelectedNode(node);
     }
-  }, [user, graphData]);
+  }, [user, graphData]);*/
+
+  useEffect(() => {
+    if (name && graphData.nodes.length > 0) {
+      const node = graphData.nodes.find(n => n.id === name);
+      if (node) {
+        setSelectedNode(node);
+      }
+    } else {
+      setSelectedNode(null);
+    }
+  }, [name, graphData]);
   const handleRelationClick = (relationId) => {
     const relatedNode = graphData.nodes.find(node => node.id === relationId);
     if (relatedNode) {
