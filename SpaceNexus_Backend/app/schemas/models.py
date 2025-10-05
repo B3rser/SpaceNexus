@@ -3,6 +3,7 @@
 from enum import Enum
 from pydantic import BaseModel
 from typing import List
+from typing import Dict, Any
 
 class GraphStats(BaseModel):
     """
@@ -116,3 +117,10 @@ class SearchQuery(BaseModel):
 class LabelFrequency(BaseModel):
     label: str
     count: int
+
+class ChatbotResponse(BaseModel):
+    answer: str
+
+class ChatbotRequest(BaseModel):
+    json_data: Dict[str, Any]
+    question: str
