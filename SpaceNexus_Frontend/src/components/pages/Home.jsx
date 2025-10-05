@@ -47,6 +47,9 @@ export function Home() {
     const handleNavigateToGraph = () => {
         navigate('/knowledgeGalaxy');
     };
+    const handleNavigateToSearch = () => { navigate('/semanticSearch'); };
+
+
     if (loading) {
         return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}><CircularProgress /></Box>;
     }
@@ -78,7 +81,7 @@ export function Home() {
                     color='var(--color-text)'
                     hoverColor="var(--color-secondary-40)"
                     tooltipTitle="Semantic Search"
-                    onClick={handleNavigateToGraph}
+                    onClick={handleNavigateToSearch}
                 >
                     <SearchIcon />
                 </FloatingBtn>
