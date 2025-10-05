@@ -3,8 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Home } from './components/pages/Home'
 import { BackgroundParticles } from './components/BackgroundParticles';
+import Welcome from './components/pages/Welcome';
+import SelectRole from './components/pages/ProfileSelectPage';
 
 import './App.css'
+
 
 function App() {
 
@@ -12,7 +15,9 @@ function App() {
     <BrowserRouter>
       <BackgroundParticles />
       <Routes>
-        <Route path="/Home" element={<Home />} />
+        <Route path="/" element={<Welcome key="welcome" />} />
+        <Route path="/select-role/:role" element={<SelectRole />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   )
