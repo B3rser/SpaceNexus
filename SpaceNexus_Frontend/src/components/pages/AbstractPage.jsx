@@ -163,14 +163,45 @@ export default function ArticleView() {
   // const sections = ROLE_SECTIONS[role] || [];
   const theme = THEME_STYLES[role] || {};
 
-  const availableSections = ['abstract', 'key_points', 'impact_and_application', 'risks_and_mitigation', 'results_and_conclusions'];
-  const sections = availableSections.filter(key => article.hasOwnProperty(key));
-  const sectionTitles = {
-    'abstract': 'Abstract', 'key_points': 'Key Points',
-    'results_and_conclusions': 'Results and Conclusions', 'impact_and_application': 'Impact and Application',
-    'risks_and_mitigation': 'Risks and Mitigation'
-  };
+
+
+ const ANALYSIS_FIELDS = [
+  'knowledge_gaps',
+  'consensus_disagreement',
+  'actionable_insights',
+  'scientific_progress',
+];
+
+const availableSections = [
+  'abstract',
+  'key_points',
+  'impact_and_application',
+  'risks_and_mitigation',
+  'results_and_conclusions',
+];
+
+const shouldIncludeAnalysis = ANALYSIS_FIELDS.some(key => article.hasOwnProperty(key));
+
+
+let finalSections = availableSections.filter(key => article.hasOwnProperty(key));
+
+if (shouldIncludeAnalysis) {
+  finalSections.unshift('areas_of_analysis');
+}
+
+const sectionTitles = {
+
+  'areas_of_analysis': 'Areas of Analysis', 
+  
+  'abstract': 'Abstract',
+  'key_points': 'Key Points',
+  'results_and_conclusions': 'Results and Conclusions',
+  'impact_and_application': 'Impact and Application',
+  'risks_and_mitigation': 'Risks and Mitigation',
+};
+
   console.log('articulo', article);
+ 
 
   return (
     <div style={{ minHeight: '100vh' }}>
@@ -371,7 +402,7 @@ export default function ArticleView() {
               '& .MuiTabs-indicator': { backgroundColor: theme.primaryColor, height: '4px' },
             }}
           >
-            {sections.map((sectionKey) => (
+            {finalSections.map((sectionKey) => (
               <Tab
                 key={sectionKey}
                 label={sectionTitles[sectionKey]}
@@ -398,13 +429,13 @@ export default function ArticleView() {
                 paddingBottom: '10px',
               }}
             >
-              {sectionTitles[sections[selectedTab]]}
+              {sectionTitles[finalSections[selectedTab]]}
             </Typography>
             <Typography
               variant="body1"
               sx={{ fontSize: '1.2rem', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}
             >
-              {article[sections[selectedTab]]}
+              {article[finalSections[selectedTab]]}
             </Typography>
 
             {/* 🔹 ChatBot lateral */}
