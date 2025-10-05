@@ -10,9 +10,13 @@ export default function Welcome() {
   const [hovered, setHovered] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "Welcome";
+  });
+
   const handleSelectRole = (role) => {
     console.log("✅ Avatar clickeado:", role);
-    navigate(`/select-role/${role}`); 
+    navigate(`/select-role/${role}`);
   };
 
   return (

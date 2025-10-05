@@ -19,6 +19,7 @@ export function KnowledgeGraph() {
 
 
   useEffect(() => {
+    document.title = "Knowledge Galaxy";
     const fetchGraphData = async () => {
       try {
         const data = await getFullGraph();

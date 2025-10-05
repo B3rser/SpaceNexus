@@ -56,20 +56,20 @@ const RolePaper = styled(Paper)(({ role }) => {
 });
 
 const ROLE_SECTIONS = {
-    Cientifico: ['Abstract', 'Datos Clave', 'Resultados', 'Conclusión'],
-    Inversor: ['Abstract', 'Impacto y Aplicación', 'Resultados', 'Conclusión'],
-    Astronauta: ['Abstract', 'Riesgos y Mitigación', 'Resultados', 'Conclusión'],
+  Cientifico: ['Abstract', 'Datos Clave', 'Resultados', 'Conclusión'],
+  Inversor: ['Abstract', 'Impacto y Aplicación', 'Resultados', 'Conclusión'],
+  Astronauta: ['Abstract', 'Riesgos y Mitigación', 'Resultados', 'Conclusión'],
 };
 
 const MOCK_SUMMARY = {
-    Abstract: 'Resumen general adaptado al rol, lenguaje distinto según el rol.',
-    'Datos Clave': 'Datos científicos clave y relevantes para análisis técnico.',
-    Resultados: 'Resultados cuantitativos y cualitativos del artículo.',
-    Conclusiones: 'Síntesis y reflexiones finales desde la perspectiva científica.',
-    'Impacto y Aplicación': 'Potencial de inversión y aplicaciones prácticas inmediatas.',
-    'Riesgos y Mitigación': 'Riesgos detectados y estrategias de mitigación espacial.',
-    Conclusión: 'Cierre resumido con tono adaptado al rol.',
-    Etiquetas: ['Biologia', 'Fisica', 'Espacio', 'Investigacion', 'Marte']
+  Abstract: 'Resumen general adaptado al rol, lenguaje distinto según el rol.',
+  'Datos Clave': 'Datos científicos clave y relevantes para análisis técnico.',
+  Resultados: 'Resultados cuantitativos y cualitativos del artículo.',
+  Conclusiones: 'Síntesis y reflexiones finales desde la perspectiva científica.',
+  'Impacto y Aplicación': 'Potencial de inversión y aplicaciones prácticas inmediatas.',
+  'Riesgos y Mitigación': 'Riesgos detectados y estrategias de mitigación espacial.',
+  Conclusión: 'Cierre resumido con tono adaptado al rol.',
+  Etiquetas: ['Biologia', 'Fisica', 'Espacio', 'Investigacion', 'Marte']
 };
 
 
@@ -78,6 +78,10 @@ export default function ArticleView({ rol, nombre }) {
   const [sectionsContent, setSectionsContent] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState(0);
+
+  useEffect(() => {
+    document.title = "Articles";
+  });
 
   // Lógica de carga... (mantener tal cual)
   useEffect(() => {
@@ -107,21 +111,21 @@ export default function ArticleView({ rol, nombre }) {
       </Box>
     );
   }
-  
+
   const sections = ROLE_SECTIONS[rol] || [];
   const theme = THEME_STYLES[rol] || {};
 
   return (
-    <Box 
-      sx={{ 
+    <Box
+      sx={{
         width: '120%', // Mejor usar 100% que 100vw/vh para anidar en un layout
         height: '100%',
         minHeight: '100vh',
-        display: 'flex', 
-        flexDirection: 'column', 
+        display: 'flex',
+        flexDirection: 'column',
         // Fondo más oscuro para que el RolePaper resalte
-        backgroundColor: '#0F1624', 
-        
+        backgroundColor: '#0F1624',
+
       }}
     >
       <Box

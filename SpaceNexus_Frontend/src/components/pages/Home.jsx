@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import HubIcon from '@mui/icons-material/Hub';
-import SearchIcon from '@mui/icons-material/Search'
+import SearchIcon from '@mui/icons-material/Search';
 import { Carousel } from '../Carousel';
 import { Box } from '@mui/material';
 import { FloatingBtn } from '../FloatingBtn';
 
 export function Home() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = "Home";
+    });
+
     return (
         <Box
             sx={{
@@ -25,17 +32,29 @@ export function Home() {
                     gap: 2,
                 }}
             >
-                <FloatingBtn bgColor="var(--color-secondary)" color='var(--color-text)' hoverColor="var(--color-secondary-40)" tooltipTitle="ir-a-otra-pagina">
+                <FloatingBtn
+                    onClick={() => navigate('/SemanticSearch')}
+                    bgColor="var(--color-secondary)"
+                    color='var(--color-text)'
+                    hoverColor="var(--color-secondary-40)"
+                    tooltipTitle="Semantic Search"
+                >
                     <SearchIcon />
                 </FloatingBtn>
-                <FloatingBtn bgColor="var(--color-accent)" color='var(--color-text)' hoverColor="var(--color-accent-40)" tooltipTitle="">
+                <FloatingBtn
+                    onClick={() => navigate('/KnowledgeGalaxy')}
+                    bgColor="var(--color-accent)"
+                    color='var(--color-text)'
+                    hoverColor="var(--color-accent-40)"
+                    tooltipTitle="Knowledge Galaxy"
+                >
                     <HubIcon />
                 </FloatingBtn>
             </Box>
 
             <Box>
-                <Carousel title="Recientes" />
-                <Carousel title="Más relaciones" />
+                <Carousel title="Recent" />
+                <Carousel title="More Relationships" />
             </Box>
         </Box>
     );

@@ -11,7 +11,6 @@ import ArticleView from './components/pages/AbstractPage';
 
 import './App.css'
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -23,9 +22,9 @@ function App() {
         <Route path="/welcome" element={<Welcome key="welcome" />} />
         <Route path="/select-role/:role" element={<SelectRole />} />
         <Route path="/home" element={<Home />} />
-        <Route path='/knowledgeGraph' element={<KnowledgeGraph />} />
+        <Route path='/knowledgeGalaxy' element={<KnowledgeGraph />} />
         <Route path='/test' element={<Test />} />
-        <Route path='/knowledgeGraph/:user' element={<KnowledgeGraph />} />
+        <Route path='/knowledgeGalaxy/:user' element={<KnowledgeGraph />} />
         <Route path='/article' element={<ArticleView rol="Astronauta" nombre="Artículo C" />} />
       </Routes>
     </BrowserRouter>

@@ -6,8 +6,11 @@ export default function SelectRole() {
   const { role } = useParams();
 
   useEffect(() => {
+        document.title = "Selecting role..";
+    });
+
+  useEffect(() => {
     const timer = setTimeout(() => {
-      console.log("➡️ Redirigiendo al home...");
       navigate("/home");
     },4000);
 
