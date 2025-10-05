@@ -1,5 +1,4 @@
-# app/services/query_manager.py
-
+from collections import Counter 
 from typing import Optional, List
 
 
@@ -170,3 +169,21 @@ class QueryManager:
         sorted_articles = sorted(all_articles, key=lambda article: len(article.get('labels', [])), reverse=True)
         
         return sorted_articles[:limit]
+    
+    def get_top_labels(self, limit: int) -> List[dict]:
+        """
+        Calcula la frecuencia de todas las etiquetas y devuelve las más comunes.
+        """
+        print(f"LOG: Obteniendo las {limit} etiquetas más comunes.")
+        
+        all_labels_flat_list = []
+        for node in self._mock_graph_db["nodes"]:
+            all_labels_flat_list.extend(node.get("labels", []))
+        for article in self._mock_articles_db.values():
+            all_labels_flat_list.extend(article.get("labels", []))
+            
+        label_counts = Counter(all_labels_flat_list)
+        
+        top_labels_tuples = label_counts.most_common(limit)
+        
+        return [{"label": label, "count": count} for label, count in top_labels_tuples]

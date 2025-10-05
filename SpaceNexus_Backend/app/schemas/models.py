@@ -92,3 +92,7 @@ class ArticleSummaryView(BaseModel):
 class SearchQuery(BaseModel):
     query: str
     max_results: int = 10
+    
+class LabelFrequency(BaseModel):
+    label: str
+    count: int
