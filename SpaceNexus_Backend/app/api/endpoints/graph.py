@@ -1,6 +1,6 @@
 # app/api/endpoints/graph.py
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, HTTPException 
 from pydantic import BaseModel 
 from typing import List       
 from app.services.query_manager import QueryManager
@@ -34,3 +34,13 @@ def filter_nodes(labels: List[str] = Query(..., min_length=1, description="Lista
     """
     # CAMBIO: Llamamos a la nueva función del servicio
     return query_manager.filter_nodes_and_get_neighbors(required_labels=labels)
+
+@router.get("/graph/node/{node_id}", response_model=GraphSample)
+def get_node_subgraph(node_id: str):
+    """
+    Obtiene un subgrafo a partir de un único nodo y sus vecinos de primer nivel.
+    """
+    subgraph = query_manager.get_subgraph_by_node_id(node_id=node_id)
+    if subgraph is None:
+        raise HTTPException(status_code=404, detail="Nodo no encontrado")
+    return subgraph

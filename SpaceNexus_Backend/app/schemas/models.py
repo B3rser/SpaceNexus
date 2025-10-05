@@ -77,3 +77,7 @@ class ArticleSummaryView(BaseModel):
     id: str
     title: str
     labels: List[str]
+    
+class SearchQuery(BaseModel):
+    query: str
+    max_results: int = 10
