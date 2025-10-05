@@ -102,6 +102,7 @@ export default function ArticleView() {
     };
 
     fetchArticle();
+    console.log(article)
   }, [articleId]);
 
   const handleChange = (event, newValue) => {
@@ -146,8 +147,6 @@ export default function ArticleView() {
         width: '120%', // Mejor usar 100% que 100vw/vh para anidar en un layout
         height: '100%',
         minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
         display: 'flex',
         flexDirection: 'column',
         // Fondo más oscuro para que el RolePaper resalte
