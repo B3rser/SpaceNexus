@@ -78,13 +78,21 @@ export function Graph({ selectedNode, setSelectedNode, data }) {
             .join('g')
             .attr('class', 'node')
             .call(drag(simulation));
+        node.append('title')
+            .text(d => d.title);
 
         node.append('circle')
             .attr('r', d => radiusScale(d.weight))
             .attr('fill', d => colorScale(d.weight));
 
         node.append('text')
-            .text(d => d.id)
+            .text(d => {
+                const maxLength = 20;
+                if (d.title.length > maxLength) {
+                    return d.title.substring(0, maxLength) + '...';
+                }
+                return d.title;
+            })
             .attr('x', d => radiusScale(d.weight) + 6)
             .attr('y', 5)
             .attr('pointer-events', 'none')

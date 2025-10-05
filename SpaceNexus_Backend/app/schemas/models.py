@@ -21,6 +21,7 @@ class GraphNode(BaseModel):
     links : List[str]
     authors: list[str] 
     year: int
+    title: str
 
 class GraphLink(BaseModel):
     source: str
@@ -42,6 +43,7 @@ class ArticleBase(BaseModel):
     authors: List[str]
     year: int
     labels: List[str]
+    url: str
     abstract: str
     key_points: str
     impact_and_application: str
@@ -55,9 +57,15 @@ class ArticleScientistView(BaseModel):
     authors: List[str]
     year: int
     labels: List[str]
+    url: str
     abstract: str
     key_points: str
     results_and_conclusions: str
+    knowledge_gaps: str | None = None
+    consensus_disagreement: str | None = None
+    actionable_insights: str | None = None
+    scientific_progress: str | None = None
+
 
 class ArticleInvestorView(BaseModel):
     id: str
@@ -65,9 +73,15 @@ class ArticleInvestorView(BaseModel):
     authors: List[str]
     year: int
     labels: List[str]
+    url: str
     abstract: str
     impact_and_application: str
     results_and_conclusions: str
+    knowledge_gaps: str | None = None
+    consensus_disagreement: str | None = None
+    actionable_insights: str | None = None
+    scientific_progress: str | None = None
+
 
 class ArticleArchitectView(BaseModel):
     id: str
@@ -75,9 +89,15 @@ class ArticleArchitectView(BaseModel):
     authors: List[str]
     year: int
     labels: List[str]
+    url: str
     abstract: str
     risks_and_mitigation: str
     results_and_conclusions: str
+    knowledge_gaps: str | None = None
+    consensus_disagreement: str | None = None
+    actionable_insights: str | None = None
+    scientific_progress: str | None = None
+
     
 class ArticleSummaryView(BaseModel):
     """
