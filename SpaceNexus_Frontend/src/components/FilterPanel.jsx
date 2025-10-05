@@ -9,7 +9,7 @@ export function FilterPanel({ onClose, onApply }) {
   // const [tags, setTags] = React.useState([]);
 
   return (
-    <Paper variant="outlined" sx={{ mt: 1, p: 2, borderRadius: 2, position: "relative",  }}>
+    <Paper variant="outlined" sx={{ mt: 1, p: 2, borderRadius: 2, position: "relative"}}>
       <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
         <div><strong>Filtros</strong> (aquí tus controles)</div>
         <div>

@@ -46,7 +46,7 @@ export function ArticleCard({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        minHeight: '180PX',     // 👈 controla altura base aquí
+        minHeight: '180PX',    
         overflow: 'hidden',
         transition: 'box-shadow .2s ease, transform .2s ease',
         '&:hover': { boxShadow: 3, transform: 'translateY(-1px)' },
@@ -80,7 +80,7 @@ export function ArticleCard({
             flexWrap="wrap"
             sx={{
               gap: 0.75,
-              maxHeight: 24 * 2 + 8, // 👈 2 filas exactas
+              maxHeight: 24 * 2 + 8, 
               overflow: 'hidden',
               alignContent: 'flex-start',
             }}
@@ -116,17 +116,17 @@ export function ArticleCard({
         </CardContent>
       </CardActionArea>
 
-      {/* CTA independiente (no dispara el click del área) */}
+
       <CardActions sx={{ p: 1, pt: 0 }}>
         <Button
           size="small"
           variant="contained"
           onClick={handleOpen}
           startIcon={<AccountTreeIcon />}
-          sx={{ ml: 'auto', borderRadius: '999px' }}
+          sx={{ ml: 'auto', borderRadius: '999px', background: 'var(--color-cosmic-purple)' }}
           aria-label={`Abrir en grafo: ${resolvedTitle}`}
         >
-          Ver en grafo
+          Ver grafo
         </Button>
       </CardActions>
     </Card>

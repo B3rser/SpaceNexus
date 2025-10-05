@@ -1,4 +1,3 @@
-// /src/CustomizedInputBase.jsx
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -7,10 +6,12 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Collapse from '@mui/material/Collapse';
+import FilterChips from './FilterChips';
 
-export default function CustomizedInputBase({ onSearch, FilterComponent }) {
+export default function CustomizedInputBase({ onSearch, FilterComponent, chips = [] }) {
   const [query, setQuery] = React.useState('');
   const [filtersOpen, setFiltersOpen] = React.useState(false);
+  const [selectedChips, setSelectedChips] = React.useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,24 +61,23 @@ export default function CustomizedInputBase({ onSearch, FilterComponent }) {
       </Paper>
 
       {/* Panel de filtros plegable */}
-      <Collapse in={filtersOpen} unmountOnExit>
+      <Collapse in={filtersOpen} unmountOnExit sx={{position:'relative'}}>
         {FilterComponent ? (
           <FilterComponent
             onClose={() => setFiltersOpen(false)}
-            // pasa más props si necesitas (onApply, valores, etc.)
+            selectedChips={selectedChips}
+            onChangeSelected={setSelectedChips}
           />
         ) : (
-          <Paper
-            elevation={0}
-            sx={{
-              mt: 1,
-              p: 2,
-              borderRadius: 2,
-              bgcolor: 'var(--color-white)',
-            }}
-          >
-            {/* Placeholder si aún no tienes componente */}
-            <strong>Filtros</strong>: coloca aquí tu componente de filtros.
+          <Paper elevation={0} sx={{ mt: 1, p: 2, borderRadius: 2, bgcolor: 'var(--color-white)', width: '78vw', mx: 'auto' }}>
+            <strong>Filtrar por etiquetas</strong>
+            <Box sx={{ mt: 1 }}>
+              <FilterChips
+                chips={chips}
+                selected={selectedChips}
+                onChangeSelected={setSelectedChips}
+              />
+            </Box>
           </Paper>
         )}
       </Collapse>
