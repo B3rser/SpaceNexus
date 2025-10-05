@@ -1,84 +1,71 @@
 import React from 'react';
-import { Card, CardContent, Typography, Button, Stack } from '@mui/material';
+import { Card, CardContent, Typography, Button, Stack, Box } from '@mui/material';
+import { motion, AnimatePresence } from "framer-motion";
+import { GlassButton } from './GlassButton';
+import { GlassChip } from './GlassChip';
 
-export function InfoNode({ selectedNode = null, onRelationClick, onTagClick }) {
-    if (!selectedNode) {
-        return null;
-    }
+const MotionCard = motion(Card);
 
+export function InfoNode({ selectedNode = null, onRelationClick }) {
     return (
-        <Card
-            sx={{
-                position: 'absolute',
-                zIndex: 1000,
-                top: 20,
-                right: 20,
-                width: 280,
-                borderRadius: '15px',
-                boxShadow: '0 2px 10px var(--shadow-10)',
-                bgcolor: 'var(--color-primary-40)',
-                border: '2px solid var(--color-primary)',
-            }}
-        >
-            <CardContent>
-                <Typography variant="h6" component="h3" gutterBottom>
-                    {selectedNode.id}
-                </Typography>
-
-                {selectedNode.links?.length > 0 && (
-                    <>
-                        <Typography variant="body2" sx={{ fontWeight: 'bold', mt: 1, mb: 1 }}>
-                            Relaciones:
+        <AnimatePresence>
+            {selectedNode && (
+                <MotionCard
+                    key={selectedNode.id}
+                    elevation={0}
+                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    sx={{
+                        position: "absolute",
+                        top: 20,
+                        right: 20,
+                        zIndex: 10,
+                        width: 280,
+                        background: 'linear-gradient(135deg, rgba(50, 100, 255, 0.15), rgba(200, 0, 255, 0.15))',
+                        backdropFilter: 'blur(100px)',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        borderRadius: '20px',
+                        boxShadow: '0 0 25px rgba(120, 200, 255, 0.5)',
+                        color: 'var(--color-text, #ffffff)',
+                    }}
+                >
+                    <CardContent>
+                        <Typography variant="h6" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+                            {selectedNode.id}
                         </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                            {selectedNode.links.map((rel, i) => (
-                                <Button
-                                    key={i}
-                                    variant="outlined"
-                                    size="small"
-                                    sx={{
-                                        borderRadius: "16px",
-                                        textTransform: "none",
-                                        fontSize: "0.8rem",
-                                        padding: "2px 8px",
-                                        minHeight: "unset"
-                                    }}
-                                    onClick={() => onRelationClick?.(rel)}
-                                >
-                                    {rel}
-                                </Button>
-                            ))}
-                        </Stack>
-                    </>
-                )}
 
-                {selectedNode.labels?.length > 0 && (
-                    <>
-                        <Typography variant="body2" sx={{ fontWeight: 'bold', mt: 2, mb: 1 }}>
-                            Etiquetas:
-                        </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                            {selectedNode.labels.map((tag, i) => (
-                                <Button
-                                    key={i}
-                                    variant="outlined"
-                                    size="small"
-                                    sx={{
-                                        borderRadius: "16px",
-                                        textTransform: "none",
-                                        fontSize: "0.8rem",
-                                        padding: "2px 8px",
-                                        minHeight: "unset"
-                                    }}
-                                    onClick={() => onTagClick?.(tag)}
-                                >
-                                    {tag}
-                                </Button>
-                            ))}
-                        </Stack>
-                    </>
-                )}
-            </CardContent>
-        </Card>
+                        {selectedNode.links?.length > 0 && (
+                            <Box mt={2}>
+                                <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
+                                    Relations:
+                                </Typography>
+                                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                                    {selectedNode.links.slice(0, 5).map((rel, i) => (
+                                        <GlassButton key={i} onClick={() => onRelationClick?.(rel)}>
+                                            {rel}
+                                        </GlassButton>
+                                    ))}
+                                </Stack>
+                            </Box>
+                        )}
+
+                        {selectedNode.labels?.length > 0 && (
+                            <Box mt={2}>
+                                <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
+                                    Labels:
+                                </Typography>
+                                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                                    {selectedNode.labels.slice(0, 5).map((tag, i) => (
+                                        <GlassChip key={i} label={tag} />
+                                    ))}
+                                </Stack>
+                            </Box>
+                        )}
+                    </CardContent>
+                </MotionCard>
+            )}
+        </AnimatePresence>
     );
 }
