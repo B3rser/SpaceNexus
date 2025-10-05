@@ -5,6 +5,11 @@ import { Box, Typography, Tabs, Tab, CircularProgress, Paper, Button, Chip } fro
 import { styled } from '@mui/system';
 
 import { getArticleById } from '../../services/articles.service';
+import ChatBotDrawer from '../ChatBot';
+
+import DescriptionIcon from '@mui/icons-material/Description'; // Paper Completo
+import LinkIcon from '@mui/icons-material/Link'; // Papers Relacionados
+import ChatIcon from '@mui/icons-material/Chat';
 
 // Paletas temáticas y estilos más audaces
 const THEME_STYLES = {
@@ -78,6 +83,11 @@ export default function ArticleView() {
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState(0);
 
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const [showAllAuthors, setShowAllAuthors] = React.useState(false);
+  const [showAllLabels, setShowAllLabels] = React.useState(false);
+
   useEffect(() => {
     document.title = "Articles";
   });
@@ -113,30 +123,48 @@ export default function ArticleView() {
     }
   };
 
+  const handleChatBot = () => {
+    setIsChatOpen(!isChatOpen);
+  };
+
   if (loading) {
-    // ... Carga (mantener tal cual)
     return (
       <Box sx={{ width: '100vh', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {/* Usamos el color primario del rol para el cargador */}
         <CircularProgress sx={{ color: (THEME_STYLES[selectedRole] || {}).primaryColor || 'secondary.main' }} />
         <Typography variant="h6" sx={{ ml: 2, color: 'text.primary' }}>Cargando resumen...</Typography>
       </Box>
     );
   }
 
+  if (error) {
+    return <Typography color="error">{error}</Typography>;
+  }
+
+  if (!article) {
+    return null;
+  }
+  const maxAuthors = 3;
+  const maxLabels = 3;
+
+  const visibleAuthors = showAllAuthors ? article.authors : article.authors.slice(0, maxAuthors);
+  const visibleLabels = showAllLabels ? article.labels : article.labels.slice(0, maxLabels);
+
+  const hasMoreAuthors = article.authors.length > maxAuthors;
+  const hasMoreLabels = article.labels.length > maxLabels;
+
+
   if (error || !article) {
     return <Box sx={{ color: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>{error || "Artículo no encontrado."}</Box>;
   }
 
-  // const sections = ROLE_SECTIONS[selectedRole] || [];
   const theme = THEME_STYLES[selectedRole] || {};
 
   const availableSections = ['abstract', 'key_points', 'impact_and_application', 'risks_and_mitigation', 'results_and_conclusions'];
   const sections = availableSections.filter(key => article.hasOwnProperty(key));
   const sectionTitles = {
-    'abstract': 'Abstract', 'key_points': 'Datos Clave',
-    'results_and_conclusions': 'Resultados y Conclusiones', 'impact_and_application': 'Impacto y Aplicación',
-    'risks_and_mitigation': 'Riesgos y Mitigación'
+    'abstract': 'Abstract', 'key_points': 'Key Points',
+    'results_and_conclusions': 'Results and Conclusions', 'impact_and_application': 'Impact and Application',
+    'risks_and_mitigation': 'Risks and Mitigation'
   };
 
   return (
@@ -160,56 +188,142 @@ export default function ArticleView() {
         <Box
           sx={{
             position: 'fixed',
-            right: 'calc((100vw - 120vw) / 2 - 120px)',
-            top: '40%',
+            right: 'calc((100vw - 120vw) / 2 - 80px)',
+            top: '30%',
             display: 'flex',
             flexDirection: 'column',
             gap: 2,
+            zIndex: 9999,
           }}
         >
+          {/* Paper Completo */}
           <Button
             variant="contained"
             href="https://www.google.com"
             target="_blank"
             sx={{
+              width: 60,
+              height: 60,
+              borderRadius: '50%',
+              minWidth: 0,
               background: theme.primaryColor,
               color: '#fff',
-              fontWeight: 'bold',
               boxShadow: theme.boxShadow,
-              '&:hover': { transform: 'scale(1.05)', background: theme.secondaryColor },
+              '&:hover': { transform: 'scale(1.1)', background: theme.secondaryColor },
             }}
           >
-            Paper Completo
+            <DescriptionIcon />
           </Button>
+
+          {/* Papers Relacionados */}
           <Button
             variant="outlined"
+            onClick={handleRelatedPapersClick}
             sx={{
+              width: 60,
+              height: 60,
+              borderRadius: '50%',
+              minWidth: 0,
               color: theme.primaryColor,
               borderColor: theme.primaryColor,
-              fontWeight: 'bold',
-              '&:hover': { background: 'rgba(255,255,255,0.1)' },
+              '&:hover': { background: 'rgba(255,255,255,0.1)', transform: 'scale(1.1)' },
             }}
-            onClick={handleRelatedPapersClick}
           >
-            Papers Relacionados
+            <LinkIcon />
+          </Button>
+
+          {/* ChatBot */}
+          <Button
+            variant="outlined"
+            onClick={handleChatBot}
+            sx={{
+              width: 60,
+              height: 60,
+              borderRadius: '50%',
+              minWidth: 0,
+              color: theme.primaryColor,
+              borderColor: theme.primaryColor,
+              '&:hover': { background: 'rgba(255,255,255,0.1)', transform: 'scale(1.1)' },
+            }}
+          >
+            <ChatIcon />
           </Button>
         </Box>
 
-        {/* Contenido principal */}
         <Box sx={{ flexGrow: 1, p: 4 }}>
           {/* --- Encabezado y Metadatos --- */}
-          <Box sx={{ mb: 3 }}>
-            <Typography variant="h3" sx={{ color: theme.primaryColor, fontWeight: 'bold' }}>
+          <Box
+            sx={{
+              mb: 4, // más espacio debajo del bloque
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1.5, // separación entre título y autores
+            }}
+          >
+            {/* --- Título del artículo --- */}
+            <Typography
+              variant="h4"
+              sx={{
+                color: theme.primaryColor,
+                fontWeight: 700,
+                letterSpacing: '0.5px',
+                lineHeight: 1.3,
+                fontSize: '1.9rem',
+              }}
+            >
               {article.title}
             </Typography>
-            <Typography variant="h6" sx={{ color: theme.color }}>
-              Autores: <strong>{article.authors.join(', ')}</strong> | Año: <strong>{article.year}</strong>
+
+            {/* --- Autores y año --- */}
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: theme.color,
+                fontSize: '1rem',
+                lineHeight: 1.7,
+              }}
+            >
+              <Box component="span" sx={{ fontWeight: 600, color: theme.secondaryColor }}>
+                Authors:
+              </Box>{' '}
+              <strong>{visibleAuthors.join(', ')}</strong>
+              {hasMoreAuthors && (
+                <>
+                  {!showAllAuthors && '... '}
+                  <Button
+                    variant="text"
+                    onClick={() => setShowAllAuthors(!showAllAuthors)}
+                    sx={{
+                      color: theme.primaryColor,
+                      fontWeight: 'bold',
+                      textTransform: 'none',
+                      ml: 1,
+                      fontSize: '0.9rem',
+                      '&:hover': { textDecoration: 'underline' },
+                    }}
+                  >
+                    {showAllAuthors ? 'show less' : 'show more'}
+                  </Button>
+                </>
+              )}
+              <Box
+                component="span"
+                sx={{
+                  ml: 2,
+                  color: theme.secondaryColor,
+                  fontWeight: 600,
+                }}
+              >
+                | Year:
+              </Box>{' '}
+              <strong>{article.year}</strong>
             </Typography>
           </Box>
 
-          {/* Etiquetas temáticas */}
+
+          {/* --- Etiquetas temáticas --- */}
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3 }}>
-            {article.labels.map((tag, i) => (
+            {visibleLabels.map((tag, i) => (
               <Chip
                 key={i}
                 label={tag}
@@ -224,6 +338,20 @@ export default function ArticleView() {
                 }}
               />
             ))}
+            {hasMoreLabels && (
+              <Button
+                variant="text"
+                onClick={() => setShowAllLabels(!showAllLabels)}
+                sx={{
+                  color: theme.primaryColor,
+                  fontWeight: 'bold',
+                  textTransform: 'none',
+                  '&:hover': { textDecoration: 'underline' },
+                }}
+              >
+                {showAllLabels ? 'show less' : 'show more'}
+              </Button>
+            )}
           </Box>
 
           {/* --- Pestañas de Navegación --- */}
@@ -273,8 +401,17 @@ export default function ArticleView() {
             >
               {article[sections[selectedTab]]}
             </Typography>
+
+            {/* 🔹 ChatBot lateral */}
+            <ChatBotDrawer
+              open={isChatOpen}
+              onClose={() => setIsChatOpen(false)}
+              role={selectedRole}
+              theme={theme}
+            />
           </RolePaper>
         </Box>
+
       </Box>
     </div>
   );
