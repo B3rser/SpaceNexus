@@ -1,5 +1,6 @@
 # main.py
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints import graph  
 from app.api.endpoints import labels 
 from app.api.endpoints import graph, labels, articles
@@ -10,6 +11,23 @@ app = FastAPI(
     description="API para interactuar con el Knowledge Graph de Biología Espacial.",
     version="1.0.0"
 )
+
+
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:5173", 
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"], # Permite todos los métodos (GET, POST, etc.)
+    allow_headers=["*"], # Permite todas las cabeceras
+)
+
 
 #Imports de los routers
 app.include_router(graph.router, tags=["Graph"])
