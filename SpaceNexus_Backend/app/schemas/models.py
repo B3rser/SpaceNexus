@@ -19,7 +19,8 @@ class GraphNode(BaseModel):
     labels: List[str] 
     weight: int
     links : List[str]
-    #properties: dict
+    authors: list[str] 
+    year: int
 
 class GraphLink(BaseModel):
     source: str
@@ -38,6 +39,8 @@ class UserRole(str, Enum):
 class ArticleBase(BaseModel):
     id: str
     title: str
+    authors: List[str]
+    year: int
     labels: List[str]
     abstract: str
     key_points: str
@@ -49,6 +52,8 @@ class ArticleBase(BaseModel):
 class ArticleScientistView(BaseModel):
     id: str
     title: str
+    authors: List[str]
+    year: int
     labels: List[str]
     abstract: str
     key_points: str
@@ -57,6 +62,8 @@ class ArticleScientistView(BaseModel):
 class ArticleInvestorView(BaseModel):
     id: str
     title: str
+    authors: List[str]
+    year: int
     labels: List[str]
     abstract: str
     impact_and_application: str
@@ -65,6 +72,8 @@ class ArticleInvestorView(BaseModel):
 class ArticleArchitectView(BaseModel):
     id: str
     title: str
+    authors: List[str]
+    year: int
     labels: List[str]
     abstract: str
     risks_and_mitigation: str
@@ -76,6 +85,8 @@ class ArticleSummaryView(BaseModel):
     """
     id: str
     title: str
+    authors: List[str]
+    year: int
     labels: List[str]
     
 class SearchQuery(BaseModel):

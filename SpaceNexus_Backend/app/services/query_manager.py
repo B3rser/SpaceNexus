@@ -11,18 +11,35 @@ class QueryManager:
         """
         self._mock_graph_db = {
             "nodes": [
-                {"id": "Paper A", "links": ["Paper B", "Paper D"], "labels": ["fundamentos", "teoría", "base conceptual"]},
-                {"id": "Paper B", "links": ["Paper A", "Paper C"], "labels": ["expansión", "fundamentos", "desarrollo"]},
-                {"id": "Paper C", "links": ["Paper B", "Paper D"], "labels": ["reciente", "citas", "aplicaciones"]},
-                {"id": "Paper D", "links": ["Paper A", "Paper C"], "labels": ["técnica", "innovación", "metodología"]},
-                {"id": "Paper E", "links": [], "labels": ["nicho", "especializado", "baja influencia"]}
+                {"id": "ART-001", "links": ["ART-002", "ART-003"], "labels": ["astrobiología", "marte", "extremófilos"], "authors": ["Rodriguez, A."], "year": 2023},
+                {"id": "ART-002", "links": ["ART-001"], "labels": ["propulsión", "iónica", "eficiencia"], "authors": ["Chen, L.", "Miller, S."], "year": 2021},
+                {"id": "ART-003", "links": ["ART-001", "ART-004"], "labels": ["salud", "microgravedad", "huesos"], "authors": ["Kim, J."], "year": 2024},
+                {"id": "ART-004", "links": ["ART-003"], "labels": ["satélites", "comunicación", "cuántica"], "authors": ["Patel, R.", "Jones, B."], "year": 2022},
+                {"id": "ART-005", "links": ["ART-006"], "labels": ["trajes espaciales", "movilidad", "seguridad"], "authors": ["García, M."], "year": 2023},
+                {"id": "ART-006", "links": ["ART-005", "ART-007"], "labels": ["cultivos hidropónicos", "ISS", "nutrición"], "authors": ["Smith, A."], "year": 2022},
+                {"id": "ART-007", "links": ["ART-006"], "labels": ["psicología", "aislamiento", "misiones largas"], "authors": ["Williams, D."], "year": 2024},
+                {"id": "ART-008", "links": ["ART-009"], "labels": ["agujeros negros", "radiación Hawking", "teoría"], "authors": ["Lee, S."], "year": 2020},
+                {"id": "ART-009", "links": ["ART-008", "ART-010"], "labels": ["exoplanetas", "atmósferas", "telescopio Webb"], "authors": ["Davis, T."], "year": 2023},
+                {"id": "ART-010", "links": ["ART-009"], "labels": ["basura espacial", "mitigación", "láser"], "authors": ["Cho, H."], "year": 2022}
             ],
             "links": [
-                {"source": "Paper A", "target": "Paper B"},
-                {"source": "Paper A", "target": "Paper D"},
-                {"source": "Paper B", "target": "Paper C"},
-                {"source": "Paper D", "target": "Paper C"}
+                {"source": "ART-001", "target": "ART-002"}, {"source": "ART-001", "target": "ART-003"},
+                {"source": "ART-003", "target": "ART-004"}, {"source": "ART-005", "target": "ART-006"},
+                {"source": "ART-006", "target": "ART-007"}, {"source": "ART-008", "target": "ART-009"},
+                {"source": "ART-009", "target": "ART-010"}
             ]
+        }
+        self._mock_articles_db = {
+            "ART-001": {"id": "ART-001", "title": "Supervivencia de Extremófilos en Suelo Marciano Simulado", "authors": ["Rodriguez, A."], "year": 2023, "labels": ["astrobiología", "marte", "extremófilos"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-002": {"id": "ART-002", "title": "Avances en Propulsores de Iones para Misiones Interplanetarias", "authors": ["Chen, L.", "Miller, S."], "year": 2021, "labels": ["propulsión", "iónica", "eficiencia"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-003": {"id": "ART-003", "title": "Degradación Ósea Acelerada por Exposición a Microgravedad", "authors": ["Kim, J."], "year": 2024, "labels": ["salud", "microgravedad", "huesos"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-004": {"id": "ART-004", "title": "Redes de Comunicación Cuántica para Satélites", "authors": ["Patel, R.", "Jones, B."], "year": 2022, "labels": ["satélites", "comunicación", "cuántica"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-005": {"id": "ART-005", "title": "Nuevos Polímeros para Mejorar la Movilidad en Trajes Espaciales", "authors": ["García, M."], "year": 2023, "labels": ["trajes espaciales", "movilidad", "seguridad"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-006": {"id": "ART-006", "title": "Optimización del Crecimiento de Vegetales en la ISS", "authors": ["Smith, A."], "year": 2022, "labels": ["cultivos hidropónicos", "ISS", "nutrición"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-007": {"id": "ART-007", "title": "Impacto Psicológico del Aislamiento en Misiones de Larga Duración", "authors": ["Williams, D."], "year": 2024, "labels": ["psicología", "aislamiento", "misiones largas"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-008": {"id": "ART-008", "title": "Observación de la Radiación de Hawking en Agujeros Negros Sintéticos", "authors": ["Lee, S."], "year": 2020, "labels": ["agujeros negros", "radiación Hawking", "teoría"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-009": {"id": "ART-009", "title": "Análisis Atmosférico de Exoplanetas con el Telescopio James Webb", "authors": ["Davis, T."], "year": 2023, "labels": ["exoplanetas", "atmósferas", "telescopio Webb"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
+            "ART-010": {"id": "ART-010", "title": "Uso de Láseres Terrestres para Mitigar la Basura Espacial", "authors": ["Cho, H."], "year": 2022, "labels": ["basura espacial", "mitigación", "láser"], "abstract": "...", "key_points": "...", "impact_and_application": "...", "risks_and_mitigation": "...", "results_and_conclusions": "..."},
         }
     
     def _add_dynamic_weights(self, nodes: List[dict]) -> List[dict]:
@@ -37,78 +54,63 @@ class QueryManager:
     
     
     def get_graph_stats(self) -> dict:
-        print("LOG: Obteniendo estadísticas del grafo desde el servicio.")
+        """
+        Calcula y devuelve estadísticas reales basadas en la base de datos
+        """
+        print("LOG: Calculando estadísticas del grafo desde el servicio.")
+
+        node_count = len(self._mock_graph_db["nodes"])
+
+        relationship_count = len(self._mock_graph_db["links"])
+
+        all_labels = set()
+        for node in self._mock_graph_db["nodes"]:
+            all_labels.update(node.get("labels", []))
+
         return {
-            "node_count": 15032,
-            "relationship_count": 87451,
-            "labels": ["Publication", "Organism", "Environment", "Gene"],
-            # Se eliminó average_node_degree
+            "node_count": node_count,
+            "relationship_count": relationship_count,
+            "labels": sorted(list(all_labels)) # Convertimos el set a una lista ordenada
         }
 
     def get_all_labels(self) -> list[str]:
-        print("LOG: Obteniendo todas las etiquetas desde el servicio.")
-        return ["Publication", "Organism", "Environment", "Gene", "Protein", "PhysiologicalEffect", "Countermeasure"]
+        print("LOG: Obteniendo todas las etiquetas únicas desde los datos de prueba.")
+        
+        all_labels = set()
 
-    def get_graph_sample(self, limit: int) -> dict:
+        # 1. Recolecta etiquetas del grafo
+        for node in self._mock_graph_db["nodes"]:
+            all_labels.update(node.get("labels", []))
+
+        # 2. Recolecta etiquetas de los artículos
+        for article in self._mock_articles_db.values():
+            all_labels.update(article.get("labels", []))
+            
+        return sorted(list(all_labels))
+    
+    def get_graph_sample(self) -> dict:
         nodes_with_weights = self._add_dynamic_weights(self._mock_graph_db["nodes"])
         return {"nodes": nodes_with_weights, "links": self._mock_graph_db["links"]}
 
 
     def get_article_by_id(self, article_id: str) -> Optional[dict]:
         print(f"LOG: Buscando el artículo con ID: {article_id}")
-
-        mock_db = {
-            "NASA-001": {
-                "id": "NASA-001",
-                "title": "Efectos de la Microgravedad en Arabidopsis Thaliana",
-                "labels": ["Microgravity", "Botany", "ISS Experiment"],
-                "abstract": "Un estudio sobre el crecimiento y la expresión génica de Arabidopsis Thaliana en condiciones de microgravedad a bordo de la ISS.",
-                "key_points": "Se observaron cambios significativos en la expresión de 112 genes relacionados con el estrés celular y el crecimiento.",
-                "impact_and_application": "Los hallazgos podrían llevar al desarrollo de cultivos más resistentes para misiones espaciales de larga duración, con un potencial mercado de 10M USD.",
-                "risks_and_mitigation": "El principal riesgo es la atrofia del sistema radicular. Mitigación: sistema de nutrientes hidropónico optimizado.",
-                "results_and_conclusions": "La microgravedad induce una respuesta de estrés detectable, pero la planta es capaz de adaptarse. Se concluye que el cultivo es viable."
-            }
-        }
-        return mock_db.get(article_id)
+        return self._mock_articles_db.get(article_id)
     
     def filter_articles_by_labels(self, required_labels: List[str]) -> List[dict]:
-       
         print(f"LOG: Filtrando artículos que contengan todas las etiquetas: {required_labels}")
-
-        # Base de datos de ejemplo más grande
-        mock_articles_db = [
-            {
-                "id": "NASA-001",
-                "title": "Efectos de la Microgravedad en Arabidopsis Thaliana",
-                "labels": ["Microgravity", "Botany", "ISS Experiment"],
-                # ... otros campos ...
-            },
-            {
-                "id": "NASA-002",
-                "title": "Pérdida de Densidad Ósea en Misiones de Larga Duración",
-                "labels": ["Human", "PhysiologicalEffect", "Risk", "Microgravity"],
-                # ... otros campos ...
-            },
-            {
-                "id": "JAXA-005",
-                "title": "Cultivo de Lechugas en Entorno Espacial",
-                "labels": ["Botany", "ISS Experiment", "Countermeasure"],
-                # ... otros campos ...
-            }
-        ]
-
-        # Convertimos las etiquetas requeridas a un conjunto para una búsqueda eficiente
+        all_articles = list(self._mock_articles_db.values()) # Convertimos el dict a una lista
+        
+        if not required_labels:
+            return all_articles
+            
         required_set = set(required_labels)
-        
-        # Filtramos la lista de artículos
-        matching_articles = []
-        for article in mock_articles_db:
-            # Un artículo coincide si el conjunto de etiquetas requeridas es un
-            # subconjunto del conjunto de etiquetas del artículo.
-            if required_set.issubset(set(article["labels"])):
-                matching_articles.append(article)
-        
+        matching_articles = [
+            article for article in all_articles
+            if required_set.issubset(set(article["labels"]))
+        ]
         return matching_articles
+
     
     def filter_nodes_and_get_neighbors(self, required_labels: List[str]) -> dict:
         all_nodes_map = {node['id']: node for node in self._mock_graph_db["nodes"]}
@@ -142,3 +144,29 @@ class QueryManager:
         final_links = [link for link in self._mock_graph_db["links"] if link['source'] in final_node_ids and link['target'] in final_node_ids]
 
         return {"nodes": self._add_dynamic_weights(final_nodes), "links": final_links}
+    
+    def get_most_recent_articles(self, limit: int) -> List[dict]:
+        """
+        Ordena todos los artículos por año (de más nuevo a más viejo)
+        y devuelve la cantidad especificada por 'limit'.
+        """
+        print(f"LOG: Obteniendo los {limit} artículos más recientes.")
+        
+        all_articles = list(self._mock_articles_db.values())
+        
+        sorted_articles = sorted(all_articles, key=lambda article: article['year'], reverse=True)
+        
+        return sorted_articles[:limit]
+
+    def get_top_weight_articles(self, limit: int) -> List[dict]:
+        """
+        Ordena todos los artículos por peso (cantidad de etiquetas)
+        y devuelve la cantidad especificada por 'limit'.
+        """
+        print(f"LOG: Obteniendo los {limit} artículos con mayor peso.")
+        
+        all_articles = list(self._mock_articles_db.values())
+
+        sorted_articles = sorted(all_articles, key=lambda article: len(article.get('labels', [])), reverse=True)
+        
+        return sorted_articles[:limit]
