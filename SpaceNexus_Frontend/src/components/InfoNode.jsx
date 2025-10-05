@@ -1,12 +1,17 @@
 import React from 'react';
-import { Card, CardContent, Typography, Button, Stack, Box } from '@mui/material';
+import { Card, CardContent, Typography, Tooltip ,Button, Stack, Box } from '@mui/material';
 import { motion, AnimatePresence } from "framer-motion";
 import { GlassButton } from './GlassButton';
 import { GlassChip } from './GlassChip';
 
 const MotionCard = motion(Card);
 
-export function InfoNode({ selectedNode = null, onRelationClick }) {
+export function InfoNode({ selectedNode = null, onRelationClick, allNodes = [] }) {
+    const truncate = (text, maxLength) => {
+        if (text.length <= maxLength) return text;
+        return text.substring(0, maxLength) + '...';
+    };
+
     return (
         <AnimatePresence>
             {selectedNode && (
@@ -33,23 +38,21 @@ export function InfoNode({ selectedNode = null, onRelationClick }) {
                 >
                     <CardContent>
                         <Typography variant="h6" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            {selectedNode.id}
+                            {selectedNode.title || selectedNode.id}
                         </Typography>
 
-                        {selectedNode.links?.length > 0 && (
-                            <Box mt={2}>
-                                <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
-                                    Relations:
-                                </Typography>
-                                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                                    {selectedNode.links.slice(0, 5).map((rel, i) => (
-                                        <GlassButton key={i} onClick={() => onRelationClick?.(rel)}>
-                                            {rel}
-                                        </GlassButton>
-                                    ))}
-                                </Stack>
-                            </Box>
-                        )}
+                        {selectedNode.links.slice(0, 5).map((relationId, i) => {
+                            const relatedNode = allNodes.find(node => node.id === relationId);
+                            const title = relatedNode ? relatedNode.title : relationId;
+
+                            return (
+                                <Tooltip key={i} title={title} arrow>
+                                    <GlassButton onClick={() => onRelationClick?.(relationId)}>
+                                        {truncate(title, 30)}
+                                    </GlassButton>
+                                </Tooltip>
+                            );
+                        })}
 
                         {selectedNode.labels?.length > 0 && (
                             <Box mt={2}>

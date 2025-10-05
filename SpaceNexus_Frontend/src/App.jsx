@@ -8,6 +8,7 @@ import { Test } from './components/pages/Test';
 import Welcome from './components/pages/Welcome';
 import SelectRole from './components/pages/ProfileSelectPage';
 import ArticleView from './components/pages/AbstractPage';
+import SemanticSearch from './components/pages/SemanticSearch';
 
 import './App.css'
 import { UserProvider } from './context/UserContext';
@@ -38,6 +39,7 @@ function App() {
           <Route path='/knowledgeGalaxy/:name' element={<KnowledgeGraph />} />
           { /*<Route path='/article' element={<ArticleView rol="Astronauta" nombre="Artículo C" />} />*/}
           <Route path="/article/:articleId" element={<ArticleView />} />
+          <Route path="/semanticSearch" element={<SemanticSearch />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>

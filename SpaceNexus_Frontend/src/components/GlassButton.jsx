@@ -13,6 +13,8 @@ export function GlassButton({ children, onClick }) {
                 border: '1px solid rgba(255, 255, 255, 0.2)',
                 borderRadius: '10px',
                 textTransform: 'none',
+                width: '100%',
+                mb: 1.25,
                 fontSize: '0.8rem',
                 padding: '4px 12px',
                 transition: 'all 0.3s ease',

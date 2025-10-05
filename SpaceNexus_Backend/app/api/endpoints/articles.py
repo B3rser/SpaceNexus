@@ -8,7 +8,8 @@ from app.schemas.models import (
     ArticleScientistView,
     ArticleInvestorView,
     ArticleArchitectView,
-    ArticleSummaryView
+    ArticleSummaryView,
+    ArticleIdList 
 )
 
 router = APIRouter()
@@ -54,3 +55,10 @@ def get_top_weight_articles(limit: int = 10):
     Obtiene los N artículos con mayor peso (más etiquetas), indicando mayor interconexión.
     """
     return query_manager.get_top_weight_articles(limit=limit)
+
+@router.post("/articles/batch", response_model=List[ArticleSummaryView])
+def get_articles_in_batch(id_list: ArticleIdList):
+    """
+    Obtiene los detalles completos de una lista de artículos a partir de sus IDs.
+    """
+    return query_manager.get_articles_by_ids(article_ids=id_list.ids)
