@@ -3,8 +3,8 @@ import * as React from 'react';
 import {
   Card, CardContent, CardActions, Typography, Button, Stack, Box
 } from '@mui/material';
-import CardActionArea from '@mui/material/CardActionArea';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import { useNavigate } from 'react-router-dom';
 
 export function ArticleCard({
   node,
@@ -13,120 +13,132 @@ export function ArticleCard({
   tags,
   nodeId,
   graphUrl,
-  onOpenGraph,
   renderTag,
 }) {
-  // Mapea al esquema del back
-  const resolvedTitle  = title ?? node?.id ?? id ?? '';
-  const resolvedTags   = Array.isArray(tags) ? tags : (Array.isArray(node?.labels) ? node.labels : []);
+  const resolvedTitle = title ?? node?.id ?? id ?? '';
+  const resolvedTags = Array.isArray(tags) ? tags : (Array.isArray(node?.labels) ? node.labels : []);
   const resolvedNodeId = nodeId ?? node?.id ?? id;
 
-  // Límite de 5 por reglas previas; además el contenedor corta a 2 filas visibles
-  const tagsToShow = resolvedTags.slice(0, 5);
+  const navigate = useNavigate();
 
-  const handleOpen = () => {
-    const finalNodeId = resolvedNodeId ?? resolvedTitle;
-    if (onOpenGraph) return onOpenGraph(finalNodeId);
-    if (graphUrl) return window.open(graphUrl, '_blank', 'noopener,noreferrer');
-    console.warn('No onOpenGraph ni graphUrl proporcionados. nodeId:', finalNodeId);
+  // --- acciones ---
+  const handleOpenGraph = (e) => {
+    e.stopPropagation();
+    if (graphUrl) {
+      return window.open(graphUrl, '_blank', 'noopener,noreferrer');
+    }
+    navigate(`/knowledgeGalaxy/${resolvedNodeId}`);
   };
 
-  // Si NO pasas onOpenGraph y SÍ pasas graphUrl, renderizamos como <a> (soporta ctrl/cmd-click)
-  const clickableProps =
-    graphUrl && !onOpenGraph
-      ? { component: 'a', href: graphUrl, target: '_blank', rel: 'noopener noreferrer' }
-      : { onClick: handleOpen };
+  const handleOpenArticle = () => {
+    if (!resolvedNodeId) {
+      console.warn("No valid article id found");
+      return;
+    }
+    navigate(`/article/${resolvedNodeId}`);
+  };
+
+  const tagsToShow = resolvedTags.slice(0, 5);
 
   return (
     <Card
-      variant="outlined"
+      onClick={handleOpenArticle}
       sx={{
-        borderRadius: '10px',
-        bgcolor: 'var(--color-white)',
+        borderRadius: '20px',
+        background: 'linear-gradient(135deg, rgba(50, 100, 255, 0.2), rgba(200, 0, 255, 0.2))',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        minHeight: '180PX',     // 👈 controla altura base aquí
+        minHeight: '200px',
         overflow: 'hidden',
-        transition: 'box-shadow .2s ease, transform .2s ease',
-        '&:hover': { boxShadow: 3, transform: 'translateY(-1px)' },
+        cursor: 'pointer',
+        transition: 'box-shadow .25s ease, transform .25s ease',
+        '&:hover': {
+          boxShadow: '0 0 25px rgba(120, 200, 255, 0.4)',
+          transform: 'translateY(-3px)',
+        },
       }}
     >
-      {/* Toda esta área es clickeable */}
-      <CardActionArea sx={{ flexGrow: 1, alignSelf: 'stretch' }} {...clickableProps}>
-        <CardContent sx={{ p: '10px' }}>
-          {/* Título: 2 líneas con “…” */}
-          <Typography
-            variant="subtitle1"
-            sx={{
-              fontWeight: 600,
-              mb: 0.5,
-              fontSize: '18px',
-              lineHeight: 1.25,
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-            }}
-            title={resolvedTitle}
-          >
-            {resolvedTitle}
-          </Typography>
+      <CardContent sx={{ p: 2, flexGrow: 1 }}>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            fontWeight: 700,
+            mb: 1,
+            fontSize: '18px',
+            lineHeight: 1.25,
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            color: 'var(--color-text, #fff)',
+          }}
+          title={resolvedTitle}
+        >
+          {resolvedTitle}
+        </Typography>
 
-          {/* Etiquetas: solo las que quepan en 2 filas */}
-          <Stack
-            direction="row"
-            useFlexGap
-            flexWrap="wrap"
-            sx={{
-              gap: 0.75,
-              maxHeight: 24 * 2 + 8, // 👈 2 filas exactas
-              overflow: 'hidden',
-              alignContent: 'flex-start',
-            }}
-          >
-            {tagsToShow.length ? (
-              tagsToShow.map((t, i) =>
-                renderTag ? (
-                  <React.Fragment key={i}>{renderTag(t, i)}</React.Fragment>
-                ) : (
-                  // Placeholder de etiqueta (reemplazarás con tu componente real)
-                  <Box
-                    key={i}
-                    sx={{
-                      px: 0.75,
-                      py: 0.25,
-                      borderRadius: '999px',
-                      fontSize: 12,
-                      lineHeight: '18px',
-                      bgcolor: 'rgba(0,0,0,0.05)',
-                      color: 'var(--color-accent-60)',
-                      whiteSpace: 'nowrap',
-                    }}
-                    title={t}
-                  >
-                    {t}
-                  </Box>
-                )
+        <Stack
+          direction="row"
+          useFlexGap
+          flexWrap="wrap"
+          sx={{
+            gap: 0.75,
+            maxHeight: 24 * 2 + 8,
+            overflow: 'hidden',
+            alignContent: 'flex-start',
+          }}
+        >
+          {tagsToShow.length ? (
+            tagsToShow.map((t, i) =>
+              renderTag ? (
+                <React.Fragment key={i}>{renderTag(t, i)}</React.Fragment>
+              ) : (
+                <Box
+                  key={i}
+                  sx={{
+                    px: 0.75,
+                    py: 0.25,
+                    borderRadius: '999px',
+                    fontSize: 12,
+                    lineHeight: '18px',
+                    bgcolor: 'rgba(255,255,255,0.15)',
+                    color: 'var(--color-text, #fff)',
+                    whiteSpace: 'nowrap',
+                  }}
+                  title={t}
+                >
+                  {t}
+                </Box>
               )
-            ) : (
-              <Box sx={{ fontSize: 12, opacity: 0.7 }}>Sin etiquetas</Box>
-            )}
-          </Stack>
-        </CardContent>
-      </CardActionArea>
+            )
+          ) : (
+            <Box sx={{ fontSize: 12, opacity: 0.7, color: 'var(--color-text, #fff)' }}>No tags</Box>
+          )}
+        </Stack>
+      </CardContent>
 
-      {/* CTA independiente (no dispara el click del área) */}
       <CardActions sx={{ p: 1, pt: 0 }}>
         <Button
           size="small"
           variant="contained"
-          onClick={handleOpen}
+          onClick={handleOpenGraph}
           startIcon={<AccountTreeIcon />}
-          sx={{ ml: 'auto', borderRadius: '999px' }}
-          aria-label={`Abrir en grafo: ${resolvedTitle}`}
+          sx={{
+            ml: 'auto',
+            borderRadius: '999px',
+            textTransform: 'none',
+            fontWeight: 600,
+            background: 'var(--color-secondary)',
+            color: 'var(--color-text)',
+            '&:hover': {
+              background: 'var(--color-secondary-40)',
+            },
+          }}
+          aria-label={`Open in Knowledge Galaxy: ${resolvedTitle}`}
         >
-          Ver en grafo
+          Open in Knowledge Galaxy
         </Button>
       </CardActions>
     </Card>
