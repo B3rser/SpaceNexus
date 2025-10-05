@@ -8,31 +8,30 @@ import { getArticleById } from '../../services/articles.service';
 
 // Paletas temáticas y estilos más audaces
 const THEME_STYLES = {
-  // 🔬 Científico: Profesional, oscuro, enfocado en el detalle y la precisión.
   cientifico: {
-    primaryColor: '#00bcd4', // Cian para tecnología y datos
-    secondaryColor: '#f44336', // Rojo de alerta/importancia
-    gradient: 'linear-gradient(135deg, #1C2331 0%, #0A1929 100%)', // Fondo oscuro y profundo
-    icon: '🧪', // Ícono temático
-    color: '#E0F7FA', // Texto claro
-    boxShadow: '0 8px 30px rgba(0, 188, 212, 0.4)', // Sombra con acento de color
+    primaryColor: '#6b9ac4',
+    secondaryColor: '#c86fc9',
+    gradient: 'linear-gradient(135deg, #1C2331 0%, #0A1929 100%)',
+    icon: '🧪',
+    color: '#E0F7FA',
+    boxShadow: '0 8px 30px rgba(0, 188, 212, 0.4)',
   },
-  // 📈 Inversor: Enérgico, enfocado en el crecimiento y las finanzas.
+
   inversionista: {
-    primaryColor: '#4caf50', // Verde de crecimiento y éxito
-    secondaryColor: '#ff9800', // Ámbar de precaución/oportunidad
-    gradient: 'linear-gradient(135deg, #1A237E 0%, #295F2D 100%)', // Combinación de azul corporativo y verde
-    icon: '💰', // Ícono temático
-    color: '#FFFDE7', // Texto cremoso/blanquecino
-    boxShadow: '0 8px 30px rgba(76, 175, 80, 0.4)',
+    primaryColor: '#c86fc9',
+    secondaryColor: '#ff9800',
+    gradient: 'linear-gradient(135deg, #312031 0%, #4B2142 100%)',
+    icon: '💰',
+    color: '#FFFDE7',
+    boxShadow: '0 8px 30px rgba(255, 3, 230, 0.4)',
   },
-  // 🚀 Astronauta: Inspirador, futurista, enfocado en el espacio y la aventura.
+
   arquitecto_de_mision: {
-    primaryColor: '#bbdefb', // Azul claro, espacial
-    secondaryColor: '#ff5722', // Naranja espacial/de seguridad
-    gradient: 'linear-gradient(135deg, #000000 0%, #151B54 100%)', // Fondo de cielo nocturno a azul oscuro
-    icon: '🛰️', // Ícono temático
-    color: '#E3F2FD', // Texto azul pálido
+    primaryColor: '#bbdefb',
+    secondaryColor: '#ff5722',
+    gradient: 'linear-gradient(135deg, #000000 0%, #151B54 100%)',
+    icon: '🛰️',
+    color: '#E3F2FD',
     boxShadow: '0 8px 30px rgba(187, 222, 251, 0.4)',
   },
 };
@@ -42,16 +41,15 @@ const RolePaper = styled(Paper)(({ role }) => {
 
   const theme = THEME_STYLES[role] || {};
   return {
-    width: '85%', // un poco más ancho
-    minHeight: '65vh', // altura base
+    width: '85%',
+    minHeight: '65vh',
     padding: '40px',
-    margin: 'auto', // centra horizontalmente
+    margin: 'auto',
     background: theme.gradient,
     color: theme.color,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center', // centra verticalmente el contenido
-    alignItems: 'center',
+    justifyContent: 'center',
     gap: '20px',
     borderRadius: '20px',
     boxShadow: theme.boxShadow,
@@ -75,7 +73,7 @@ export default function ArticleView() {
   const [error, setError] = useState(null);
 
   //Cambiar con el contexto
-  const selectedRole = 'cientifico';
+  const selectedRole = 'arquitecto_de_mision';
   const [sectionsContent, setSectionsContent] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -85,7 +83,7 @@ export default function ArticleView() {
   });
 
   useEffect(() => {
-     if (!articleId) return;
+    if (!articleId) return;
 
     const fetchArticle = async () => {
       try {
@@ -109,9 +107,9 @@ export default function ArticleView() {
     setSelectedTab(newValue);
   };
 
-   const handleRelatedPapersClick = () => {
+  const handleRelatedPapersClick = () => {
     if (article) {
-      navigate(`/knowledgeGraph/${article.id}`);
+      navigate(`/knowledgeGalaxy/${article.id}`);
     }
   };
 
@@ -142,138 +140,142 @@ export default function ArticleView() {
   };
 
   return (
-    <Box
-      sx={{
-        width: '120%', // Mejor usar 100% que 100vw/vh para anidar en un layout
-        height: '100%',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        // Fondo más oscuro para que el RolePaper resalte
-        backgroundColor: '#0F1624',
-        position: 'relative',
-      }}
-    >
+    <div style={{ minHeight: '100vh' }}>
       <Box
         sx={{
-          position: 'fixed',
-          right: '30px',
-          top: '40%',
+          width: '120vh',
+          minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
-          gap: 2,
+          backgroundColor: '#0F1624',
+          position: 'relative',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          borderRadius: '16px',
+          boxShadow: '0 0 20px rgba(0,0,0,0.3)',
+          transition: 'none',
+          flexShrink: 0,
         }}
       >
-        <Button
-          variant="contained"
-          href="https://www.google.com"
-          target="_blank"
+        <Box
           sx={{
-            background: theme.primaryColor,
-            color: '#fff',
-            fontWeight: 'bold',
-            boxShadow: theme.boxShadow,
-            '&:hover': { transform: 'scale(1.05)', background: theme.secondaryColor },
+            position: 'fixed',
+            right: 'calc((100vw - 120vw) / 2 - 120px)',
+            top: '40%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
           }}
         >
-          Paper Completo
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={handleRelatedPapersClick}
-          sx={{
-            color: theme.primaryColor,
-            borderColor: theme.primaryColor,
-            fontWeight: 'bold',
-            '&:hover': { background: 'rgba(255,255,255,0.1)' },
-          }}
-        >
-          Papers Relacionados
-        </Button>
-      </Box>
-
-      {/* Contenido principal */}
-      <Box sx={{ flexGrow: 1, p: 4 }}>
-        {/* --- Encabezado y Metadatos --- */}
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="h3" sx={{ color: theme.primaryColor, fontWeight: 'bold' }}>
-            {theme.icon} {article.title}
-          </Typography>
-          <Typography variant="h6" sx={{ color: theme.color }}>
-            Autores: <strong>{article.authors.join(', ')}</strong> | Año: <strong>{article.year}</strong>
-          </Typography>
-          <Typography variant="body1" sx={{ mt: 1, color: theme.color }}>
-            Vista Personalizada: <strong style={{ color: theme.primaryColor }}>{selectedRole}</strong>
-          </Typography>
-        </Box>
-
-        {/* Etiquetas temáticas */}
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3 }}>
-          {article.labels.map((tag, i) => (
-            <Chip
-              key={i}
-              label={tag}
-              sx={{
-                backgroundColor: theme.secondaryColor,
-                color: '#fff',
-                fontWeight: 'bold',
-                '&:hover': {
-                  backgroundColor: theme.primaryColor,
-                  transform: 'scale(1.1)',
-                },
-              }}
-            />
-          ))}
-        </Box>
-
-        {/* --- Pestañas de Navegación --- */}
-        <Tabs
-          value={selectedTab}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          sx={{
-            borderBottom: `2px solid ${theme.secondaryColor}`,
-            '& .MuiTabs-indicator': { backgroundColor: theme.primaryColor, height: '4px' },
-          }}
-        >
-          {sections.map((sectionKey) => (
-            <Tab
-              key={sectionKey}
-              label={sectionTitles[sectionKey]}
-              sx={{
-                color: theme.color,
-                '&.Mui-selected': {
-                  color: theme.primaryColor,
-                  fontWeight: 'bold',
-                  backgroundColor: 'rgba(255,255,255,0.05)',
-                },
-              }}
-            />
-          ))}
-        </Tabs>
-
-        {/* --- Contenido del Paper --- */}
-        <RolePaper role={selectedRole} elevation={10}>
-          <Typography
-            variant="h4"
-            gutterBottom
+          <Button
+            variant="contained"
+            href="https://www.google.com"
+            target="_blank"
             sx={{
-              color: theme.primaryColor,
-              borderBottom: `1px solid ${theme.secondaryColor}`,
-              paddingBottom: '10px',
+              background: theme.primaryColor,
+              color: '#fff',
+              fontWeight: 'bold',
+              boxShadow: theme.boxShadow,
+              '&:hover': { transform: 'scale(1.05)', background: theme.secondaryColor },
             }}
           >
-            {sectionTitles[sections[selectedTab]]}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontSize: '1.2rem', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}
+            Paper Completo
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{
+              color: theme.primaryColor,
+              borderColor: theme.primaryColor,
+              fontWeight: 'bold',
+              '&:hover': { background: 'rgba(255,255,255,0.1)' },
+            }}
+            onClick={handleRelatedPapersClick}
           >
-            {article[sections[selectedTab]]}
-          </Typography>
-        </RolePaper>
+            Papers Relacionados
+          </Button>
+        </Box>
+
+        {/* Contenido principal */}
+        <Box sx={{ flexGrow: 1, p: 4 }}>
+          {/* --- Encabezado y Metadatos --- */}
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="h3" sx={{ color: theme.primaryColor, fontWeight: 'bold' }}>
+              {article.title}
+            </Typography>
+            <Typography variant="h6" sx={{ color: theme.color }}>
+              Autores: <strong>{article.authors.join(', ')}</strong> | Año: <strong>{article.year}</strong>
+            </Typography>
+          </Box>
+
+          {/* Etiquetas temáticas */}
+          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3 }}>
+            {article.labels.map((tag, i) => (
+              <Chip
+                key={i}
+                label={tag}
+                sx={{
+                  backgroundColor: theme.secondaryColor,
+                  color: '#fff',
+                  fontWeight: 'bold',
+                  '&:hover': {
+                    backgroundColor: theme.primaryColor,
+                    transform: 'scale(1.1)',
+                  },
+                }}
+              />
+            ))}
+          </Box>
+
+          {/* --- Pestañas de Navegación --- */}
+          <Tabs
+            value={selectedTab}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons="auto"
+            sx={{
+              borderBottom: `2px solid ${theme.secondaryColor}`,
+              mb: 3,
+              '& .MuiTabs-indicator': { backgroundColor: theme.primaryColor, height: '4px' },
+            }}
+          >
+            {sections.map((sectionKey) => (
+              <Tab
+                key={sectionKey}
+                label={sectionTitles[sectionKey]}
+                sx={{
+                  color: theme.color,
+                  '&.Mui-selected': {
+                    color: theme.primaryColor,
+                    fontWeight: 'bold',
+                    backgroundColor: 'rgba(255,255,255,0.05)',
+                  },
+                }}
+              />
+            ))}
+          </Tabs>
+
+          {/* --- Contenido del Paper --- */}
+          <RolePaper role={selectedRole} elevation={10}>
+            <Typography
+              variant="h4"
+              gutterBottom
+              sx={{
+                color: theme.primaryColor,
+                borderBottom: `1px solid ${theme.secondaryColor}`,
+                paddingBottom: '10px',
+              }}
+            >
+              {sectionTitles[sections[selectedTab]]}
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{ fontSize: '1.2rem', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}
+            >
+              {article[sections[selectedTab]]}
+            </Typography>
+          </RolePaper>
+        </Box>
       </Box>
-    </Box>
+    </div>
   );
 }
