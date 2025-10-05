@@ -1,0 +1,381 @@
+{
+"nodes": [
+	{
+		"id": "12870_2017_Article_1024.json",
+		"labels": [
+			"trans-Golgi network",
+			"Root movement",
+			"Cell file rotation",
+			"Tethering factor",
+			"Microtubules"
+		],
+		"authors": [
+			"Rahul Roy",
+			"Diane C. Bassham"
+		],
+		"year": 2017,
+		"links": [
+			"514.json",
+			"1471-2229-11-25.json"
+		]
+	},
+	{
+		"id": "41598_2024_Article_51756.json",
+		"labels": [
+			"DNA methylation",
+			"galactic cosmic radiation",
+			"high-LET",
+			"56Fe",
+			"28Si",
+			"X-ray",
+			"Hi-C",
+			"chromatin architecture",
+			"epigenetics",
+			"radiation biology",
+			"epigenome",
+			"epigenetic clock",
+			"gene expression validation",
+			"multiomics",
+			"HBEC"
+		],
+		"authors": [
+			"Adrian Perdyan",
+			"Marcin Jąkalski",
+			"Monika Horbacz",
+			"Afshin Beheshti",
+			"Jakub Mieczkowski"
+		],
+		"year": 2024,
+		"links": [
+			"41526_2016_Article_2.json",
+			"41598_2024_Article_57948.json",
+			"2975810.json"
+		]
+	},
+	{
+		"id": "41526_2016_Article_2.json",
+		"labels": [
+			"NASA translational research",
+			"Life Sciences Translational Path",
+			"basic-to-applied translation",
+			"applied-to-operational translation",
+			"Space Biology",
+			"Human Research Program (HRP)",
+			"NASA Johnson Space Center",
+			"NASA Ames Research Center",
+			"Center for the Advancement of Science in Space",
+			"Decadal Survey",
+			"NIH translational science model",
+			"bi-directional knowledge transfer",
+			"Translational Research Institute",
+			"ISS National Laboratory"
+		],
+		"authors": [
+			"Joshua S. Alwood",
+			"April E. Ronca",
+			"Richard C. Mains",
+			"Mark J. Shelhamer",
+			"Jeffrey D. Smith",
+			"Thomas J. Goodwin"
+		],
+		"year": 2017,
+		"links": [
+			"41598_2024_Article_51756.json"
+		]
+	},
+	{
+		"id": "1471-2229-11-25.json",
+		"labels": [
+			"Rab GTPases",
+			"AtRabD2b",
+			"AtRabD2c",
+			"pollen development",
+			"pollen tube growth",
+			"Golgi localization",
+			"vesicle trafficking",
+			"Arabidopsis thaliana"
+		],
+		"authors": [
+			"Jianling Peng",
+			"Hilal Ilarslan",
+			"Eve Syrkin Wurtele",
+			"Diane C Bassham"
+		],
+		"year": 2011,
+		"links": [
+			"12870_2017_Article_1024.json",
+			"514.json",
+			"41431_2023_Article_1462.json"
+		]
+	},
+	{
+		"id": "2975810.json",
+		"labels": [
+			"F1",
+			"F1A",
+			"F1B",
+			"F2",
+			"F3",
+			"F4",
+			"A1.1",
+			"A1.2",
+			"A2",
+			"I1",
+			"I2",
+			"I3",
+			"R1",
+			"R1.1",
+			"R1.2",
+			"R1.3",
+			"Overall FAIRness Score"
+		],
+		"authors": [
+			"Daniel C. Berrios",
+			"Afshin Beheshti",
+			"Sylvain V. Costes"
+		],
+		"year": -1,
+		"links": [
+			"41598_2024_Article_51756.json",
+			"41598_2024_Article_57948.json"
+		]
+	},
+	{
+		"id": "40168_2022_Article_1332.json",
+		"labels": [
+			"ISS",
+			"Metagenomics",
+			"Antibiotic resistance",
+			"Machine learning",
+			"Space Omics",
+			"Microbiome",
+			"Built‑environment",
+			"Microbial Tracking‑1",
+			"NGS"
+		],
+		"authors": [
+			"Pedro Madrigal",
+			"Nitin K. Singh",
+			"Jason M. Wood",
+			"Elena Gaudioso",
+			"Félix Hernández‑del‑Olmo",
+			"Christopher E. Mason",
+			"Kasthuri Venkateswaran",
+			"Afshin Beheshti"
+		],
+		"year": 2022,
+		"links": [
+			"41598_2024_Article_57948.json"
+		]
+	},
+	{
+		"id": "41598_2024_Article_57948.json",
+		"labels": [
+			"BP",
+			"MF",
+			"MSigDB",
+			"NASA",
+			"NES",
+			"OSD",
+			"OSDR",
+			"padj",
+			"PBMCs",
+			"R+"
+		],
+		"authors": [
+			"Andrea Camera",
+			"Marshall Tabetah",
+			"Veronica Castañeda",
+			"JangKeun Kim",
+			"Aman Singh Galsinh",
+			"Alissen Haro-Vinueza",
+			"Ivonne Salinas",
+			"Allen Seylani",
+			"Shehbeel Arif",
+			"Saswati Das",
+			"Marcelo A. Mori",
+			"Anthony Carano",
+			"Lorraine Christine de Oliveira",
+			"Masafumi Muratani",
+			"Richard Barker",
+			"Victoria Zaksas",
+			"Chirag Goel",
+			"Eleni Dimokidis",
+			"Deanne M. Taylor",
+			"Jisu Jeong",
+			"Eliah Overbey",
+			"Cem Meydan",
+			"D. Marshall Porterfield",
+			"Juan Esteban Díaz",
+			"Andrés Caicedo",
+			"Jonathan C. Schisler",
+			"Evagelia C. Laiakis",
+			"Christopher E. Mason",
+			"Man S. Kim",
+			"Fathi Karouia",
+			"Nathaniel J. Szewczyk",
+			"Afshin Beheshti"
+		],
+		"year": 2024,
+		"links": [
+			"41598_2024_Article_51756.json",
+			"2975810.json",
+			"40168_2022_Article_1332.json",
+			"2044-5040-4-13.json"
+		]
+	},
+	{
+		"id": "2044-5040-4-13.json",
+		"labels": [
+			"Sarcoglycan",
+			"Sarcoglycanopathies",
+			"Limb girdle muscular dystrophy",
+			"Mechanotransduction",
+			"Mechano-sensing",
+			"Load-sensing",
+			"p70S6K",
+			"S6K",
+			"p70S6 kinase",
+			"ERK1/2"
+		],
+		"authors": [
+			"Catherine Moorwood",
+			"Anastassios Philippou",
+			"Janelle Spinazzola",
+			"Benjamin Keyser",
+			"Edward J Macarak",
+			"Elisabeth R Barton"
+		],
+		"year": 2014,
+		"links": [
+			"41598_2024_Article_57948.json"
+		]
+	},
+	{
+		"id": "514.json",
+		"labels": [
+			"SYP41",
+			"SYP61",
+			"VTI12",
+			"AtVPS45",
+			"TNO1",
+			"VSR1",
+			"PVC",
+			"TGN",
+			"SNARE",
+			"Vacuolar trafficking",
+			"Salt tolerance",
+			"Osmotic stress",
+			"Arabidopsis thaliana",
+			"Co-immunoprecipitation",
+			"Brefeldin A (BFA)",
+			"Membrane fusion"
+		],
+		"authors": [
+			"Sang-Jin Kim",
+			"Diane C. Bassham"
+		],
+		"year": 2011,
+		"links": [
+			"12870_2017_Article_1024.json",
+			"1471-2229-11-25.json"
+		]
+	},
+	{
+		"id": "41431_2023_Article_1462.json",
+		"labels": [
+			"extracellular effects of SARS-CoV-2",
+			"systemic metabolic remodeling",
+			"lipid metabolism and mediators",
+			"TCA cycle and mitochondrial dysfunction",
+			"glycolysis and pentose phosphate pathway shifts",
+			"humoral factors and immune signaling",
+			"renin–angiotensin system (RAS)",
+			"ACE2 and TMPRSS2 mediated entry",
+			"bradykinin signaling",
+			"endothelial damage and vascular effects",
+			"biomarkers of disease severity",
+			"metabolomics and lipidomics in COVID-19",
+			"future research directions in viral pathogenesis"
+		],
+		"authors": [
+			"S. Anand Narayanan",
+			"David A. JamisonJr",
+			"Joseph W. Guarnieri",
+			"Victoria Zaksas",
+			"Michael Topper",
+			"Andrew P. Koutnik",
+			"Jiwoon Park",
+			"Kevin B. Clark",
+			"Francisco J. Enguita",
+			"Ana Lúcia Leitão",
+			"Saswati Das",
+			"Pedro M. Moraes-Vieira",
+			"Diego Galeano",
+			"Christopher E. Mason",
+			"Nídia S. Trovão",
+			"Robert E. Schwartz",
+			"Jonathan C. Schisler",
+			"Jordana G. A. Coelho-dos-Reis",
+			"Eve Syrkin Wurtele",
+			"Afshin Beheshti"
+		],
+		"year": 2024,
+		"links": [
+			"1471-2229-11-25.json"
+		]
+	}
+],
+"links": [
+	{
+		"source": "12870_2017_Article_1024.json",
+		"target": "514.json",
+		"relationship": "shares author and topic (TNO1, vacuolar trafficking)"
+	},
+	{
+		"source": "12870_2017_Article_1024.json",
+		"target": "1471-2229-11-25.json",
+		"relationship": "shares author and topic (Arabidopsis, cellular trafficking)"
+	},
+	{
+		"source": "41598_2024_Article_51756.json",
+		"target": "41526_2016_Article_2.json",
+		"relationship": "shares author and thematic link (NASA, space biology)"
+	},
+	{
+		"source": "41598_2024_Article_51756.json",
+		"target": "41598_2024_Article_57948.json",
+		"relationship": "shares author, topic (GCR, epigenetics) and data source (GeneLab, JAXA)"
+	},
+	{
+		"source": "41598_2024_Article_51756.json",
+		"target": "2975810.json",
+		"relationship": "shares author and topic (GeneLab, data systems)"
+	},
+	{
+		"source": "1471-2229-11-25.json",
+		"target": "514.json",
+		"relationship": "shares author and topic (Arabidopsis, cellular trafficking)"
+	},
+	{
+		"source": "1471-2229-11-25.json",
+		"target": "41431_2023_Article_1462.json",
+		"relationship": "shares author (Eve Syrkin Wurtele)"
+	},
+	{
+		"source": "2975810.json",
+		"target": "41598_2024_Article_57948.json",
+		"relationship": "shares author and topic (NASA, GeneLab, data systems)"
+	},
+	{
+		"source": "40168_2022_Article_1332.json",
+		"target": "41598_2024_Article_57948.json",
+		"relationship": "shares author and data source (ISS, GeneLab)"
+	},
+	{
+		"source": "41598_2024_Article_57948.json",
+		"target": "2044-5040-4-13.json",
+		"relationship": "topic connection (muscle, spaceflight, sarcopenia)"
+	}
+]
+}
