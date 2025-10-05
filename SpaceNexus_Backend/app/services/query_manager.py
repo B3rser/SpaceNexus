@@ -391,6 +391,7 @@ class QueryManager:
         }
         self._mock_articles_db = {
             "12870_2017_Article_1024.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3177255/",
                 "id": "12870_2017_Article_1024.json",
                 "title": "TNO1, a TGN-localized SNARE-interacting protein, modulates root skewing in Arabidopsis thaliana",
                 "authors": [
@@ -421,6 +422,7 @@ class QueryManager:
                 "results_and_conclusions": "Mutants lacking TNO1 show exaggerated root skewing and CFR; skewing increases with MT stabilization but is not further altered by MT destabilization; MT orientation remains unchanged, suggesting CFR changes are MT-dependent but orientation-independent; TNO1 is required for maintenance of cell morphology in mature root regions and hypocotyl bases; the TGN SNARE machinery is implicated in epidermal CFR and cell expansion during root growth."
             },
             "2044-5040-4-13.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4095884/",
                 "id": "2044-5040-4-13.json",
                 "title": "Absence of γ-sarcoglycan alters the response of p70S6 kinase to mechanical perturbation in murine skeletal muscle",
                 "authors": [
@@ -462,6 +464,7 @@ class QueryManager:
                 "results_and_conclusions": "Key findings include that p70S6K is mechanically responsive in isolated muscles, with elevated basal activation in γ-SG-/- mice and sustained activation upon stretch in γ-SG-/- compared to the transient response in C57; rapamycin blocks p70S6K activation in C57 but not fully in γ-SG-/-, where S6RP remains elevated, suggesting γ-SG is required for inactivation of the p70S6K pathway. Calcium-independent regulation of p70S6K contrasts with calcium-dependent regulation of ERK1/2 signaling. Collectively, γ-SG appears to be a critical component of mechanotransduction in skeletal muscle, and its absence reveals altered load-sensing that could contribute to dystrophic pathology."
             },
             "41431_2023_Article_1462.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10772081/",
                 "id": "41431_2023_Article_1462.json",
                 "title": "A comprehensive SARS-CoV-2 and COVID-19 review, Part 2: host extracellular to systemic effects of SARS-CoV-2 infection",
                 "authors": [
@@ -518,6 +521,7 @@ class QueryManager:
                 "results_and_conclusions": "The results demonstrate widespread metabolic and humoral remodeling during SARS-CoV-2 infection, with systemic manifestations including altered energy metabolism, lipid handling, and endothelial function. These changes correlate with disease severity and offer mechanistic insights that support the conclusions: SARS-CoV-2 drives multi-organ physiological remodeling through extracellular signals, with implications for prognosis, treatment, and future research into the mechanisms of viral diseases."
             },
             "41526_2016_Article_2.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5460236/",
                 "id": "41526_2016_Article_2.json",
                 "title": "From the bench to exploration medicine: NASA life sciences translational research for human exploration and habitation missions",
                 "authors": [
@@ -559,6 +563,7 @@ class QueryManager:
                 "results_and_conclusions": "The paper documents progress in institutionalizing NASA translational research, including the 2004 cross-disciplinary workshops, subsequent NASA-sponsored events (ASGSR 2014–2015; HRP Investigators Workshops 2015–2016), and the establishment of the Translational Research Institute in 2016. It concludes that integrating Space Biology and HRP within a NIH-like translational framework, guided by NASA and National Academy recommendations, will enhance knowledge transfer, accelerate countermeasure development, and improve preparation for exploration-class missions. It also emphasizes the potential for Earth-based medical applications via the ISS National Laboratory designation."
             },
             "40168_2022_Article_1332.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9400218/",
                 "id": "40168_2022_Article_1332.json",
                 "title": "Machine learning algorithm to characterize antimicrobial resistance associated with the International Space Station surface microbiome",
                 "authors": [
@@ -598,6 +603,7 @@ class QueryManager:
                 "results_and_conclusions": "Results demonstrate that ML-based AMR gene prediction can uncover novel determinants in ISS surface microbiomes, with experimental validation confirming resistance in pathogenic species; conclusions emphasize ML's value in identifying concealed AMR determinants in metagenomic datasets and its implications for astronaut health."
             },
             "1471-2229-11-25.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3040128/",
                 "id": "1471-2229-11-25.json",
                 "title": "AtRabD2b and AtRabD2c have overlapping functions in pollen development and pollen tube growth",
                 "authors": [
@@ -631,6 +637,7 @@ class QueryManager:
                 "results_and_conclusions": "The results demonstrate that AtRabD2b and AtRabD2c have overlapping expression and partially redundant functions essential for proper pollen development and pollen tube growth. The double mutant exhibits defective pollen morphology and impaired tube elongation, leading to reduced fertility and shorter siliques. Complementation rescues these defects, and both proteins localize to the Golgi, supporting a role in ER-to-Golgi trafficking. This work concludes that AtRabD2b and AtRabD2c contribute to vesicle trafficking in pollen in a manner not fully compensated by other RabD family members."
             },
             "41598_2024_Article_57948.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11166946/",
                 "id": "41598_2024_Article_57948.json",
                 "title": "Aging and putative frailty biomarkers are altered by spaceflight",
                 "authors": [
@@ -704,6 +711,7 @@ class QueryManager:
                 "results_and_conclusions": "Results show tissue-specific frailty-related gene expression changes in rodent muscles during spaceflight, with a subset of DEGs common across datasets, suggesting a frailty-like response to space conditions. Conclusions emphasize the potential utility of frailty biomarkers for astronaut health surveillance and the need for preventive strategies in future missions."
             },
             "41598_2024_Article_51756.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10789781/",
                 "id": "41598_2024_Article_51756.json",
                 "title": "Chromosomal positioning and epigenetic architecture influence DNA methylation patterns triggered by galactic cosmic radiation",
                 "authors": [
@@ -749,6 +757,7 @@ class QueryManager:
                 "results_and_conclusions": "56Fe irradiation induces a persistent DNA methylation increase, whereas 28Si and X-ray induce decreases with X-ray effects not persisting over time. Chromatin architecture and nuclear positioning modulate radiation response, with Hi-C-defined radial layers revealing layer-specific epigenetic and transcriptional changes. The study provides novel insights into the epigenetic and transcriptomic responses and the role of chromatin structure in galactic cosmic radiation damage."
             },
             "514.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3177255/",
                 "id": "514.json",
                 "title": "TNO1 Is Involved in Salt Tolerance and Vacuolar Trafficking in Arabidopsis",
                 "authors": [
@@ -790,6 +799,7 @@ class QueryManager:
                 "results_and_conclusions": "Results demonstrated that TNO1 is a TGN-associated, membrane-integrated protein that interacts with the SYP41 SNARE complex and is required for efficient vacuolar trafficking. The tno1 mutant's salt/osmotic sensitivity and mislocalization of SYP61, along with partial secretion of vacuolar proteins and delayed BFA compartment formation, support a model in which TNO1 facilitates vesicle fusion at the TGN and maintains TGN structure/identity, contributing to salt tolerance and proper vacuolar protein sorting."
             },
             "2975810.json": {
+                "url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6371294/",
                 "id": "2975810.json",
                 "title": "FAIRness and Usability for Open-access Omics Data Systems",
                 "authors": [
