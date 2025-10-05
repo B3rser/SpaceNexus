@@ -1,7 +1,7 @@
 import apiClient from './apiClient';
 
 export const getArticleById = async (articleId, role) => {
-  const response = await apiClient.get(`/articles/${articleId}?role=${role}`);
+  const response = await apiClient.get(`/articles/${role}/${articleId}`);
   return response.data;
 };
 

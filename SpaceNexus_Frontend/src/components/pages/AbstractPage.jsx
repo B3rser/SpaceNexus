@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, Tabs, Tab, CircularProgress, Paper, Button, Chip } from '@mui/material';
 import { styled } from '@mui/system';
+import { useUser } from '../../context/UserContext';
 
 import { getArticleById } from '../../services/articles.service';
 
 // Paletas temáticas y estilos más audaces
 const THEME_STYLES = {
-  cientifico: {
+  scientific: {
     primaryColor: '#6b9ac4',
     secondaryColor: '#c86fc9',
     gradient: 'linear-gradient(135deg, #1C2331 0%, #0A1929 100%)',
@@ -17,7 +18,7 @@ const THEME_STYLES = {
     boxShadow: '0 8px 30px rgba(0, 188, 212, 0.4)',
   },
 
-  inversionista: {
+  investor: {
     primaryColor: '#c86fc9',
     secondaryColor: '#ff9800',
     gradient: 'linear-gradient(135deg, #312031 0%, #4B2142 100%)',
@@ -26,7 +27,7 @@ const THEME_STYLES = {
     boxShadow: '0 8px 30px rgba(255, 3, 230, 0.4)',
   },
 
-  arquitecto_de_mision: {
+  astronaut: {
     primaryColor: '#bbdefb',
     secondaryColor: '#ff5722',
     gradient: 'linear-gradient(135deg, #000000 0%, #151B54 100%)',
@@ -59,9 +60,9 @@ const RolePaper = styled(Paper)(({ role }) => {
 });
 
 const ROLE_SECTIONS = {
-  cientifico: ['Abstract', 'Datos Clave', 'Resultados', 'Conclusión'],
-  inversionista: ['Abstract', 'Impacto y Aplicación', 'Resultados', 'Conclusión'],
-  arquitecto_de_mision: ['Abstract', 'Riesgos y Mitigación', 'Resultados', 'Conclusión'],
+  scientific: ['Abstract', 'Datos Clave', 'Resultados', 'Conclusión'],
+  investor: ['Abstract', 'Impacto y Aplicación', 'Resultados', 'Conclusión'],
+  astronaut: ['Abstract', 'Riesgos y Mitigación', 'Resultados', 'Conclusión'],
 };
 
 
@@ -73,7 +74,7 @@ export default function ArticleView() {
   const [error, setError] = useState(null);
 
   //Cambiar con el contexto
-  const selectedRole = 'arquitecto_de_mision';
+  const { role } = useUser();
   const [sectionsContent, setSectionsContent] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -83,12 +84,12 @@ export default function ArticleView() {
   });
 
   useEffect(() => {
-    if (!articleId) return;
+    if (!articleId || !role) return;
 
     const fetchArticle = async () => {
       try {
         setLoading(true);
-        const data = await getArticleById(articleId, selectedRole);
+        const data = await getArticleById(articleId, role);
         setArticle(data);
         setError(null);
       } catch (err) {
@@ -101,7 +102,7 @@ export default function ArticleView() {
 
     fetchArticle();
     console.log(article)
-  }, [articleId]);
+  }, [articleId, role]);
 
   const handleChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -118,7 +119,7 @@ export default function ArticleView() {
     return (
       <Box sx={{ width: '100vh', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {/* Usamos el color primario del rol para el cargador */}
-        <CircularProgress sx={{ color: (THEME_STYLES[selectedRole] || {}).primaryColor || 'secondary.main' }} />
+        <CircularProgress sx={{ color: (THEME_STYLES[role] || {}).primaryColor || 'secondary.main' }} />
         <Typography variant="h6" sx={{ ml: 2, color: 'text.primary' }}>Cargando resumen...</Typography>
       </Box>
     );
@@ -128,8 +129,8 @@ export default function ArticleView() {
     return <Box sx={{ color: 'red', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>{error || "Artículo no encontrado."}</Box>;
   }
 
-  // const sections = ROLE_SECTIONS[selectedRole] || [];
-  const theme = THEME_STYLES[selectedRole] || {};
+  // const sections = ROLE_SECTIONS[role] || [];
+  const theme = THEME_STYLES[role] || {};
 
   const availableSections = ['abstract', 'key_points', 'impact_and_application', 'risks_and_mitigation', 'results_and_conclusions'];
   const sections = availableSections.filter(key => article.hasOwnProperty(key));
@@ -255,7 +256,7 @@ export default function ArticleView() {
           </Tabs>
 
           {/* --- Contenido del Paper --- */}
-          <RolePaper role={selectedRole} elevation={10}>
+          <RolePaper role={role} elevation={10}>
             <Typography
               variant="h4"
               gutterBottom

@@ -32,9 +32,9 @@ class GraphSample(BaseModel):
     
     
 class UserRole(str, Enum):
-    cientifico = "cientifico"
-    inversionista = "inversionista"
-    arquitecto_de_mision = "arquitecto_de_mision"
+    scientific = "scientific"
+    investor = "investor"
+    astronaut = "astronaut"
 
 class ArticleBase(BaseModel):
     id: str
@@ -56,7 +56,7 @@ class ArticleScientistView(BaseModel):
     year: int
     labels: List[str]
     abstract: str
-    key_points: str
+    key_points: List[str]
     results_and_conclusions: str
 
 class ArticleInvestorView(BaseModel):

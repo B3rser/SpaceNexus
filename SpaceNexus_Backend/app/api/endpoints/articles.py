@@ -22,7 +22,7 @@ def filter_articles(labels: List[str] = Query(..., min_length=1, description="Li
     return query_manager.filter_articles_by_labels(required_labels=labels)
 
 
-@router.get("/articles/{article_id}")
+@router.get("/articles/{role}/{article_id}")
 def get_article(article_id: str, role: UserRole):
     """
     Obtiene la información de un artículo específico.
@@ -33,11 +33,11 @@ def get_article(article_id: str, role: UserRole):
     if not full_article_data:
         raise HTTPException(status_code=404, detail="Artículo no encontrado")
 
-    if role == UserRole.cientifico:
+    if role == UserRole.scientific:
         return ArticleScientistView(**full_article_data)
-    elif role == UserRole.inversionista:
+    elif role == UserRole.investor:
         return ArticleInvestorView(**full_article_data)
-    elif role == UserRole.arquitecto_de_mision:
+    elif role == UserRole.astronaut:
         return ArticleArchitectView(**full_article_data)
     
 @router.get("/articles/recent/", response_model=List[ArticleSummaryView])
