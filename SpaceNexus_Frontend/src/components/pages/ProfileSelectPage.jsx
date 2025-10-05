@@ -9,7 +9,7 @@ export default function SelectRole() {
     const timer = setTimeout(() => {
       console.log("➡️ Redirigiendo al home...");
       navigate("/home");
-    }, 3000);
+    },4000);
 
     return () => clearTimeout(timer);
   }, [navigate]);
@@ -17,7 +17,7 @@ export default function SelectRole() {
   return (
     <div
       style={{
-        position: "fixed", 
+        position: "relative",
         top: 0,
         left: 0,
         width: "100vw",
@@ -25,24 +25,30 @@ export default function SelectRole() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backdropFilter: "blur(3px)", // efecto sutil sobre el fondo
-        zIndex: 1000, // aseguramos que quede encima
+        backdropFilter: "blur(3px)", 
+        zIndex: 1000, 
       }}
     >
       <div
         style={{
-          background: "rgba(0, 0, 0, 0.6)",
-          color: "#fff",
-          padding: "2rem 3rem",
-          borderRadius: "1rem",
-          fontSize: "1.5rem",
+          position: "absolute",
+          top: "50%",            
+          left: "50%",            
+          transform: "translate(-50%, -50%)", 
+          width: "100%",
           textAlign: "center",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
+          color: "white",
+          fontSize: "2rem",
+          fontFamily: "'Orbitron', sans-serif",
+          letterSpacing: "2px",
+          fontStyle: "italic",      
+          textShadow: "0 0 10px rgba(255,255,255,0.5)", 
         }}
       >
-        Rol seleccionado: <strong>{role}</strong> <br />
-        Cargando datos de la misión...
+        Mode {role} loading mission data ...
       </div>
+
+
     </div>
   );
 }

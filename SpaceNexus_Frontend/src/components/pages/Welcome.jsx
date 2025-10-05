@@ -10,10 +10,9 @@ export default function Welcome() {
   const [hovered, setHovered] = useState(null);
   const navigate = useNavigate();
 
-  // ✅ Cuando se selecciona un rol
   const handleSelectRole = (role) => {
     console.log("✅ Avatar clickeado:", role);
-    navigate(`/select-role/${role}`); // redirige con el rol seleccionado
+    navigate(`/select-role/${role}`); 
   };
 
   return (
@@ -38,7 +37,7 @@ export default function Welcome() {
           letterSpacing: "2px",
         }}
       >
-        ¿Quién eres en esta misión?
+        Who are you in this mission?
       </div>
 
       <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>

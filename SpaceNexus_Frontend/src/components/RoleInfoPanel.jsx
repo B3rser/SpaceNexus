@@ -4,19 +4,19 @@ import { Rocket, Atom, Briefcase } from "lucide-react";
 
 const roleData = {
   scientific: {
-    title: "Científico",
+    title: "Scientific",
     icon: <Atom size={22} />,
-    keywords: ["Innovación", "Descubrimiento", "Futuro"],
+    keywords: ["Analysis", "Discovery", "Technical Data"],
   },
   investor: {
-    title: "Inversionista",
+    title: "Investor",
     icon: <Briefcase size={22} />,
-    keywords: ["Visión", "Crecimiento", "Oportunidad"],
+    keywords: ["Vision", "Growth", "Opportunity"],
   },
   astronaut: {
-    title: "Astronauta",
+    title: "Astronaut",
     icon: <Rocket size={22} />,
-    keywords: ["Exploración", "Espacio", "Horizontes"],
+    keywords: ["Exploration", "Space", "Mission Architect"],
   },
 };
 
@@ -49,7 +49,7 @@ export default function RoleInfoPanel({ hovered }) {
               boxShadow: "0 0 20px rgba(120,200,255,0.5)",
               color: "white",
               textAlign: "center",
-              fontFamily: "Orbitron, sans-serif", // tipografía espacial
+              fontFamily: "Orbitron, sans-serif", 
             }}
           >
             <div
