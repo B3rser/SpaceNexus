@@ -46,7 +46,7 @@ class ArticleBase(BaseModel):
     labels: List[str]
     url: str
     abstract: str
-    key_points: str
+    key_points: List[str] 
     impact_and_application: str
     risks_and_mitigation: str
     results_and_conclusions: str
@@ -60,7 +60,7 @@ class ArticleScientistView(BaseModel):
     labels: List[str]
     url: str
     abstract: str
-    key_points: str
+    key_points: List[str] 
     results_and_conclusions: str
     knowledge_gaps: str | None = None
     consensus_disagreement: str | None = None
@@ -112,7 +112,6 @@ class ArticleSummaryView(BaseModel):
     
 class SearchQuery(BaseModel):
     query: str
-    max_results: int = 10
     
 class LabelFrequency(BaseModel):
     label: str
@@ -124,3 +123,6 @@ class ChatbotResponse(BaseModel):
 class ChatbotRequest(BaseModel):
     json_data: Dict[str, Any]
     question: str
+    
+class ArticleIdList(BaseModel):
+    ids: List[str]

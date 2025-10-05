@@ -212,3 +212,17 @@ class QueryManager:
         top_labels_tuples = label_counts.most_common(limit)
         
         return [{"label": label, "count": count} for label, count in top_labels_tuples]
+
+
+    def get_articles_by_ids(self, article_ids: List[str]) -> List[dict]:
+        """
+        Busca y devuelve una lista de artículos completos a partir de una lista de IDs.
+        """
+        print(f"LOG: Buscando artículos por la lista de IDs: {article_ids}")
+        found_articles = []
+        for article_id in article_ids:
+            article = self._mock_articles_db.get(article_id)
+            if article:
+                found_articles.append(article)
+        print(f"LOG: Encontrados {len(found_articles)} artículos de {len(article_ids)} IDs solicitados.")
+        return found_articles

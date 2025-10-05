@@ -21,3 +21,8 @@ export const filterArticlesByLabels = async (labels) => {
     const response = await apiClient.get(`/articles/?${params.toString()}`);
     return response.data;
 };
+
+export const getArticlesByIds = async (ids) => {
+  const response = await apiClient.post('/articles/batch', { ids: ids });
+  return response.data;
+};
