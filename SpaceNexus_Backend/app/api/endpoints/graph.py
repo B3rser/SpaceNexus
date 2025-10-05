@@ -19,12 +19,12 @@ def get_stats():
     return stats_data
 
 @router.get("/graph/sample", response_model=GraphSample)
-def get_sample(limit: int = 20):
+def get_sample():
     """
     Endpoint para obtener una muestra de nodos y relaciones del grafo,
     ideal para visualizaciones.
     """
-    return query_manager.get_graph_sample(limit=limit)
+    return query_manager.get_graph_sample()
 
 @router.get("/graph/nodes/", response_model=GraphSample)
 def filter_nodes(labels: List[str] = Query(..., min_length=1, description="Lista de etiquetas para filtrar los nodos. Deben coincidir todas.")):
