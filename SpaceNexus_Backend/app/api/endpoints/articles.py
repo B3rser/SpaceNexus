@@ -39,3 +39,18 @@ def get_article(article_id: str, role: UserRole):
         return ArticleInvestorView(**full_article_data)
     elif role == UserRole.arquitecto_de_mision:
         return ArticleArchitectView(**full_article_data)
+    
+@router.get("/articles/recent/", response_model=List[ArticleSummaryView])
+def get_recent_articles(limit: int = 10):
+    """
+    Obtiene los N artículos más recientes, ordenados por año de publicación.
+    """
+    return query_manager.get_most_recent_articles(limit=limit)
+
+
+@router.get("/articles/top-weight/", response_model=List[ArticleSummaryView])
+def get_top_weight_articles(limit: int = 10):
+    """
+    Obtiene los N artículos con mayor peso (más etiquetas), indicando mayor interconexión.
+    """
+    return query_manager.get_top_weight_articles(limit=limit)

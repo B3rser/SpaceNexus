@@ -144,3 +144,29 @@ class QueryManager:
         final_links = [link for link in self._mock_graph_db["links"] if link['source'] in final_node_ids and link['target'] in final_node_ids]
 
         return {"nodes": self._add_dynamic_weights(final_nodes), "links": final_links}
+    
+    def get_most_recent_articles(self, limit: int) -> List[dict]:
+        """
+        Ordena todos los artículos por año (de más nuevo a más viejo)
+        y devuelve la cantidad especificada por 'limit'.
+        """
+        print(f"LOG: Obteniendo los {limit} artículos más recientes.")
+        
+        all_articles = list(self._mock_articles_db.values())
+        
+        sorted_articles = sorted(all_articles, key=lambda article: article['year'], reverse=True)
+        
+        return sorted_articles[:limit]
+
+    def get_top_weight_articles(self, limit: int) -> List[dict]:
+        """
+        Ordena todos los artículos por peso (cantidad de etiquetas)
+        y devuelve la cantidad especificada por 'limit'.
+        """
+        print(f"LOG: Obteniendo los {limit} artículos con mayor peso.")
+        
+        all_articles = list(self._mock_articles_db.values())
+
+        sorted_articles = sorted(all_articles, key=lambda article: len(article.get('labels', [])), reverse=True)
+        
+        return sorted_articles[:limit]
