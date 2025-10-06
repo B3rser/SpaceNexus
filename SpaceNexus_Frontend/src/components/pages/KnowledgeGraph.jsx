@@ -98,7 +98,7 @@ export function KnowledgeGraph() {
         onRelationClick={handleRelationClick}
         allNodes={graphData.nodes}
       />
-      <div style={{ flexShrink: 0, position: "absolute", zIndex: 2, width: "60%", margin: "15px" }}>
+      <div style={{ flexShrink: 0, position: "absolute", zIndex: 2, width: "50%", margin: "15px" }}>
         <CustomizedInputBase onSearch={handleSearch} />
       </div>
       <div style={{ flex: 1, minHeight: 0 }}>

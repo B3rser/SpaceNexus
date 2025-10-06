@@ -27,7 +27,7 @@ const CHATBOT_ENDPOINT = `${API_BASE_URL}/answer`;
 
 export default function ChatBotDrawer({ open, onClose, role, theme, articleContent }) {
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: `👋 Hola, soy tu asistente ${role}. ¿Sobre qué parte del artículo te gustaría conversar?` },
+    { sender: 'bot', text: `👋 Hello, I am your assistant. ${role}. Which part of the article would you like to discuss?` },
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false); 
