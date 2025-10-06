@@ -50,6 +50,7 @@ export function ArticleCard({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        width:'100%',
         minHeight: '200px',
         overflow: 'hidden',
         cursor: 'pointer',

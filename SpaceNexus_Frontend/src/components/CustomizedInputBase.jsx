@@ -12,7 +12,7 @@ export default function CustomizedInputBase({ onSearch = () => { } }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(query == "") return;
+    if (query == "") return;
     onSearch(query);
   };
 
@@ -25,7 +25,8 @@ export default function CustomizedInputBase({ onSearch = () => { } }) {
           p: '8px 12px',
           display: 'flex',
           alignItems: 'center',
-          width: '80vw',
+          width: '100%',
+          boxSizing: "border-box",
           borderRadius: '20px',
           background: 'rgba(255, 255, 255, 0.08)',
           border: '1px solid rgba(255, 255, 255, 0.2)',

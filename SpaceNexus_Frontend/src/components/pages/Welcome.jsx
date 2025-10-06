@@ -60,22 +60,22 @@ export default function Welcome() {
             onClick={() => handleSelectRole("scientific")}
           />
           <AvatarModel
-            url="/avatars/investor1.glb"
-            position={[0, 0, 0]}
-            scale={1.1}
-            id="investor"
-            hovered={hovered}
-            setHovered={setHovered}
-            onClick={() => handleSelectRole("investor")}
-          />
-          <AvatarModel
             url="/avatars/astronaut.glb"
-            position={[3, 0, 0]}
+            position={[0, 0, 0]}
             scale={0.5}
             id="astronaut"
             hovered={hovered}
             setHovered={setHovered}
             onClick={() => handleSelectRole("astronaut")}
+          />
+          <AvatarModel
+            url="/avatars/investor1.glb"
+            position={[3, 0, 0]}
+            scale={1.1}
+            id="investor"
+            hovered={hovered}
+            setHovered={setHovered}
+            onClick={() => handleSelectRole("investor")}
           />
         </group>
 
