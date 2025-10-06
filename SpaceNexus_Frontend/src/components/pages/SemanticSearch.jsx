@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress, Grid } from '@mui/material';
 import CustomizedInputBase from '../CustomizedInputBase';
@@ -15,6 +15,10 @@ export default function SemanticSearch() {
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
+
+    useEffect(() => {
+        document.title = "Semantic Search";
+    }, []);
 
     const handleSearch = async (term) => {
         const query = term.trim();

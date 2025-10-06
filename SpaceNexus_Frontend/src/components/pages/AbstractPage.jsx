@@ -90,7 +90,7 @@ export default function ArticleView() {
   const [showAllLabels, setShowAllLabels] = React.useState(false);
 
   useEffect(() => {
-    document.title = "Articles";
+    document.title = "Article";
   });
 
   useEffect(() => {

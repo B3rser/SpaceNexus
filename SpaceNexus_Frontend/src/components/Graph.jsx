@@ -83,7 +83,8 @@ export function Graph({ selectedNode, setSelectedNode, data }) {
 
         node.append('circle')
             .attr('r', d => radiusScale(d.weight))
-            .attr('fill', d => colorScale(d.weight));
+            .attr('fill', d => colorScale(d.weight))
+            .style('filter', 'drop-shadow(0px 0px 3px white)');
 
         node.append('text')
             .text(d => {

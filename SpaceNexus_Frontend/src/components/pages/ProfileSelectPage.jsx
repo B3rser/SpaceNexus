@@ -8,7 +8,7 @@ export default function SelectRole() {
   const {setRole} = useUser();
 
   useEffect(() => {
-        document.title = "Selecting role..";
+        document.title = "Selecting role...";
     });
 
   useEffect(() => {

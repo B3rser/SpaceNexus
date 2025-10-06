@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Graph } from '../Graph'
 import { InfoNode } from '../InfoNode';
 import { useParams } from 'react-router-dom';
+import stringSimilarity from 'string-similarity';
 
 import { getFullGraph, getNodeSubgraph } from '../../services/graph.service';
 
@@ -63,12 +64,24 @@ export function KnowledgeGraph() {
     }
   };
 
-  const handleSearch = (relationId) => {
-    const relatedNode = graphData.nodes.find(node => node.id === relationId);
-    if (relatedNode) {
-      setSelectedNode(relatedNode);
+  const handleSearch = (title) => {
+    if (!title) return;
+
+    const similarities = graphData.nodes.map(node => ({
+      node,
+      similarity: stringSimilarity.compareTwoStrings(node.title.toLowerCase(), title.toLowerCase())
+    }));
+
+    const bestMatch = similarities.reduce((prev, current) => {
+      return (current.similarity > prev.similarity) ? current : prev;
+    }, { similarity: 0, node: null });
+
+    if (bestMatch.node && bestMatch.similarity > 0.01) {
+      setSelectedNode(bestMatch.node);
+    } else {
+      setSelectedNode(null);
     }
-  }
+  };
 
 
   return (
@@ -78,7 +91,7 @@ export function KnowledgeGraph() {
         onRelationClick={handleRelationClick}
         allNodes={graphData.nodes}
       />
-      <div style={{ flexShrink: 0, position: "absolute", zIndex: 2, width: "80%", margin: "15px" }}>
+      <div style={{ flexShrink: 0, position: "absolute", zIndex: 2, width: "60%", margin: "15px" }}>
         <CustomizedInputBase onSearch={handleSearch} />
       </div>
       <div style={{ flex: 1, minHeight: 0 }}>
