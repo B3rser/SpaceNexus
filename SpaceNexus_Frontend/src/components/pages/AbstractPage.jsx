@@ -11,6 +11,7 @@ import ChatBotDrawer from '../ChatBot';
 import DescriptionIcon from '@mui/icons-material/Description'; // Paper Completo
 import LinkIcon from '@mui/icons-material/Link'; // Papers Relacionados
 import ChatIcon from '@mui/icons-material/Chat';
+import { NavigateMenu } from '../NavigateMenu';
 
 // Paletas temáticas y estilos más audaces
 const THEME_STYLES = {
@@ -77,6 +78,7 @@ export default function ArticleView() {
 
   const [article, setArticle] = useState(null);
   const [error, setError] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   //Cambiar con el contexto
   const { role } = useUser();
@@ -129,6 +131,11 @@ export default function ArticleView() {
     setIsChatOpen(!isChatOpen);
   };
 
+  const handleOpenMenu = () => {
+    setIsMenuOpen(prev => !prev);
+  };
+
+
   if (loading) {
     return (
       <Box sx={{ width: '100vh', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -174,6 +181,7 @@ export default function ArticleView() {
 
   return (
     <div style={{ minHeight: '100vh' }}>
+      <NavigateMenu open={isMenuOpen} onClick={handleOpenMenu} />
       <Box
         sx={{
           width: '120vh',
@@ -204,7 +212,7 @@ export default function ArticleView() {
           {/* Paper Completo */}
           <Button
             variant="contained"
-            href= {article.url}
+            href={article.url}
             target="_blank"
             sx={{
               width: 60,
@@ -413,7 +421,7 @@ export default function ArticleView() {
               onClose={() => setIsChatOpen(false)}
               role={role}
               theme={theme}
-              articleContent={article} 
+              articleContent={article}
             />
           </RolePaper>
         </Box>

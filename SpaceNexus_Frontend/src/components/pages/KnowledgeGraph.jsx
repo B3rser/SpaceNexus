@@ -8,11 +8,13 @@ import { getFullGraph, getNodeSubgraph } from '../../services/graph.service';
 
 import graphData from '../../assets/graph-data.json';
 import CustomizedInputBase from '../CustomizedInputBase';
+import { NavigateMenu } from '../NavigateMenu';
 
 export function KnowledgeGraph() {
   const { name } = useParams();
 
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -83,9 +85,14 @@ export function KnowledgeGraph() {
     }
   };
 
+  const handleOpenMenu = () => {
+    setIsMenuOpen(prev => !prev);
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", alignItems: "center" }}>
+      <NavigateMenu open={isMenuOpen} onClick={handleOpenMenu} />
+
       <InfoNode
         selectedNode={selectedNode}
         onRelationClick={handleRelationClick}

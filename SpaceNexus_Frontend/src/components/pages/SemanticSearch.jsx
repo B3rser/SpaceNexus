@@ -7,6 +7,7 @@ import { ArticlesGrid } from '../ArticleGrid';
 import { ArticleCard } from '../ArticleCard';
 import { semanticSearch } from '../../services/search.service';
 import { getArticlesByIds } from '../../services/articles.service';
+import { NavigateMenu } from '../NavigateMenu';
 
 
 export default function SemanticSearch() {
@@ -15,6 +16,7 @@ export default function SemanticSearch() {
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         document.title = "Semantic Search";
@@ -51,9 +53,15 @@ export default function SemanticSearch() {
     };
 
     const hasResults = searchResults.length > 0;
+    
+    const handleOpenMenu = () => {
+        setIsMenuOpen(prev => !prev);
+    };
 
     return (
         <Box sx={{ position: "relative", maxWidth: '100vw', padding: 2 }}>
+            <NavigateMenu open={isMenuOpen} onClick={handleOpenMenu} />
+
             <Typography variant="h3" sx={{ color: 'var(--color-text)', textAlign: 'center', mb: 3 }}>
                 Semantic Search
             </Typography>
